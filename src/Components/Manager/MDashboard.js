@@ -42,6 +42,7 @@ function MDashboard() {
       <SliderContainer>
         <MLeftMenu>
         </MLeftMenu>
+          <p>Left side</p>
         <MRightMenu>
         <SliderContainer>
         <Show>
