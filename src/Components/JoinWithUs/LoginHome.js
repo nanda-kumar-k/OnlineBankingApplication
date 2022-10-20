@@ -5,7 +5,7 @@ import business from './Images/business.png';
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-
+import { NavLink } from 'react-router-dom';
 const SliderContainer = styled.div`
     background-image: url(${background});
     background-size: 100% 100%;
@@ -35,7 +35,10 @@ const InformContainer = styled.div`
     /* box-shadow: 1px 1px whitesmoke;
     border: solid 1px whitesmoke;
     border-color: black; */
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+    box-shadow: 1px 1px whitesmoke;
+    border-bottom: 1px solid #E6E6E6;
+    -webkit-box-shadow: 6px 3px 6px #0000001f;
 `;
 
 const JoinContainer = styled.div`
@@ -58,10 +61,14 @@ const JoinLeftContainer = styled.div`
     /* border: solid 1px whitesmoke;
     border-color: black; */
     border-radius: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+    box-shadow: 1px 1px whitesmoke;
+    border-bottom: 1px solid #E6E6E6;
+    -webkit-box-shadow: 6px 3px 6px #0000001f;
     .h3{
         text-align: center;
         margin-bottom: 10px;
+        color: #0B0B61;
     }
 
     .personal {
@@ -85,9 +92,13 @@ const JoinLeftContainer = styled.div`
         width: 39vw;
         height: 50px;
         /* background-color: red; */
+        /* box-shadow: 1px 1px whitesmoke;
+        border: solid 1px whitesmoke; */
+        /* border-color: black; */
+        text-align: left;
         box-shadow: 1px 1px whitesmoke;
-    border: solid 1px whitesmoke;
-    border-color: black;
+    border-bottom: 1px solid #E6E6E6;
+    -webkit-box-shadow: 6px 3px 6px #0000001f;
     }
 
 `;
@@ -98,15 +109,18 @@ const PersonalImg = styled.img`
     
 `;
 
-
 const BottomInfoContainer = styled.div`
     width: 84vw;
     height: 5vh;
-    /* background-color: red; */
+    background-color: #d3ebfa;
     text-align:center;
     display: flex;
     justify-content: center;
     align-items: center;
+`;
+
+const TextScroll = styled.marquee`
+
 `;
 
 function LoginHome() {
@@ -115,7 +129,7 @@ function LoginHome() {
             <SliderContainer>
                 <OuterContainer>
                     <InformContainer>
-                        <p>If slowness is observed during Login Page Loading. Please refresh the page for better experience. </p>
+                        <p style={{color:'orange'}}>If slowness is observed during Login Page Loading. Please refresh the page for better experience. </p>
                         <p>RLN Never asks for confidential information such as PIN and OTP from Customers.Any Such call can be made only by a fraudster. Please do not share personal Info.</p>
                     </InformContainer>
                     <JoinContainer>
@@ -123,11 +137,15 @@ function LoginHome() {
                             <div className='personal'>
                                 <PersonalImg src={personal} alt="personal" />
                             </div>
-                            <h3>Personal Online Banking</h3>
+                            <h3 style={{color:'#3498db'}}>Personal Online Banking</h3>
                             <div className='LoginCon'>
                                 <Stack spacing={2} direction="row">
-                                    <Button variant="outlined" style={{width:'100px'}}>Login</Button>
-                                    <Button variant="outlined" style={{width:'100px'}}>Register</Button>
+                                    <NavLink to="/contractregister">
+                                        <Button variant="outlined" style={{width:'100px'}}>Login</Button>
+                                    </NavLink>
+                                    <NavLink to="/contractregister">
+                                        <Button variant="outlined" style={{width:'100px'}}>Register</Button>
+                                    </NavLink>
                                 </Stack>
                             </div>
                             <div className='inform'>
@@ -138,11 +156,15 @@ function LoginHome() {
                             <div className='personal'>
                                 <PersonalImg src={business} alt="personal" />
                             </div>
-                            <h3>Online Business Banking</h3>
+                            <h3 style={{color:'#3498db'}}>Online Business Banking</h3>
                             <div className='LoginCon'>
                                 <Stack spacing={2} direction="row">
-                                    <Button variant="outlined" style={{width:'100px'}}>Login</Button>
-                                    <Button variant="outlined" style={{width:'100px'}}>Register</Button>
+                                    <NavLink to="/contractregister">
+                                        <Button variant="outlined" style={{width:'100px'}}>Login</Button>
+                                    </NavLink>
+                                    <NavLink to="/contractregister">
+                                        <Button variant="outlined" style={{width:'100px'}}>Register</Button>
+                                    </NavLink>
                                 </Stack>
                             </div>
                             <div className='inform'>
@@ -151,9 +173,9 @@ function LoginHome() {
                         </JoinLeftContainer>
                     </JoinContainer>
                     <BottomInfoContainer>
-                        <marquee class="marq" direction = "left" loop="" >
+                        <TextScroll  direction = "left" loop="" >
                             <p>Mandatory Profile password change after 365 days introduced for added security.   |   Customers who have installed “SBI Secure OTP App” on their mobile and completed registration process will now receive Login OTP for OnlineSBI.com on the app instead of SMS OTP   |   Call us toll free on 1800 1234 and 1800 2100 and get a wide range of services through SBI Contact Centre   |   For added security, new functionality to maintain per day and per transaction limit for general merchant payment transactions has been implemented. Please visit Define Limit under profile section.SBI never asks for your Card/PIN/OTP/CVV details on phone, message or email. Please do not click on links received on your email or mobile asking your Bank/Card details. </p>
-                        </marquee>
+                        </TextScroll>
                     </BottomInfoContainer>
                 </OuterContainer>
             </SliderContainer>
