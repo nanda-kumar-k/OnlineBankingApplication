@@ -146,7 +146,7 @@ function Navbar() {
                         <NavLink to='/'>
                             <div className='RouteLink'  style={{width:'11vw'}}><AssessmentIcon/><p style={{marginLeft:'5px'}}>Business API</p></div>
                         </NavLink>
-                        <NavLink to='/'>
+                        <NavLink to='/home'>
                             <div className='RouteLink'  style={{width:'6vw', border: '1px solid #3498db' }}><AdminPanelSettingsIcon/><p style={{marginLeft:'5px'}}>Login</p></div>
                         </NavLink>
                     </div>
