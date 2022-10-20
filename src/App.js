@@ -14,6 +14,7 @@ import ProfessionalRegister from './Components/JoinWithUs/ProfessionalRegister';
 import EducationalRegister from './Components/JoinWithUs/EducationalRegister';
 import FamilyRegister from './Components/JoinWithUs/FamilyRegister';
 import PasswordRegister from './Components/JoinWithUs/PasswordRegister';
+import MDashboard from './Components/Manager/MDashboard';
 function App() {
   return (
     <>
@@ -36,6 +37,7 @@ function App() {
           <Route path="educational" element={<EducationalRegister/>}/>
           <Route path="family" element={<FamilyRegister/>}/>
           <Route path="setpassword" element={<PasswordRegister/>}/>
+          <Route path="managerdashboard" element={<MDashboard/>}/>
         </Routes>
       </Router>
     </>
