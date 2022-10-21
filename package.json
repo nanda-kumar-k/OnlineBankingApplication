@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/react": "^18.0.21",
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.5",
     "moment": "^2.29.4",
@@ -20,6 +21,7 @@
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.6",
     "swiper": "^8.4.2",
+    "typescript": "^4.8.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

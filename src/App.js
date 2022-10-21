@@ -15,6 +15,8 @@ import EducationalRegister from './Components/JoinWithUs/EducationalRegister';
 import FamilyRegister from './Components/JoinWithUs/FamilyRegister';
 import PasswordRegister from './Components/JoinWithUs/PasswordRegister';
 import MDashboard from './Components/Manager/MDashboard';
+import MAllCustomers from './Components/Manager/MAllCustomers';
+import MAccountRequest from './Components/Manager/MAccountRequest';
 function App() {
   return (
     <>
@@ -38,6 +40,8 @@ function App() {
           <Route path="family" element={<FamilyRegister/>}/>
           <Route path="setpassword" element={<PasswordRegister/>}/>
           <Route path="managerdashboard" element={<MDashboard/>}/>
+          <Route path="mallcustomers" element={<MAllCustomers/>}/>
+          <Route path="macountrequest" element={<MAccountRequest/>}/>
         </Routes>
       </Router>
     </>

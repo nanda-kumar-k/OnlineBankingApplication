@@ -1,10 +1,7 @@
-.swiper {
+.MMSwiper {
   width: 70vw;
   height: 70vh;
-  margin-left: 15vw;
-  margin-right: 15vw;
-
-
+  margin: 0 6vw 0 6vw;
 }
 
 .swiper-slide {
