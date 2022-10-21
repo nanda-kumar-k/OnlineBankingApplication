@@ -7,7 +7,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/bundle";
-import "./slider.css";
+import "./Hslider.css";
 
 // import required modules
 import { Autoplay, Pagination, Navigation } from "swiper";
@@ -18,6 +18,7 @@ const SliderContainer = styled.div`
     background-repeat: no-repeat;
     background-position: center;
     position: absolute;
+    width: 100vw;
 `;
 
 const Show = styled.div`
