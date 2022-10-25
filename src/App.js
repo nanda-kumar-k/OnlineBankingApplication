@@ -17,6 +17,9 @@ import PasswordRegister from './Components/JoinWithUs/PasswordRegister';
 import MDashboard from './Components/Manager/MDashboard';
 import MAllCustomers from './Components/Manager/MAllCustomers';
 import MAccountRequest from './Components/Manager/MAccountRequest';
+import NewDeposit from './Components/Deposits/NewDeposit';
+import NewHomeLoan from './Components/Loans/NewHomeLoan';
+import NewEducationalLoan from './Components/Loans/NewEducationalLoan';
 function App() {
   return (
     <>
@@ -42,6 +45,9 @@ function App() {
           <Route path="managerdashboard" element={<MDashboard/>}/>
           <Route path="mallcustomers" element={<MAllCustomers/>}/>
           <Route path="macountrequest" element={<MAccountRequest/>}/>
+          <Route path="newdeposit" element={<NewDeposit/>}/>
+          <Route path="newhomeloan" element={<NewHomeLoan/>}/>
+          <Route path="neweducationloan" element={<NewEducationalLoan/>}/>
         </Routes>
       </Router>
     </>
