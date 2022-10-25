@@ -10,12 +10,12 @@ function AllLinks() {
             <NavLink to="/transfer"><p>Transfer</p></NavLink>
             <hr/>
             <h3>Deposits</h3>
-            <NavLink to="/"><p>Open New Deposit</p></NavLink>
+            <NavLink to="/newdeposit"><p>Open New Deposit</p></NavLink>
             <NavLink to="/"><p>All Deposits</p></NavLink>
             <hr/>
             <h3>Loans</h3>
-            <NavLink to="/"><p>Open New Home Loan</p></NavLink>
-            <NavLink to="/"><p>Open New Educational Loan</p></NavLink>
+            <NavLink to="/newhomeloan"><p>Open New Home Loan</p></NavLink>
+            <NavLink to="/neweducationloan"><p>Open New Educational Loan</p></NavLink>
             <NavLink to="/"><p>All Loans</p></NavLink>
             <hr/>
             <h3>Insurances</h3>
