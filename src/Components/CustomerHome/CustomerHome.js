@@ -11,7 +11,9 @@ import "swiper/css/bundle";
 
 // import required modules
 import { Autoplay, Pagination, Navigation } from "swiper";
-import Footer from '../Navbar/Footer';
+
+import Footer from '../Footer/Footer';
+
 
 export const CHContainer = styled.div`
     width: 90vw;

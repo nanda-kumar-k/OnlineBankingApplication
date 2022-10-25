@@ -20,6 +20,8 @@ import MAccountRequest from './Components/Manager/MAccountRequest';
 import NewDeposit from './Components/Deposits/NewDeposit';
 import NewHomeLoan from './Components/Loans/NewHomeLoan';
 import NewEducationalLoan from './Components/Loans/NewEducationalLoan';
+import AllDeposits from './Components/Deposits/AllDeposits';
+import AllLoans from './Components/Loans/AllLoans';
 function App() {
   return (
     <>
@@ -48,6 +50,8 @@ function App() {
           <Route path="newdeposit" element={<NewDeposit/>}/>
           <Route path="newhomeloan" element={<NewHomeLoan/>}/>
           <Route path="neweducationloan" element={<NewEducationalLoan/>}/>
+          <Route path="alldeposits" element={<AllDeposits/>}/>
+          <Route path="allloans" element={<AllLoans/>}/>
         </Routes>
       </Router>
     </>
