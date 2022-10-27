@@ -6,7 +6,7 @@ import "swiper/css/navigation";
 import "swiper/css/bundle";
 
 // import required modules
-// import { Autoplay, Pagination, Navigation } from "swiper";
+import { Autoplay, Pagination, Navigation } from "swiper";
 
 const TopContainer = styled.div`
     width: 100vw;
@@ -95,11 +95,11 @@ function Footer (){
                     delay: 5000,
                     disableOnInteraction: false,
                     }}
-                    // pagination={{
-                    // clickable: true,
-                    // }}
-                    // navigation={true}
-                    // modules={[Autoplay, Pagination, Navigation]}
+                    pagination={{
+                    clickable: true,
+                    }}
+                    navigation={true}
+                    modules={[Autoplay, Pagination, Navigation]}
                     className="mySwiper"
                 >
                     

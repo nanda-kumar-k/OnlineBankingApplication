@@ -22,6 +22,12 @@ import NewHomeLoan from './Components/Loans/NewHomeLoan';
 import NewEducationalLoan from './Components/Loans/NewEducationalLoan';
 import AllDeposits from './Components/Deposits/AllDeposits';
 import AllLoans from './Components/Loans/AllLoans';
+import EDashboard from './Components/Employee/EDashboard';
+import SDashboard from './Components/SuperAdmin/SDashboard';
+import EAllCustomers from './Components/Employee/EAllCustomers';
+import AccountRequest from './Components/Employee/AccountRequest';
+import LoansRequest from './Components/Employee/LoansRequest';
+import CustomerProfile from './Components/Employee/CustomerProfile';
 function App() {
   return (
     <>
@@ -52,6 +58,12 @@ function App() {
           <Route path="neweducationloan" element={<NewEducationalLoan/>}/>
           <Route path="alldeposits" element={<AllDeposits/>}/>
           <Route path="allloans" element={<AllLoans/>}/>
+          <Route path="superadmindashboard" element={<SDashboard/>}/>
+          <Route path="employeedashboard" element={<EDashboard/>}/>
+          <Route path="employeeallcustomers" element={<EAllCustomers/>}/>
+          <Route path="accountrequest" element={<AccountRequest/>}/>
+          <Route path="loanrequest" element={<LoansRequest/>}/>
+          <Route path="customerprofile" element={<CustomerProfile/>}/>
         </Routes>
       </Router>
     </>
