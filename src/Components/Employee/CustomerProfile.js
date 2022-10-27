@@ -3,18 +3,7 @@ import styled from 'styled-components';
 import EmployeeMenu from './EmployeeMenu';
 import CustomerImage from "./Images/customer.jpg";
 
-const EAllContainer = styled.div`
-    width: 81vw;
-    height: 85vh;
-    /* background-color: red; */
-    padding: 2vh 2vw;
 
-    h2 {
-        padding: 1vh 1vw;
-        box-shadow: 1px 1px whitesmoke;
-        border-bottom: 1px solid #E6E6E6;
-    }
-`;
 
 const CHRightContainer = styled.div`
     padding: 2vh 10vw;
@@ -47,6 +36,7 @@ const CHRightContainer = styled.div`
         }
     }
 `;
+
 
 const ProfileImg = styled.img`
     width: 10vw;
