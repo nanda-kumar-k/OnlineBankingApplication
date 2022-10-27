@@ -28,6 +28,8 @@ import EAllCustomers from './Components/Employee/EAllCustomers';
 import AccountRequest from './Components/Employee/AccountRequest';
 import LoansRequest from './Components/Employee/LoansRequest';
 import CustomerProfile from './Components/Employee/CustomerProfile';
+import CustomerDeposit from './Components/Employee/CustomerDeposit';
+import CustomerTransaction from './Components/Employee/CustomerTransaction';
 function App() {
   return (
     <>
@@ -64,6 +66,8 @@ function App() {
           <Route path="accountrequest" element={<AccountRequest/>}/>
           <Route path="loanrequest" element={<LoansRequest/>}/>
           <Route path="customerprofile" element={<CustomerProfile/>}/>
+          <Route path="customerdeposit" element={<CustomerDeposit/>}/>
+          <Route path="customertransaction" element={<CustomerTransaction/>}/>
         </Routes>
       </Router>
     </>

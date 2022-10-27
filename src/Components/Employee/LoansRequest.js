@@ -58,7 +58,7 @@ function LoansRequest() {
                         <th>Account ID</th>
                         <th>First Name</th>
                         <th>Last Name</th>
-                        <th>Account Type</th>
+                        <th>Loan Type</th>
                         <th>Balance</th>
                         <th>Loan Document</th>
                         <th>Profile</th>
