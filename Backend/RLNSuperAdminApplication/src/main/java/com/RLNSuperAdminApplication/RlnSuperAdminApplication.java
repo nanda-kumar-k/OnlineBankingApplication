@@ -1,4 +1,4 @@
-package com.RLNSuperAdmin;
+package com.RLNSuperAdminApplication;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
