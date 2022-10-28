@@ -1,4 +1,4 @@
-package com.RLNSuperAdmin;
+package com.RLNSuperAdminApplication;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
