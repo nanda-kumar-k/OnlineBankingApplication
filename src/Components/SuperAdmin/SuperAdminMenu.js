@@ -1,11 +1,12 @@
 import manager from './Images/manager.jpg';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import NoEncryptionIcon from '@mui/icons-material/NoEncryption';
+import CreditScoreIcon from '@mui/icons-material/CreditScore';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-
 
 const MImgCon = styled.div`
     width: 12vw;
@@ -51,25 +52,40 @@ function SuperAdminMenu (){
             <MImg src={manager} alt=""/>
         </MImgCon>
         
-        <NavLink to="/managerdashboard" style={{textDecoration : 'none'}}>
+        <NavLink to="/employeedashboard" style={{textDecoration : 'none'}}>
             <MenusList style={{marginTop:'50px'}}>
                 <DashboardIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
                 <p>Dashboard</p>
             </MenusList>
         </NavLink>
-        <NavLink to="/mallcustomers" style={{textDecoration : 'none'}}>
+        <NavLink to="/employeeallcustomers" style={{textDecoration : 'none'}}>
             <MenusList style={{marginTop:'15px'}}>
                 <SupervisedUserCircleIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
                 <p>All Customers</p>
             </MenusList>
         </NavLink>
         
-        <NavLink to="/macountrequest" style={{textDecoration : 'none'}}>
+        <NavLink to="/accountrequest" style={{textDecoration : 'none'}}>
             <MenusList style={{marginTop:'15px'}}>
-                <AdminPanelSettingsIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
+                <ManageAccountsIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
                 <p>Account Request</p>
             </MenusList>
         </NavLink>
+
+        <NavLink to="/loanrequest" style={{textDecoration : 'none'}}>
+            <MenusList style={{marginTop:'15px'}}>
+                <CreditScoreIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
+                <p>Loan Request</p>
+            </MenusList>
+        </NavLink>
+
+        <NavLink to="/macountrequest" style={{textDecoration : 'none'}}>
+            <MenusList style={{marginTop:'15px'}}>
+                <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
+                <p>Insurance Request</p>
+            </MenusList>
+        </NavLink>
+
         <MenusList style={{marginTop:'15px'}}>
             <NoEncryptionIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
             <p>Logout</p>
