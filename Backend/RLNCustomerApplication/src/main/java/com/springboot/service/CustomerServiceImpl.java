@@ -1,14 +1,15 @@
-package com.service;
+package com.springboot.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.model.Customer;
-import com.respository.CustomerRepository;
+
+import com.springboot.model.Customer;
+import com.springboot.repository.CustomerRepository;
 
 @Service
 public class CustomerServiceImpl implements CustomerService  {
 	
-	 @Autowired(required=true)
+	 @Autowired
 	 private CustomerRepository customerRepository;
 
 	@Override
