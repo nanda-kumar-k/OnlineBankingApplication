@@ -11,38 +11,31 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.CreatedDate;
 
-
 @Entity
 @Table
 
-public class BusinessTransaction {
+public class EducationalLoanInterestPayment {
 	
 	@Id
 	@GeneratedValue(generator = "uuid2")
 	@GenericGenerator(name = "uuid2", strategy = "uuid2")
 	@Column(columnDefinition = "BINARY(16)", insertable = false, updatable = false, nullable = false)
-	private UUID transaction_id;
+	private UUID loan_payment_id;
 	@Column(insertable = false, updatable = false, nullable = false)
-	private UUID api_id;
-	@Column(nullable = false)
-	private String transaction_request_id;
-	@Column(nullable = false)
+	private UUID loan_id;
 	@CreatedDate
-	private Date transaction_date;
-	private long reciever_account_number;
-	private long transaction_amount;
-	@Column(nullable = false)
+	private Date payment_date;
+	private long amount_paid;
 	@Value("${some.key:false}")
-	private boolean transaction_status;
+	private boolean status;
 	
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "api_id", referencedColumnName = "api_id")
-	private BusinessAPI businessAPI_ref;
+	@JoinColumn(name = "customer_id", referencedColumnName = "loan_id")
+	private EducationalLoan educationalLoan_ref;
 
 }
