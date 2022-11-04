@@ -1,0 +1,23 @@
+import { CHContainer, CHLeft, CHNavbar, CHRight, BackImg } from "../CustomerHome/CustomerHome";
+import background from "../CustomerHome/Images/background.png";
+import AllLinks from "../CustomerHome/AllLinks";
+import styled from "styled-components";
+
+function Transfer() {
+    return (
+        <>
+        <CHContainer>
+            <BackImg src={background} alt="" />
+            <CHLeft>
+                <CHNavbar>
+                    <AllLinks/>
+                </CHNavbar>
+            </CHLeft>
+            <CHRight>
+            </CHRight>
+        </CHContainer>
+        </>
+    )
+}
+
+export default Transfer;
