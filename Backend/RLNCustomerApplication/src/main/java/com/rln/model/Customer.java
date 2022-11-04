@@ -45,7 +45,7 @@ public class Customer {
 	@Value("${some.key:25000}")
 	private BigInteger balance;
 	@Column(nullable = false)
-	@Value("${some.key:true}")
+	@Value("${some.key:false}")
 	private boolean verification_status;
 	@Column(nullable = false)
 	@CreatedDate

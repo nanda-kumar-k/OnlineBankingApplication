@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -19,6 +20,7 @@ import org.springframework.data.annotation.CreatedDate;
 public class CustomerProfile {
 	
 	@Id
+	@Column(insertable = false, updatable = false, nullable = false)
 	private UUID customer_id;
 	private String gender;
 	private Date dob;
@@ -43,5 +45,4 @@ public class CustomerProfile {
 	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
 	private Customer customer_ref;
 	
-
 }
