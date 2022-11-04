@@ -9,11 +9,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.rln</groupId>
-	<artifactId>RLNSuperAdminApplication</artifactId>
+	<artifactId>RLNCustomerApplication</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>RLNSuperAdminApplication</name>
-	<description>it&apos;s super admin application</description>
+	<name>RLNCustomerApplication</name>
+	<description>it&apos;s Customer application</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -44,6 +44,11 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
