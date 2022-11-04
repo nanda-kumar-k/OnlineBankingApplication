@@ -77,3 +77,8 @@ function App() {
 }
 
 export default App;
+
+
+/* it appears that the problem is with the routes. I am not able to navigate to the pages. I am getting the following error:
+
+*/
