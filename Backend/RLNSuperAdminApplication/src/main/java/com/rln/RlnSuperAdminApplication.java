@@ -4,11 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RlnManagerApplication {
+public class RlnSuperAdminApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RlnManagerApplication.class, args);
-		System.out.println("RLN Manager Applicaton Running...!!");
+		SpringApplication.run(RlnSuperAdminApplication.class, args);
+		System.out.println("RLN Super Admin Application Running...!!");
 	}
 
 }
