@@ -1,5 +1,5 @@
 package com.rln.model;
 
-public class Deposits {
+public class Customer {
 
 }
