@@ -133,9 +133,57 @@ const NotePointContainer = styled.div`
     /* background-color: blue; */
 `;
 
+
+const InputFileContainer = styled.div`
+    width: 40ch;
+    height: 10vh;
+    display: flex;
+    z-index: 1;
+    justify-content:center ;
+    align-items: center;
+    background-color: white;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    border: solid 0.5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    color:rgba(0, 0, 0, 0.6);
+  
+    button {
+        cursor: pointer;
+        background: transparent;
+        border: 0;
+        margin-right: 10px;
+    } 
+
+    button:focus {
+        outline: none;
+    }
+
+     button img {
+        width: 30px;
+        height: 30px;
+    }
+    
+    input[type='file'] {
+        display: none;
+    }
+`;
+
+const FImg = styled.img`
+    width: 30px;
+    height: 30px;
+`;
+
 function PersonalRegister() {
 
     const [value, setValue] = React.useState(new Date(2022, 3, 7));
+
+    const [file, setFile] = React.useState([]);
+    const inputFile = React.useRef(null);
+    
+    const FhandleChange = (e) => {
+        setFile([...file, e.target.files[0]]);
+    };
+
     return (
         <>
             <SliderContainer>
@@ -268,6 +316,13 @@ function PersonalRegister() {
                             <FormControlLabel value="male" control={<Radio />} label="No" />
                         </RadioGroup>
                         </FormControl>
+                        <InputFileContainer>   
+                            <button onClick={() => inputFile.current.click()}>
+                                <FImg src="https://www.svgrepo.com/show/12604/paper-clip.svg" />
+                            </button>
+                            <input type="file" onChange={FhandleChange} ref={inputFile} />
+                            <p>Uploaded Photo:</p> {file.map((x) => x.name).join(', ')}
+                        </InputFileContainer>
                         <Stack spacing={2} direction="row">
                             <NavLink to="/contractregister">
                                 <Button variant="outlined" id="but" >Back</Button>

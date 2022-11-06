@@ -99,7 +99,7 @@ const InputContainer = styled.div`
     }
     #but {
         width: 150px;
-        margin-left: 6vw;
+        margin-left: 0vw;
         margin-top: 8vh;
     }
 `;
