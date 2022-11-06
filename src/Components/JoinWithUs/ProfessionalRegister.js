@@ -180,21 +180,6 @@ function ProfessionalRegister() {
                         <InputContainer>
                         <h2>Enter Professional Details</h2>
                         <br/>
-
-                        <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
-                            color: 'balck',
-                            fontSize: '1.2rem',
-                            },
-                            '& .MuiFilledInput-root':{
-                                backgroundColor: 'white',
-                            } }} >
-                            <InputLabel htmlFor="filled-adornment-amount">Occupation Type</InputLabel>
-                            <FilledInput
-                            id="filled-adornment-amount"
-                            // value={values.senderaccount}
-                            // onChange={handleChange('senderaccount')}
-                            />
-                        </FormControl>
                         <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
                             color: 'balck',
                             fontSize: '1.2rem',
@@ -244,35 +229,7 @@ function ProfessionalRegister() {
                             '& .MuiFilledInput-root':{
                                 backgroundColor: 'white',
                             } }} >
-                            <InputLabel htmlFor="filled-adornment-amount">Nature Of Business</InputLabel>
-                            <FilledInput
-                            id="filled-adornment-amount"
-                            // value={values.senderaccount}
-                            // onChange={handleChange('senderaccount')}
-                            />
-                        </FormControl>
-                        <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
-                            color: 'balck',
-                            fontSize: '1.2rem',
-                            },
-                            '& .MuiFilledInput-root':{
-                                backgroundColor: 'white',
-                            } }} >
                             <InputLabel htmlFor="filled-adornment-amount">Annual Income</InputLabel>
-                            <FilledInput
-                            id="filled-adornment-amount"
-                            // value={values.senderaccount}
-                            // onChange={handleChange('senderaccount')}
-                            />
-                        </FormControl>
-                        <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
-                            color: 'balck',
-                            fontSize: '1.2rem',
-                            },
-                            '& .MuiFilledInput-root':{
-                                backgroundColor: 'white',
-                            } }} >
-                            <InputLabel htmlFor="filled-adornment-amount">Net Worth</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
                             // value={values.senderaccount}
