@@ -9,6 +9,8 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'
+
 
 const SliderContainer = styled.div`
     background-image: url(${background});
@@ -155,7 +157,35 @@ function PasswordRegister() {
             navigate('/contractregister');
         }
         else {
-            alert("Please fill all the details");
+           
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    footer: '<a href>Why do I have this issue?</a>'
+                })
+            
+
+            const { value: file } =  Swal.fire({
+                title: 'Select image',
+                input: 'file',
+                inputAttributes: {
+                  'accept': 'image/*',
+                  'aria-label': 'Upload your profile picture'
+                }
+              })
+              
+              if (file) {
+                const reader = new FileReader()
+                reader.onload = (e) => {
+                  Swal.fire({
+                    title: 'Your uploaded picture',
+                    imageUrl: e.target.result,
+                    imageAlt: 'The uploaded picture'
+                  })
+                }
+                reader.readAsDataURL(file)
+              }
         }
     };
 
@@ -246,19 +276,17 @@ function PasswordRegister() {
                             <NavLink to="/family">
                                 <Button variant="outlined" id="but" >Back</Button>
                             </NavLink>
-                            <NavLink to="/contractregister">
-                                <Button variant="outlined" id="but" style={{marginLeft:'50px'}} onClick={handleSubmit} >Next</Button>
-                            </NavLink>
+                            <Button variant="outlined" id="but" style={{marginLeft:'50px'}} onClick={handleSubmit} >Next</Button>
                         </Stack>
                         </InputContainer>
                         <NotePointContainer>
                             <p style={{fontSize:'1.3rem'}}><b>Please Note</b></p>
-                            <u1>
+                            <ul>
                                 <li><p>The Customer ID is mentioned in the welcome letter and cheque book.</p></li>
                                 <li><p>You can also SMS "CustID" for savings account or CustIDCC XXXX(last 4 digits of credit card number) for credit card only customers to 5676782 from your registered mobile number to know your Customer ID.</p></li>
                                 <li><p>If you have not received your welcome letter, please contact your branch.</p></li>
                                 <li><p>Please ensure that your mobile number is registered with Axis Bank. You may visit the nearest Axis Bank ATM and click on "Registration-Mobile Number Update" to register. You may also visit your nearest branch.</p></li>
-                            </u1>                          
+                            </ul>                          
                         </NotePointContainer>
                     </AllInputContainer>
                 </OuterContainer>

@@ -124,6 +124,7 @@ const NotePointContainer = styled.div`
 function ContactRegister() {
 
     const [values, setValues] = React.useState({
+        username : '',
         contact_number: '',
         email_id: '',
     });
@@ -131,6 +132,7 @@ function ContactRegister() {
         let find = JSON.parse(localStorage.getItem("register"));
         if (find) {
             setValues({
+                username: find.customer.username,
                 contact_number: find.customer.contact_number,
                 email_id: find.customer.email_id,
             })
@@ -147,22 +149,24 @@ function ContactRegister() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(values);
-        let find = JSON.parse(localStorage.getItem("register"));
-        if (find) {
-            find.customer.contact_number = Number(values.contact_number);
-            find.customer.email_id = values.email_id;
-            localStorage.setItem("register", JSON.stringify(find));
-        }
-        else {
-            let obj = {
-                customer: {
-                    contact_number: values.contact_number,
-                    email_id: values.email_id,
-                }
+        if (values.contact_number && values.email_id && values.username) {
+            let find = JSON.parse(localStorage.getItem("register"));
+            if (find) {
+                find.customer.username = values.username;
+                find.customer.contact_number = Number(values.contact_number);
+                find.customer.email_id = values.email_id;
+                localStorage.setItem("register", JSON.stringify(find));
             }
-            localStorage.setItem("register", JSON.stringify(obj));
-        }
-        if (values.contact_number && values.email_id) {
+            else {
+                let obj = {
+                    customer: {
+                        username: values.username,
+                        contact_number: values.contact_number,
+                        email_id: values.email_id,
+                    }
+                }
+                localStorage.setItem("register", JSON.stringify(obj));
+            }
             navigate('/personaldetails');
         }
         else {
@@ -224,6 +228,20 @@ function ContactRegister() {
                         <h2>Enter Contact Details</h2>
                         <br/>
                         <form>
+                        <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
+                            color: 'balck',
+                            fontSize: '1.2rem',
+                            },
+                            '& .MuiFilledInput-root':{
+                                backgroundColor: 'white',
+                            } }} >
+                            <InputLabel htmlFor="filled-adornment-amount">Enter User Name</InputLabel>
+                            <FilledInput
+                            id="filled-adornment-amount"
+                            value={values.username || ''}
+                            onChange={handleChange('username')}
+                            />
+                        </FormControl>
                         <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
                             color: 'balck',
                             fontSize: '1.2rem',
