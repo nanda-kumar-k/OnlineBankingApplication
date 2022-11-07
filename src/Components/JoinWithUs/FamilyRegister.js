@@ -12,6 +12,9 @@ import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useNavigate } from 'react-router-dom';
+
+
 const SliderContainer = styled.div`
     background-image: url(${background});
     background-size: 100% 100%;
@@ -131,7 +134,50 @@ const NotePointContainer = styled.div`
 `;
 
 function FamilyRegister() {
-    const [value, setValue] = React.useState(new Date(2022, 3, 7));
+
+    const [fvalue, setFvalue] = React.useState(new Date());
+    const [mvalue, setMvalue] = React.useState(new Date());
+
+    const [values, setValues] = React.useState({
+        father_name: '',
+        mother_name: '',
+    });
+    React.useEffect(() => {
+        let find = JSON.parse(localStorage.getItem("register"));
+        if (find) {
+            setValues({
+                father_name: find.father_name,
+                mother_name: find.mother_name,
+                father_dob : setFvalue(Date(find.father_dob)),
+                mother_dob : setMvalue(Date(find.mother_dob)),
+            })
+        }
+    }, []);
+
+    const handleChange = (prop) => (event) => {
+        setValues({ ...values, [prop]: event.target.value });
+        // console.log(values);
+    };
+
+    const navigate = useNavigate();
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(values);
+        if (values.father_name && values.mother_name && fvalue && mvalue)   {
+            let obj = JSON.parse(localStorage.getItem("register"));;
+            obj.father_name = values.father_name;
+            obj.mother_name = values.mother_name;
+            obj.father_dob = Date(fvalue);
+            obj.mother_dob = Date(mvalue);
+            localStorage.setItem("register", JSON.stringify(obj));
+            navigate('/setpassword');
+        }
+        else {
+            alert("Please fill all the details");
+        }
+    };
+
     return (
         <>
             <SliderContainer>
@@ -197,17 +243,17 @@ function FamilyRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Father's Name</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            // value={values.senderaccount}
-                            // onChange={handleChange('senderaccount')}
+                            value={values.father_name || ''}
+                            onChange={handleChange('father_name')}
                             />
                         </FormControl>
                         <div style={{width:'40vw', marginTop:'20px', marginBottom:'20px', marginLeft:'10px'}}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}  >
                                 <DatePicker
                                     label="Father's DOB (DD/MM/YYYY)" 
-                                    value={value}
+                                    value={fvalue || ''}
                                     onChange={(newValue) => {
-                                    setValue(newValue);
+                                    setFvalue(newValue);
                                     }}                            
                                     renderInput={(params) => <TextField {...params} /> }
                                 />
@@ -223,17 +269,17 @@ function FamilyRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Mother's Name</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            // value={values.senderaccount}
-                            // onChange={handleChange('senderaccount')}
+                            value={values.mother_name || ''}
+                            onChange={handleChange('mother_name')}
                             />
                         </FormControl>
                         <div style={{width:'40vw', marginTop:'20px', marginBottom:'20px', marginLeft:'10px'}}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}  >
                                 <DatePicker
                                     label="Mother's DOB (DD/MM/YYYY)" 
-                                    value={value}
+                                    value={mvalue || ''}
                                     onChange={(newValue) => {
-                                    setValue(newValue);
+                                    setMvalue(newValue);
                                     }}                            
                                     renderInput={(params) => <TextField {...params} /> }
                                 />
@@ -244,9 +290,7 @@ function FamilyRegister() {
                             <NavLink to="/educational">
                                 <Button variant="outlined" id="but" >Back</Button>
                             </NavLink>
-                            <NavLink to="/setpassword">
-                                <Button variant="outlined" id="but" style={{marginLeft:'50px'}}  >Next</Button>
-                            </NavLink>
+                            <Button variant="outlined" id="but" style={{marginLeft:'50px'}} onClick = {handleSubmit} >Next</Button>
                         </Stack>
                         </InputContainer>
                         <NotePointContainer>

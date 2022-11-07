@@ -149,7 +149,7 @@ function ContactRegister() {
         console.log(values);
         let find = JSON.parse(localStorage.getItem("register"));
         if (find) {
-            find.customer.contact_number = values.contact_number;
+            find.customer.contact_number = Number(values.contact_number);
             find.customer.email_id = values.email_id;
             localStorage.setItem("register", JSON.stringify(find));
         }
@@ -234,7 +234,7 @@ function ContactRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Enter Contact Number</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            value={values.contact_number}
+                            value={values.contact_number || ''}
                             onChange={handleChange('contact_number')}
                             />
                         </FormControl>
@@ -249,9 +249,9 @@ function ContactRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Enter Email Id</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            value={values.email_id}
+                            value={values.email_id || ''}
                             type={'email'}
-                            required={'true'}
+                            required={true}
                             onChange={handleChange('email_id')}
                             />
                         </FormControl>

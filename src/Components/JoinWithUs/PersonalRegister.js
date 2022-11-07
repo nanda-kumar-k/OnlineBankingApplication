@@ -15,6 +15,9 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import Stack from '@mui/material/Stack';
+import { useNavigate } from "react-router-dom";
+
+
 const SliderContainer = styled.div`
     background-image: url(${background});
     background-size: 100% 100%;
@@ -133,55 +136,55 @@ const NotePointContainer = styled.div`
     /* background-color: blue; */
 `;
 
-
-const InputFileContainer = styled.div`
-    width: 40ch;
-    height: 10vh;
-    display: flex;
-    z-index: 1;
-    justify-content:center ;
-    align-items: center;
-    background-color: white;
-    font-family: "Roboto","Helvetica","Arial",sans-serif;
-    border: solid 0.5px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    color:rgba(0, 0, 0, 0.6);
-  
-    button {
-        cursor: pointer;
-        background: transparent;
-        border: 0;
-        margin-right: 10px;
-    } 
-
-    button:focus {
-        outline: none;
-    }
-
-     button img {
-        width: 30px;
-        height: 30px;
-    }
-    
-    input[type='file'] {
-        display: none;
-    }
-`;
-
-const FImg = styled.img`
-    width: 30px;
-    height: 30px;
-`;
-
 function PersonalRegister() {
 
-    const [value, setValue] = React.useState(new Date(2022, 3, 7));
+    const [dobvalue, setDobvalue] = React.useState(new Date());
+    const [values, setValues] = React.useState({
+        first_name: '',
+        last_name: '',
+        gender : '',
+        address : '',
+        marital_status : ''
+    });
+    React.useEffect(() => {
+        let find = JSON.parse(localStorage.getItem("register"));
+        if (find) {
+            setValues({
+                first_name: find.customer.first_name,
+                last_name: find.customer.last_name,
+                gender : find.gender,
+                dobvalue : setDobvalue(Date(find.dob)),
+                address : find.address,
+                marital_status : find.marital_status,
+                customer_image : find.customer_image,
+            })
+        }
+    }, []);
 
-    const [file, setFile] = React.useState([]);
-    const inputFile = React.useRef(null);
-    
-    const FhandleChange = (e) => {
-        setFile([...file, e.target.files[0]]);
+    const handleChange = (prop) => (event) => {
+        setValues({ ...values, [prop]: event.target.value });
+        // console.log(values);
+    };
+
+    const navigate = useNavigate();
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(values);
+        if (values.first_name  && values.last_name  && values.gender  && dobvalue  && values.address  && values.marital_status   )  {
+            let obj = JSON.parse(localStorage.getItem("register"));
+            obj.customer.first_name = values.first_name;
+            obj.customer.last_name = values.last_name;
+            obj.gender = values.gender;
+            obj.dob = Date(dobvalue);
+            obj.address = values.address;
+            obj.marital_status = Boolean(values.marital_status);
+            localStorage.setItem("register", JSON.stringify(obj));
+            navigate('/identification');
+        }
+        else {
+            alert("Please fill all the details");
+        }
     };
 
     return (
@@ -249,8 +252,8 @@ function PersonalRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Enter First Name</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            // value={values.senderaccount}
-                            // onChange={handleChange('senderaccount')}
+                            value={values.first_name || ''}
+                            onChange={handleChange('first_name')}
                             />
                         </FormControl>
                         <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
@@ -263,8 +266,8 @@ function PersonalRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Enter Last Name</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            // value={values.senderaccount}
-                            // onChange={handleChange('senderaccount')}
+                            value={values.last_name || ''}
+                            onChange={handleChange('last_name')}
                             />
                         </FormControl>
                         <FormControl sx={{ m: 1, mt: 1, width: '40ch', marginTop:'20px',marginBottom:'20px'}}>
@@ -273,6 +276,8 @@ function PersonalRegister() {
                             row
                             aria-labelledby="demo-row-radio-buttons-group-label"
                             name="row-radio-buttons-group"
+                            value={values.gender || ''}
+                            onChange={handleChange('gender')}
                         >
                             <FormControlLabel value="female" control={<Radio />} label="Female" />
                             <FormControlLabel value="male" control={<Radio />} label="Male" />
@@ -283,9 +288,9 @@ function PersonalRegister() {
                             <LocalizationProvider dateAdapter={AdapterDayjs}  >
                                 <DatePicker
                                     label="Select Date of Birth (DD/MM/YYYY)" 
-                                    value={value}
+                                    value={dobvalue || ''}
                                     onChange={(newValue) => {
-                                    setValue(newValue);
+                                    setDobvalue(newValue);
                                     }}                            
                                     renderInput={(params) => <TextField {...params} /> }
                                 />
@@ -301,8 +306,8 @@ function PersonalRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Enter Address</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            // value={values.senderaccount}
-                            // onChange={handleChange('senderaccount')}
+                            value={values.address || ''}
+                            onChange={handleChange('address')}
                             />
                         </FormControl>
                         <FormControl sx={{ m: 1, mt: 1, width: '40ch', marginTop:'20px',marginBottom:'20px'}}>
@@ -311,25 +316,18 @@ function PersonalRegister() {
                             row
                             aria-labelledby="demo-row-radio-buttons-group-label"
                             name="row-radio-buttons-group"
+                            value={values.marital_status || ''}
+                            onChange={handleChange('marital_status')}
                         >
-                            <FormControlLabel value="female" control={<Radio />} label="Yes" />
-                            <FormControlLabel value="male" control={<Radio />} label="No" />
+                            <FormControlLabel value="true" control={<Radio />} label="Yes" />
+                            <FormControlLabel value="false" control={<Radio />} label="No" />
                         </RadioGroup>
                         </FormControl>
-                        <InputFileContainer>   
-                            <button onClick={() => inputFile.current.click()}>
-                                <FImg src="https://www.svgrepo.com/show/12604/paper-clip.svg" />
-                            </button>
-                            <input type="file" onChange={FhandleChange} ref={inputFile} />
-                            <p>Uploaded Photo:</p> {file.map((x) => x.name).join(', ')}
-                        </InputFileContainer>
                         <Stack spacing={2} direction="row">
                             <NavLink to="/contractregister">
                                 <Button variant="outlined" id="but" >Back</Button>
                             </NavLink>
-                            <NavLink to="/identification">
-                                <Button variant="outlined" id="but" style={{marginLeft:'50px'}}  >Next</Button>
-                            </NavLink>
+                            <Button variant="outlined" id="but" style={{marginLeft:'50px'}} onClick={handleSubmit} >Next</Button>
                         </Stack>
                         </InputContainer>
                         <NotePointContainer>

@@ -8,6 +8,9 @@ import Button from '@mui/material/Button';
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
+import { useNavigate } from 'react-router-dom';
+
+
 const SliderContainer = styled.div`
     background-image: url(${background});
     background-size: 100% 100%;
@@ -126,6 +129,50 @@ const NotePointContainer = styled.div`
 `;
 
 function ProfessionalRegister() {
+
+    const [values, setValues] = React.useState({
+        organisation_name: '',
+        designation: '',
+        nature_of_employment : '',
+        annual_income : '',
+    });
+    React.useEffect(() => {
+        let find = JSON.parse(localStorage.getItem("register"));
+        if (find) {
+            setValues({
+                organisation_name: find.organisation_name,
+                designation: find.designation,
+                nature_of_employment: find.nature_of_employment,
+                annual_income: find.annual_income,
+            })
+        }
+    }, []);
+
+    const handleChange = (prop) => (event) => {
+        setValues({ ...values, [prop]: event.target.value });
+        // console.log(values);
+    };
+
+    const navigate = useNavigate();
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(values);
+        if (values.organisation_name && values.designation && values.nature_of_employment && values.annual_income)   {
+            let obj = JSON.parse(localStorage.getItem("register"));;
+            obj.organisation_name = values.organisation_name;
+            obj.designation = values.designation;
+            obj.nature_of_employment = values.nature_of_employment;
+            obj.annual_income = Number(values.annual_income);
+            localStorage.setItem("register", JSON.stringify(obj));
+            navigate('/educational');
+        }
+        else {
+            alert("Please fill all the details");
+        }
+    };
+    
+
     return (
         <>
             <SliderContainer>
@@ -190,8 +237,8 @@ function ProfessionalRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Organisation Name</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            // value={values.senderaccount}
-                            // onChange={handleChange('senderaccount')}
+                            value={values.organisation_name  || ''}
+                            onChange={handleChange('organisation_name')}
                             />
                         </FormControl>
                         <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
@@ -204,8 +251,8 @@ function ProfessionalRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Designation</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            // value={values.senderaccount}
-                            // onChange={handleChange('senderaccount')}
+                            value={values.designation  || ''}
+                            onChange={handleChange('designation')}
                             />
                         </FormControl>
                         <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
@@ -218,8 +265,8 @@ function ProfessionalRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Nature of Employment</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            // value={values.senderaccount}
-                            // onChange={handleChange('senderaccount')}
+                            value={values.nature_of_employment || ''}
+                            onChange={handleChange('nature_of_employment')}
                             />
                         </FormControl>
                         <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
@@ -232,17 +279,15 @@ function ProfessionalRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Annual Income</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            // value={values.senderaccount}
-                            // onChange={handleChange('senderaccount')}
+                            value={values.annual_income  || ''}
+                            onChange={handleChange('annual_income')}
                             />
                         </FormControl>
                         <Stack spacing={2} direction="row">
                             <NavLink to="/identification">
                                 <Button variant="outlined" id="but" >Back</Button>
                             </NavLink>
-                            <NavLink to="/educational">
-                                <Button variant="outlined" id="but" style={{marginLeft:'50px'}}  >Next</Button>
-                            </NavLink>
+                            <Button variant="outlined" id="but" style={{marginLeft:'50px'}} onClick={handleSubmit} >Next</Button>
                         </Stack>
                         </InputContainer>
                         <NotePointContainer>
