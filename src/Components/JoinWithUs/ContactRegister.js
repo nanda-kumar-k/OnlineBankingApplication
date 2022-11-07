@@ -126,8 +126,17 @@ function ContactRegister() {
     const [values, setValues] = React.useState({
         contact_number: '',
         email_id: '',
-      });
-    
+    });
+    React.useEffect(() => {
+        let find = JSON.parse(localStorage.getItem("register"));
+        if (find) {
+            setValues({
+                contact_number: find.customer.contact_number,
+                email_id: find.customer.email_id,
+            })
+        }
+    }, []);
+
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
         // console.log(values);
@@ -138,7 +147,27 @@ function ContactRegister() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(values);
-        navigate('/personaldetails');
+        let find = JSON.parse(localStorage.getItem("register"));
+        if (find) {
+            find.customer.contact_number = values.contact_number;
+            find.customer.email_id = values.email_id;
+            localStorage.setItem("register", JSON.stringify(find));
+        }
+        else {
+            let obj = {
+                customer: {
+                    contact_number: values.contact_number,
+                    email_id: values.email_id,
+                }
+            }
+            localStorage.setItem("register", JSON.stringify(obj));
+        }
+        if (values.contact_number && values.email_id) {
+            navigate('/personaldetails');
+        }
+        else {
+            alert("Please fill all the details");
+        }
     };
     return (
         <>
