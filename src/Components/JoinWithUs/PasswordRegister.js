@@ -152,7 +152,7 @@ function PasswordRegister() {
             let obj = JSON.parse(localStorage.getItem("register"));;
             obj.password = values.password;
             localStorage.setItem("register", JSON.stringify(obj));
-            navigate('/setpassword');
+            navigate('/contractregister');
         }
         else {
             alert("Please fill all the details");
@@ -224,7 +224,7 @@ function PasswordRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Set Password</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            value={values.password}
+                            value={values.password || ''}
                             onChange={handleChange('password')}
                             />
                         </FormControl>
@@ -238,7 +238,7 @@ function PasswordRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Re-enter Password </InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            value={values.retypepassword}
+                            value={values.retypepassword || ''}
                             onChange={handleChange('retypepassword')}
                             />
                         </FormControl>
@@ -247,7 +247,7 @@ function PasswordRegister() {
                                 <Button variant="outlined" id="but" >Back</Button>
                             </NavLink>
                             <NavLink to="/contractregister">
-                                <Button variant="outlined" id="but" style={{marginLeft:'50px'}}  >Next</Button>
+                                <Button variant="outlined" id="but" style={{marginLeft:'50px'}} onClick={handleSubmit} >Next</Button>
                             </NavLink>
                         </Stack>
                         </InputContainer>
