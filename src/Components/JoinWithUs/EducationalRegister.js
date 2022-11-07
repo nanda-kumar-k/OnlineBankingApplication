@@ -8,6 +8,9 @@ import Button from '@mui/material/Button';
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
+import { useNavigate } from 'react-router-dom';
+
+
 const SliderContainer = styled.div`
     background-image: url(${background});
     background-size: 100% 100%;
@@ -127,6 +130,40 @@ const NotePointContainer = styled.div`
 `;
 
 function EducationalRegister() {
+
+    const [values, setValues] = React.useState({
+        qualification: '',
+    });
+    React.useEffect(() => {
+        let find = JSON.parse(localStorage.getItem("register"));
+        if (find) {
+            setValues({
+                qualification: find.qualification,
+            })
+        }
+    }, []);
+
+    const handleChange = (prop) => (event) => {
+        setValues({ ...values, [prop]: event.target.value });
+        // console.log(values);
+    };
+
+    const navigate = useNavigate();
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(values);
+        if (values.qualification)  {
+            let obj = JSON.parse(localStorage.getItem("register"));;
+            obj.qualification = values.qualification;
+            localStorage.setItem("register", JSON.stringify(obj));
+            navigate('/family');
+        }
+        else {
+            alert("Please fill all the details");
+        }
+    };
+
     return (
         <>
             <SliderContainer>
@@ -192,17 +229,15 @@ function EducationalRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Highest Qualification</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            // value={values.senderaccount}
-                            // onChange={handleChange('senderaccount')}
+                            value={values.qualification || ''}
+                            onChange={handleChange('qualification')}
                             />
                         </FormControl>
                         <Stack spacing={2} direction="row">
                             <NavLink to="/professional">
                                 <Button variant="outlined" id="but" >Back</Button>
                             </NavLink>
-                            <NavLink to="/family">
-                                <Button variant="outlined" id="but" style={{marginLeft:'50px'}}  >Next</Button>
-                            </NavLink>
+                            <Button variant="outlined" id="but" style={{marginLeft:'50px'}} onClick={handleSubmit} >Next</Button>
                         </Stack>
                         </InputContainer>
                         <NotePointContainer>

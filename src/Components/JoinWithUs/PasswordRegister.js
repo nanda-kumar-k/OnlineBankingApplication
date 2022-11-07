@@ -8,6 +8,8 @@ import Button from '@mui/material/Button';
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
+import { useNavigate } from 'react-router-dom';
+
 const SliderContainer = styled.div`
     background-image: url(${background});
     background-size: 100% 100%;
@@ -122,6 +124,41 @@ const NotePointContainer = styled.div`
 `;
 
 function PasswordRegister() {
+
+    const [values, setValues] = React.useState({
+        password: '',
+        retypepassword: '',
+    });
+    React.useEffect(() => {
+        let find = JSON.parse(localStorage.getItem("register"));
+        if (find) {
+            setValues({
+                password : find.password
+            })
+        }
+    }, []);
+
+    const handleChange = (prop) => (event) => {
+        setValues({ ...values, [prop]: event.target.value });
+        // console.log(values);
+    };
+
+    const navigate = useNavigate();
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(values);
+        if (values.password === values.retypepassword && values.password !== "")  {
+            let obj = JSON.parse(localStorage.getItem("register"));;
+            obj.password = values.password;
+            localStorage.setItem("register", JSON.stringify(obj));
+            navigate('/setpassword');
+        }
+        else {
+            alert("Please fill all the details");
+        }
+    };
+
     return (
         <>
             <SliderContainer>
@@ -187,8 +224,8 @@ function PasswordRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Set Password</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            // value={values.senderaccount}
-                            // onChange={handleChange('senderaccount')}
+                            value={values.password}
+                            onChange={handleChange('password')}
                             />
                         </FormControl>
                         <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
@@ -201,8 +238,8 @@ function PasswordRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Re-enter Password </InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            // value={values.senderaccount}
-                            // onChange={handleChange('senderaccount')}
+                            value={values.retypepassword}
+                            onChange={handleChange('retypepassword')}
                             />
                         </FormControl>
                         <Stack spacing={2} direction="row">

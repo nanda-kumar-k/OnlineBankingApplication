@@ -8,6 +8,8 @@ import Button from '@mui/material/Button';
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
+import { useNavigate } from 'react-router-dom';
+
 const SliderContainer = styled.div`
     background-image: url(${background});
     background-size: 100% 100%;
@@ -122,6 +124,44 @@ const NotePointContainer = styled.div`
 `;
 
 function IdentificationRegister() {
+    const [values, setValues] = React.useState({
+        aadhaar_number: '',
+        pan_number: '',
+    });
+    React.useEffect(() => {
+        let find = JSON.parse(localStorage.getItem("register"));
+        if (find) {
+            setValues({
+                aadhaar_number: find.aadhaar_number,
+                pan_number: find.pan_number,
+            })
+        }
+    }, []);
+
+    const handleChange = (prop) => (event) => {
+        setValues({ ...values, [prop]: event.target.value });
+        // console.log(values);
+    };
+
+    const navigate = useNavigate();
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(values);
+        if (values.aadhaar_number && values.pan_number )  {
+            let obj = JSON.parse(localStorage.getItem("register"));;
+            obj.aadhaar_number = Number(values.aadhaar_number);
+            obj.pan_number = Number(values.pan_number);
+            localStorage.setItem("register", JSON.stringify(obj));
+            navigate('/professional');
+        }
+        else {
+            alert("Please fill all the details");
+        }
+    };
+
+
+
     return (
         <>
             <SliderContainer>
@@ -187,8 +227,8 @@ function IdentificationRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Enter Aadhaar Number</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            // value={values.senderaccount}
-                            // onChange={handleChange('senderaccount')}
+                            value={values.aadhaar_number  || ''  }
+                            onChange={handleChange('aadhaar_number')}
                             />
                         </FormControl>
                         <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
@@ -201,17 +241,15 @@ function IdentificationRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Enter PAN Number</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            // value={values.senderaccount}
-                            // onChange={handleChange('senderaccount')}
+                            value={values.pan_number  || ''}
+                            onChange={handleChange('pan_number')}
                             />
                         </FormControl>
                         <Stack spacing={2} direction="row">
                             <NavLink to="/personaldetails">
                                 <Button variant="outlined" id="but" >Back</Button>
                             </NavLink>
-                            <NavLink to="/professional">
-                                <Button variant="outlined" id="but" style={{marginLeft:'50px'}}  >Next</Button>
-                            </NavLink>
+                            <Button variant="outlined" id="but" style={{marginLeft:'50px'}} onClick={handleSubmit}  >Next</Button>
                         </Stack>
                         </InputContainer>
                         <NotePointContainer>
