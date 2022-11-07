@@ -6,7 +6,8 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+
 const SliderContainer = styled.div`
     background-image: url(${background});
     background-size: 100% 100%;
@@ -121,6 +122,24 @@ const NotePointContainer = styled.div`
 `;
 
 function ContactRegister() {
+
+    const [values, setValues] = React.useState({
+        contact_number: '',
+        email_id: '',
+      });
+    
+    const handleChange = (prop) => (event) => {
+        setValues({ ...values, [prop]: event.target.value });
+        // console.log(values);
+    };
+
+    const navigate = useNavigate();
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(values);
+        navigate('/personaldetails');
+    };
     return (
         <>
             <SliderContainer>
@@ -175,7 +194,7 @@ function ContactRegister() {
                         <InputContainer>
                         <h2>Enter Contact Details</h2>
                         <br/>
-
+                        <form>
                         <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
                             color: 'balck',
                             fontSize: '1.2rem',
@@ -186,8 +205,8 @@ function ContactRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Enter Contact Number</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            // value={values.senderaccount}
-                            // onChange={handleChange('senderaccount')}
+                            value={values.contact_number}
+                            onChange={handleChange('contact_number')}
                             />
                         </FormControl>
                         <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
@@ -196,17 +215,19 @@ function ContactRegister() {
                             },
                             '& .MuiFilledInput-root':{
                                 backgroundColor: 'white',
-                            } }} >
+                            } }} 
+                            >
                             <InputLabel htmlFor="filled-adornment-amount">Enter Email Id</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            // value={values.senderaccount}
-                            // onChange={handleChange('senderaccount')}
+                            value={values.email_id}
+                            type={'email'}
+                            required={'true'}
+                            onChange={handleChange('email_id')}
                             />
                         </FormControl>
-                            <NavLink to="/personaldetails">
-                                <Button variant="outlined" id="but" >Next</Button>
-                            </NavLink>
+                        <Button variant="outlined" id="but" type='submit' onClick={handleSubmit} >Next</Button>
+                        </form>
                         </InputContainer>
                         <NotePointContainer>
                             <p style={{fontSize:'1.3rem'}}><b>Please Note</b></p>
