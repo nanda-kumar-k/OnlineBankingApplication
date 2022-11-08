@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.rln.apimessages.ApiResponse;
 import com.rln.model.Customer;
+import com.rln.model.CustomerProfile;
 import com.rln.repository.CustomerProfileRepository;
 import com.rln.repository.CustomerRepository;
 
@@ -21,13 +22,25 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	
 	@Override
-	public boolean checkCustomer(String user) {
+	public boolean _checkCustomer(String user) {
 		
 		Optional<Customer> check = customerRepository.findByUsername(user);
 		
-		if (check != null) {
-			return true;
+		System.out.println(check);
+		
+		if (check.isEmpty()) {
+			return false;
 		}
+		
+		return true;
+	}
+
+
+	@Override
+	public boolean _createRLNCustomer(CustomerProfile customerProfile) {
+		
+		
+		
 		
 		return false;
 	}

@@ -1,7 +1,11 @@
 package com.rln.service;
 
+import com.rln.model.CustomerProfile;
+
 public interface CustomerService {
 	
-	boolean checkCustomer(String user);
+	boolean _checkCustomer(String user);
+	
+	boolean _createRLNCustomer(CustomerProfile customerProfile);
 
 }
