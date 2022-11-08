@@ -12,6 +12,6 @@ import com.rln.model.Customer;
 @Repository
 public interface CustomerRepository extends CrudRepository<Customer, UUID> {
 	
-	Optional<Customer> findByUsername(String user);
+	Optional<Customer>findByUsername(String user);
 
 }

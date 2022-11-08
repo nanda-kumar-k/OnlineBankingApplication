@@ -31,6 +31,7 @@ import CustomerProfile from './Components/Employee/CustomerProfile';
 import CustomerDeposit from './Components/Employee/CustomerDeposit';
 import CustomerTransaction from './Components/Employee/CustomerTransaction';
 import CustomerLoan from './Components/Employee/CustomerLoan';
+import ConnectionTest from './Components/APITesting/ConnectionTest';
 function App() {
   return (
     <>
@@ -70,6 +71,9 @@ function App() {
           <Route path="customerdeposit" element={<CustomerDeposit/>}/>
           <Route path="customertransaction" element={<CustomerTransaction/>}/>
           <Route path="customerloan" element={<CustomerLoan/>}/>
+          
+
+          <Route path="testing" element={<ConnectionTest/>}/>
         </Routes>
       </Router>
     </>
