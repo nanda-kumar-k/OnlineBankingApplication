@@ -1,5 +1,6 @@
 package com.rln.repository;
 
+import java.math.BigInteger;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -13,5 +14,6 @@ import com.rln.model.Customer;
 public interface CustomerRepository extends CrudRepository<Customer, UUID> {
 	
 	Optional<Customer>findByUsername(String user);
+	Optional<Customer>findByAccountNumber(BigInteger bigInteger);
 
 }
