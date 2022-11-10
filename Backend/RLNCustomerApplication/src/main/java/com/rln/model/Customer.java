@@ -2,21 +2,16 @@ package com.rln.model;
 
 import java.math.BigInteger;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
@@ -28,22 +23,24 @@ import lombok.Setter;
 
 
 @Entity
+//@Table(uniqueConstraints = {
+//		@UniqueConstraint(columnNames = "accountNumber"),
+//		@UniqueConstraint(columnNames = "username")
+//})
 @Table
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Customer {
-	
-	
 	@Id
 	@GeneratedValue(generator = "uuid2")
 	@GenericGenerator(name = "uuid2", strategy = "uuid2")
-	@Column(columnDefinition = "char(32)", insertable = false, updatable = false, nullable = false)
+	@Column(insertable = false, updatable = false, nullable = false)
 	private UUID customer_id;
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private BigInteger accountNumber;
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private String username;
 	@Column(nullable = false)
 	private String firstName;
@@ -67,10 +64,10 @@ public class Customer {
 	private Date created_date = new Date();	
 	
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	  @JoinTable(  name = "customer_type", 
-	        joinColumns = @JoinColumn(name = "customer_id"), 
-	        inverseJoinColumns = @JoinColumn(name = "type_id"))
-	  private Set<Role> roles = new HashSet<>();
+//	@ManyToMany(fetch = FetchType.LAZY)
+//	  @JoinTable(  name = "customer_type", 
+//	        joinColumns = @JoinColumn(name = "customer_id"), 
+//	        inverseJoinColumns = @JoinColumn(name = "id"))
+//	  private Set<Role> customerType = new HashSet<>();
 
 }

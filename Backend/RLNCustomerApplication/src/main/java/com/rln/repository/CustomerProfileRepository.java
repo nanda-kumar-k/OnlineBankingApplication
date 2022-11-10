@@ -9,6 +9,6 @@ import com.rln.model.CustomerProfile;
 
 
 @Repository
-public interface CustomerProfileRepository extends CrudRepository<CustomerProfile, UUID>{
+public interface CustomerProfileRepository extends CrudRepository<CustomerProfile, 	UUID>{
 
 }

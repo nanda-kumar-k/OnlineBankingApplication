@@ -154,6 +154,7 @@ function PasswordRegister() {
             let obj = JSON.parse(localStorage.getItem("register"));;
             obj.password = values.password;
             localStorage.setItem("register", JSON.stringify(obj));
+            console.log(obj);
             navigate('/contractregister');
         }
         else {
