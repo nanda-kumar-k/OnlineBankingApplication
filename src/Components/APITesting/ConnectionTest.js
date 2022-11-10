@@ -5,8 +5,6 @@ import React from 'react';
 function ConnectionTest() {
 
     const [RLN, setRLN] = React.useState('');
-
- 
     React.useEffect(  () => {
         async function fun() {
         RLNDataService.testconnection()
