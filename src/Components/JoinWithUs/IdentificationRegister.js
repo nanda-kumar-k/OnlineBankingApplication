@@ -139,7 +139,7 @@ function IdentificationRegister() {
         panNumber: '',
     });
     React.useEffect(() => {
-        let find = JSON.parse(localStorage.getItem("register"));
+        let find = JSON.parse(localStorage.getItem("customerRegister"));
         if (find) {
             setValues({
                 aadhaarNumber: find.aadhaarNumber,
@@ -158,19 +158,20 @@ function IdentificationRegister() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(values);
+        
         if (values.aadhaarNumber && values.panNumber )  {
-            if(!isNaN(values.aadhaarNumber) && values.aadhaarNumber.length === 12){
-                let obj = JSON.parse(localStorage.getItem("register"));;
+            if(!isNaN(values.aadhaarNumber) && values.aadhaarNumber.toString().length === 12){
+                let obj = JSON.parse(localStorage.getItem("customerRegister"));;
                 obj.aadhaarNumber = Number(values.aadhaarNumber);
                 obj.panNumber = values.panNumber;
-                localStorage.setItem("register", JSON.stringify(obj));
+                localStorage.setItem("customerRegister", JSON.stringify(obj));
                 navigate('/professional');
             }
             else {
                 if( isNaN(values.aadhaarNumber)){
                     setErrorMessages("Aadhaar Number should be a number");
                 }
-                else if (values.aadhaarNumber.length !== 12) {
+                else if (values.aadhaarNumber.toString().length !== 12) {
                     setErrorMessages("Aadhaar Number should be 12 digits");
                 }
             }

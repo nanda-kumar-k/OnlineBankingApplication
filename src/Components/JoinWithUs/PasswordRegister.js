@@ -10,7 +10,7 @@ import { NavLink } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
 // import Swal from 'sweetalert2'
-
+import authCustomerService from '../../services/auth.customer.service';
 
 const SliderContainer = styled.div`
     background-image: url(${background});
@@ -139,7 +139,7 @@ function PasswordRegister() {
         retypepassword: '',
     });
     React.useEffect(() => {
-        let find = JSON.parse(localStorage.getItem("register"));
+        let find = JSON.parse(localStorage.getItem("customerRegister"));
         if (find) {
             setValues({
                 password : find.password
@@ -154,17 +154,31 @@ function PasswordRegister() {
 
     const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         console.log(values);
         if (values.retypepassword && values.password)  {
             if(values.password.length >= 8 ) {
                 if (values.retypepassword === values.password) {
-                    let obj = JSON.parse(localStorage.getItem("register"));;
-                    obj.password = values.password;
-                    localStorage.setItem("register", JSON.stringify(obj));
+                    let obj = JSON.parse(localStorage.getItem("customerRegister"));;
+                    obj.customer.password = values.password;
+                    localStorage.setItem("customerRegister", JSON.stringify(obj));
                     console.log(obj);
-                    navigate('/contractregister');
+                    await authCustomerService.createRLNCustomer().then((res) => {
+                        console.log(res);
+                        if (res.data.statusCode === 201) {
+                            navigate('/contractregister');
+                        }
+                        else{
+                            navigate('/setpassword');
+                            setErrorMessages(res.data.message);
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                        navigate('/setpassword');
+                        // setErrorMessages(err);
+                    });
+                    
                 }
                 else {
                     setErrorMessages("Password and Retype Password are not same...!! Please try againPassword does not match");

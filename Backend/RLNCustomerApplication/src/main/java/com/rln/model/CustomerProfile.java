@@ -52,7 +52,7 @@ public class CustomerProfile {
 	@OneToOne(fetch = FetchType.LAZY)
 	@MapsId
 	@JoinColumn(name = "customer_id")
-	private Customer customer_ref;
+	private Customer customer;
 	
 	
 	

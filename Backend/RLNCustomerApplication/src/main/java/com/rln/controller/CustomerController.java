@@ -59,8 +59,20 @@ public class CustomerController {
 	@PostMapping("/createrlncustomer")
 	public ApiResponse<String> __createRLNCustomer(@RequestBody CustomerProfile customerProfile) {
 		
-		customerService._createRLNCustomer(customerProfile);
-		return null;
+		ApiResponse<String> res = new ApiResponse<>();
+		res.setTimestamp(new Date());
+		System.out.println("nandaaaaa");
+		if ( customerService._createRLNCustomer(customerProfile) ) {
+			
+			res.setStatusCode(201);
+			res.setMessage("Account Created successfully...!!!");
+		}
+		else {
+			res.setStatusCode(400);
+			res.setMessage(" Account Cannot created for given data...!!! ");
+		}
+		
+		return res;
 	}
 	
 	

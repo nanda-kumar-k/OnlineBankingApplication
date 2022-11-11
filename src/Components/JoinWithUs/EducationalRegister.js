@@ -142,7 +142,7 @@ function EducationalRegister() {
         qualification: '',
     });
     React.useEffect(() => {
-        let find = JSON.parse(localStorage.getItem("register"));
+        let find = JSON.parse(localStorage.getItem("customerRegister"));
         if (find) {
             setValues({
                 qualification: find.qualification,
@@ -161,9 +161,9 @@ function EducationalRegister() {
         event.preventDefault();
         console.log(values);
         if (values.qualification)  {
-            let obj = JSON.parse(localStorage.getItem("register"));;
+            let obj = JSON.parse(localStorage.getItem("customerRegister"));;
             obj.qualification = values.qualification;
-            localStorage.setItem("register", JSON.stringify(obj));
+            localStorage.setItem("customerRegister", JSON.stringify(obj));
             navigate('/family');
         }
         else {

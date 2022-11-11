@@ -1,6 +1,6 @@
 package com.rln.service;
 
-import java.math.BigInteger;
+
 
 import org.springframework.http.ResponseEntity;
 
@@ -15,7 +15,7 @@ public interface CustomerService {
 	
 	boolean _createRLNCustomer(CustomerProfile customerProfile);
 	
-	boolean _checkAccountNumber(BigInteger bigInteger);
+	boolean _checkAccountNumber(String bigInteger);
 	
 	ResponseEntity<?> _authenticateCustomer(Customer customer);
 

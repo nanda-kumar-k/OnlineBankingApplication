@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/auth/";
+const API_URL = "http://localhost:2001/api/customer/";
 
-const customerRegister = () => {
-    let data = JSON.parse(localStorage.getItem('customerRegister'));
-    return axios.post(API_URL + "customerRegister", data);
+const createRLNCustomer = () => {
+    let data = JSON.parse(localStorage.getItem("customerRegister"));
+    return axios.post(API_URL + "createrlncustomer", data);
 };
 
 const customerLogin = (username, password) => {
@@ -26,17 +26,17 @@ const customerLogin = (username, password) => {
     return response();
 };
 
-const customerLogout = () => {
-    localStorage.removeItem("user");
-};
+// const customerLogout = () => {
+//     localStorage.removeItem("user");
+// };
 
 
 
-const AuthService = {
-  customerRegister,
+const CustomerAuthService = {
+  createRLNCustomer,
   customerLogin,
-  register,
-  getCurrentUser
+  // register,
+  // getCurrentUser
 };
 
-export default AuthService();
+export default CustomerAuthService;

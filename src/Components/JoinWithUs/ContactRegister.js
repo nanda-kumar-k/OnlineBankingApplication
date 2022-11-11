@@ -141,7 +141,7 @@ function ContactRegister() {
         emailId: '',
     });
     React.useEffect(() => {
-        let find = JSON.parse(localStorage.getItem("register"));
+        let find = JSON.parse(localStorage.getItem("customerRegister"));
         if (find) {
             setValues({
                 username: find.customer.username,
@@ -170,7 +170,7 @@ function ContactRegister() {
                             setErrorMessages(response.data.message);
                         }
                         else {
-                                let find = JSON.parse(localStorage.getItem("register"));
+                                let find = JSON.parse(localStorage.getItem("customerRegister"));
                                 let accType = localStorage.getItem("accountType");
                                 if (find) {
                                     find.customer.username = values.username;
@@ -178,7 +178,7 @@ function ContactRegister() {
                                     find.customer.emailId = values.emailId;
                                     find.customer.accountType = accType;
                                     localStorage.removeItem("accountType");
-                                    localStorage.setItem("register", JSON.stringify(find));
+                                    localStorage.setItem("customerRegister", JSON.stringify(find));
                                 }
                                 else {
                                     let obj = {
@@ -196,7 +196,7 @@ function ContactRegister() {
                                         obj.customer.accountType = "Individual";
                                     }
                                     localStorage.removeItem("accountType");
-                                    localStorage.setItem("register", JSON.stringify(obj));
+                                    localStorage.setItem("customerRegister", JSON.stringify(obj));
                                 }
                                 navigate('/personaldetails');
                             }
