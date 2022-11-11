@@ -124,6 +124,17 @@ const TextScroll = styled.marquee`
 `;
 
 function LoginHome() {
+    
+    const BusinessRedirect = () => {
+        localStorage.setItem('accountType', 'business');
+        window.location.href = "/contractregister";
+    };
+
+    const SavingsRedirect = () => {
+        localStorage.setItem('accountType', 'savings');
+        window.location.href = "/contractregister";
+    };
+
     return (
         <>
             <SliderContainer>
@@ -143,16 +154,14 @@ function LoginHome() {
                                     <NavLink to="/contractregister">
                                         <Button variant="outlined" style={{width:'100px'}}>Login</Button>
                                     </NavLink>
-                                    <NavLink to="/contractregister">
-                                        <Button variant="outlined" style={{width:'100px'}}>Register</Button>
-                                    </NavLink>
+                                    <Button variant="outlined" style={{width:'100px'}} onClick={SavingsRedirect} >Register</Button>
                                 </Stack>
                             </div>
                             <div className='inform'>
                                 <p>SBI's internet banking portal provides personal banking services that gives you complete control over all your banking demands online.</p>
                             </div>
                         </JoinLeftContainer>
-                        <JoinLeftContainer style={{marginLeft:'1vw'}}>
+                        <JoinLeftContainer style={{marginLeft:'1vw'}}> 
                             <div className='personal'>
                                 <PersonalImg src={business} alt="personal" />
                             </div>
@@ -162,9 +171,7 @@ function LoginHome() {
                                     <NavLink to="/contractregister">
                                         <Button variant="outlined" style={{width:'100px'}}>Login</Button>
                                     </NavLink>
-                                    <NavLink to="/contractregister">
-                                        <Button variant="outlined" style={{width:'100px'}}>Register</Button>
-                                    </NavLink>
+                                    <Button variant="outlined" style={{width:'100px'}} onClick={BusinessRedirect} >Register</Button>
                                 </Stack>
                             </div>
                             <div className='inform'>

@@ -9,6 +9,8 @@ import com.rln.model.CustomerProfile;
 
 public interface CustomerService {
 	
+	boolean _checkUsernameAvailability(String username);
+	
 	boolean _checkCustomer(String user);
 	
 	boolean _createRLNCustomer(CustomerProfile customerProfile);

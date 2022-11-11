@@ -4,22 +4,23 @@ import java.math.BigInteger;
 import java.util.Optional;
 import java.util.Random;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
-import com.rln.payload.response.JwtResponse;
-import com.rln.security.services.UserDetailsImpl;
 import com.rln.model.Customer;
 import com.rln.model.CustomerProfile;
+import com.rln.payload.response.JwtResponse;
 import com.rln.repository.CustomerProfileRepository;
 import com.rln.repository.CustomerRepository;
+import com.rln.security.services.UserDetailsImpl;
 
 
 @Service
@@ -116,6 +117,20 @@ public class CustomerServiceImpl implements CustomerService {
 		return ResponseEntity.ok(new JwtResponse(jwt, 
 		                         userDetails.getUsername()
 		                         ));
+	}
+
+
+	@Override
+	public boolean _checkUsernameAvailability(String username) {
+		
+		Optional<Customer> check = customerRepository.findByUsername(username);
+		
+		if ( check.isEmpty() ) {
+			
+			return true;
+		}
+		
+		return false;
 	}
 
 }

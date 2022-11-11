@@ -78,6 +78,7 @@ const AllInputContainer = styled.div`
     background-color: white;
     display: flex;
     padding: 2vh 2vw;
+    overflow-y: scroll;
 `;
 
 const InputContainer = styled.div`
@@ -102,6 +103,14 @@ const InputContainer = styled.div`
         margin-left: 6vw;
         margin-top: 8vh;
     }
+
+    #errormsg {
+        color: red;
+        font-size: 1rem;
+        margin-top: 1vh;
+        width: 40ch;
+        text-align:center ;
+    }
 `;
 
 const NotePointContainer = styled.div`
@@ -125,16 +134,16 @@ function ContactRegister() {
 
     const [values, setValues] = React.useState({
         username : '',
-        contact_number: '',
-        email_id: '',
+        contactNumber: '',
+        emailId: '',
     });
     React.useEffect(() => {
         let find = JSON.parse(localStorage.getItem("register"));
         if (find) {
             setValues({
                 username: find.customer.username,
-                contact_number: find.customer.contact_number,
-                email_id: find.customer.email_id,
+                contactNumber: find.customer.contactNumber,
+                emailId: find.customer.emailId,
             })
         }
     }, []);
@@ -149,20 +158,20 @@ function ContactRegister() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(values);
-        if (values.contact_number && values.email_id && values.username) {
+        if (values.contactNumber && values.emailId && values.username) {
             let find = JSON.parse(localStorage.getItem("register"));
             if (find) {
                 find.customer.username = values.username;
-                find.customer.contact_number = Number(values.contact_number);
-                find.customer.email_id = values.email_id;
+                find.customer.contactNumber = Number(values.contactNumber);
+                find.customer.emailId = values.emailId;
                 localStorage.setItem("register", JSON.stringify(find));
             }
             else {
                 let obj = {
                     customer: {
                         username: values.username,
-                        contact_number: values.contact_number,
-                        email_id: values.email_id,
+                        contactNumber: values.contactNumber,
+                        emailId: values.emailId,
                     }
                 }
                 localStorage.setItem("register", JSON.stringify(obj));
@@ -225,56 +234,57 @@ function ContactRegister() {
 
                     <AllInputContainer>
                         <InputContainer>
-                        <h2>Enter Contact Details</h2>
-                        <br/>
-                        <form>
-                        <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
-                            color: 'balck',
-                            fontSize: '1.2rem',
-                            },
-                            '& .MuiFilledInput-root':{
-                                backgroundColor: 'white',
-                            } }} >
-                            <InputLabel htmlFor="filled-adornment-amount">Enter User Name</InputLabel>
-                            <FilledInput
-                            id="filled-adornment-amount"
-                            value={values.username || ''}
-                            onChange={handleChange('username')}
-                            />
-                        </FormControl>
-                        <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
-                            color: 'balck',
-                            fontSize: '1.2rem',
-                            },
-                            '& .MuiFilledInput-root':{
-                                backgroundColor: 'white',
-                            } }} >
-                            <InputLabel htmlFor="filled-adornment-amount">Enter Contact Number</InputLabel>
-                            <FilledInput
-                            id="filled-adornment-amount"
-                            value={values.contact_number || ''}
-                            onChange={handleChange('contact_number')}
-                            />
-                        </FormControl>
-                        <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
-                            color: 'balck',
-                            fontSize: '1.2rem',
-                            },
-                            '& .MuiFilledInput-root':{
-                                backgroundColor: 'white',
-                            } }} 
-                            >
-                            <InputLabel htmlFor="filled-adornment-amount">Enter Email Id</InputLabel>
-                            <FilledInput
-                            id="filled-adornment-amount"
-                            value={values.email_id || ''}
-                            type={'email'}
-                            required={true}
-                            onChange={handleChange('email_id')}
-                            />
-                        </FormControl>
-                        <Button variant="outlined" id="but" type='submit' onClick={handleSubmit} >Next</Button>
-                        </form>
+                            <h2>Enter Contact Details</h2>
+                            <br/>
+                            <form>
+                            <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
+                                color: 'balck',
+                                fontSize: '1.2rem',
+                                },
+                                '& .MuiFilledInput-root':{
+                                    backgroundColor: 'white',
+                                } }} >
+                                <InputLabel htmlFor="filled-adornment-amount">Enter User Name</InputLabel>
+                                <FilledInput
+                                id="filled-adornment-amount"
+                                value={values.username || ''}
+                                onChange={handleChange('username')}
+                                />
+                            </FormControl>
+                            <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
+                                color: 'balck',
+                                fontSize: '1.2rem',
+                                },
+                                '& .MuiFilledInput-root':{
+                                    backgroundColor: 'white',
+                                } }} >
+                                <InputLabel htmlFor="filled-adornment-amount">Enter Contact Number</InputLabel>
+                                <FilledInput
+                                id="filled-adornment-amount"
+                                value={values.contactNumber || ''}
+                                onChange={handleChange('contactNumber')}
+                                />
+                            </FormControl>
+                            <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
+                                color: 'balck',
+                                fontSize: '1.2rem',
+                                },
+                                '& .MuiFilledInput-root':{
+                                    backgroundColor: 'white',
+                                } }} 
+                                >
+                                <InputLabel htmlFor="filled-adornment-amount">Enter Email Id</InputLabel>
+                                <FilledInput
+                                id="filled-adornment-amount"
+                                value={values.emailId || ''}
+                                type={'email'}
+                                required={true}
+                                onChange={handleChange('emailId')}
+                                />
+                            </FormControl>
+                            <p id='errormsg'>error message</p>
+                            <Button variant="outlined" id="but" type='submit' onClick={handleSubmit} >Next</Button>
+                            </form>
                         </InputContainer>
                         <NotePointContainer>
                             <p style={{fontSize:'1.3rem'}}><b>Please Note</b></p>
