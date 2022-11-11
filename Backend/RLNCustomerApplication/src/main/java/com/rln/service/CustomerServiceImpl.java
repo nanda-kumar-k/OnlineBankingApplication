@@ -34,13 +34,13 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	
 	@Autowired
-	PasswordEncoder encoder;
+	private PasswordEncoder encoder;
 
 	@Autowired
 	private com.rln.security.jwt.JwtUtils jwtUtils;
 	
 	@Autowired
-	AuthenticationManager authenticationManager;
+	private AuthenticationManager authenticationManager;
 	
 	@Override
 	public boolean _checkCustomer(String user) {
@@ -58,7 +58,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	
 	@Override
-	public boolean _checkAccountNumber(BigInteger accNo) {
+	public boolean _checkAccountNumber(String accNo) {
 		Optional<Customer> optional = customerRepository.findByAccountNumber(accNo);
 		if(optional.isEmpty()) {
 			return true;
@@ -70,19 +70,21 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public boolean _createRLNCustomer(CustomerProfile customerProfile) {
 		
-		customerProfile.getCustomer_ref().setPassword(encoder.encode(customerProfile.getCustomer_ref().getPassword()));
+		customerProfile.getCustomer().setPassword(encoder.encode(customerProfile.getCustomer().getPassword()));
 		
 		Random random = new Random();
 		BigInteger bigInteger = BigInteger.valueOf(Math.round(random.nextFloat() * Math.pow(10,12)));
-
-		if ( _checkAccountNumber(bigInteger )) {
+		
+		String acc = bigInteger.toString();
+		
+		if ( _checkAccountNumber(acc )) {
 			
-			customerProfile.getCustomer_ref().setAccountNumber(bigInteger);
-			Customer customer = customerRepository.save(customerProfile.getCustomer_ref());
+			customerProfile.getCustomer().setAccountNumber(acc);
+			Customer customer = customerRepository.save(customerProfile.getCustomer());
 			
 			if( customer != null ) {
 				
-				customerProfile.setCustomer_ref(customer);
+				customerProfile.setCustomer(customer);
 				CustomerProfile cp = customerProfileRepository.save(customerProfile);
 				
 				if ( cp !=  null ) {
@@ -94,13 +96,14 @@ public class CustomerServiceImpl implements CustomerService {
 					return false;
 				}
 			}
+			else {
+				return false;
+			}
 		}
 		
 		else {
 			return _createRLNCustomer(customerProfile);
 		}
-		
-		return false;
 	}
 
 

@@ -39,7 +39,7 @@ public class Customer {
 	@Column(insertable = false, updatable = false, nullable = false)
 	private UUID customer_id;
 	@Column(nullable = false)
-	private BigInteger accountNumber;
+	private String accountNumber;
 	@Column(nullable = false)
 	private String username;
 	@Column(nullable = false)

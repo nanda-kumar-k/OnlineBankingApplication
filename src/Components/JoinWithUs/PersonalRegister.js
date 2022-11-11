@@ -156,7 +156,7 @@ function PersonalRegister() {
         maritalStatus : ''
     });
     React.useEffect(() => {
-        let find = JSON.parse(localStorage.getItem("register"));
+        let find = JSON.parse(localStorage.getItem("customerRegister"));
         if (find) {
             setValues({
                 firstName: find.customer.firstName,
@@ -180,15 +180,18 @@ function PersonalRegister() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(values);
+        const date = new Date(dobvalue);
+        const dob = date.toISOString().split('T')[0];
+
         if (values.firstName  && values.lastName  && values.gender  && dobvalue  && values.address  && values.maritalStatus   )  {
-            let obj = JSON.parse(localStorage.getItem("register"));
+            let obj = JSON.parse(localStorage.getItem("customerRegister"));
             obj.customer.firstName = values.firstName;
             obj.customer.lastName = values.lastName;
             obj.gender = values.gender;
-            obj.dob = Date(dobvalue);
+            obj.dob = dob;
             obj.address = values.address;
             obj.maritalStatus = Boolean(values.maritalStatus);
-            localStorage.setItem("register", JSON.stringify(obj));
+            localStorage.setItem("customerRegister", JSON.stringify(obj));
             navigate('/identification');
         }
         else {

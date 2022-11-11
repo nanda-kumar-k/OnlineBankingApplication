@@ -145,7 +145,7 @@ function ProfessionalRegister() {
         annualIncome : '',
     });
     React.useEffect(() => {
-        let find = JSON.parse(localStorage.getItem("register"));
+        let find = JSON.parse(localStorage.getItem("customerRegister"));
         if (find) {
             setValues({
                 organisationName: find.organisationName,
@@ -169,12 +169,12 @@ function ProfessionalRegister() {
         if (values.organisationName && values.designation && values.natureOfEmployment && values.annualIncome)   {
             if( !isNaN(values.annualIncome)){
                 if(values.annualIncome >= 0){
-                    let obj = JSON.parse(localStorage.getItem("register"));;
+                    let obj = JSON.parse(localStorage.getItem("customerRegister"));;
                     obj.organisationName = values.organisationName;
                     obj.designation = values.designation;
                     obj.natureOfEmployment = values.natureOfEmployment;
                     obj.annualIncome = Number(values.annualIncome);
-                    localStorage.setItem("register", JSON.stringify(obj));
+                    localStorage.setItem("customerRegister", JSON.stringify(obj));
                     navigate('/educational');
                 }
                 else{
