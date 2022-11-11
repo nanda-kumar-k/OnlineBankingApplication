@@ -110,6 +110,13 @@ const InputContainer = styled.div`
         margin-left: 0vw;
         margin-top: 8vh;
     }
+    #errormsg {
+        color: red;
+        font-size: 1rem;
+        margin-top: 1vh;
+        width: 40ch;
+        text-align:center ;
+    }
 `;
 
 const NotePointContainer = styled.div`
@@ -130,7 +137,7 @@ const NotePointContainer = styled.div`
 `;
 
 function EducationalRegister() {
-
+    const [errorMessages, setErrorMessages] = React.useState('');
     const [values, setValues] = React.useState({
         qualification: '',
     });
@@ -160,7 +167,7 @@ function EducationalRegister() {
             navigate('/family');
         }
         else {
-            alert("Please fill all the details");
+            setErrorMessages("Please fill all the fields");
         }
     };
 
@@ -233,6 +240,7 @@ function EducationalRegister() {
                             onChange={handleChange('qualification')}
                             />
                         </FormControl>
+                        <p id='errormsg'>{errorMessages}</p>
                         <Stack spacing={2} direction="row">
                             <NavLink to="/professional">
                                 <Button variant="outlined" id="but" >Back</Button>
@@ -242,12 +250,12 @@ function EducationalRegister() {
                         </InputContainer>
                         <NotePointContainer>
                             <p style={{fontSize:'1.3rem'}}><b>Please Note</b></p>
-                            <u1>
+                            <ul>
                                 <li><p>The Customer ID is mentioned in the welcome letter and cheque book.</p></li>
                                 <li><p>You can also SMS "CustID" for savings account or CustIDCC XXXX(last 4 digits of credit card number) for credit card only customers to 5676782 from your registered mobile number to know your Customer ID.</p></li>
                                 <li><p>If you have not received your welcome letter, please contact your branch.</p></li>
                                 <li><p>Please ensure that your mobile number is registered with Axis Bank. You may visit the nearest Axis Bank ATM and click on "Registration-Mobile Number Update" to register. You may also visit your nearest branch.</p></li>
-                            </u1>                          
+                            </ul>                          
                         </NotePointContainer>
                     </AllInputContainer>
                 </OuterContainer>

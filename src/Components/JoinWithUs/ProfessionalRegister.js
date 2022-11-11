@@ -109,6 +109,13 @@ const InputContainer = styled.div`
         margin-left: 0vw;
         margin-top: 8vh;
     }
+    #errormsg {
+        color: red;
+        font-size: 1rem;
+        margin-top: 1vh;
+        width: 40ch;
+        text-align:center ;
+    }
 `;
 
 const NotePointContainer = styled.div`
@@ -130,20 +137,21 @@ const NotePointContainer = styled.div`
 
 function ProfessionalRegister() {
 
+    const [errorMessages, setErrorMessages] = React.useState('');
     const [values, setValues] = React.useState({
-        organisation_name: '',
+        organisationName: '',
         designation: '',
-        nature_of_employment : '',
-        annual_income : '',
+        natureOfEmployment : '',
+        annualIncome : '',
     });
     React.useEffect(() => {
         let find = JSON.parse(localStorage.getItem("register"));
         if (find) {
             setValues({
-                organisation_name: find.organisation_name,
+                organisationName: find.organisationName,
                 designation: find.designation,
-                nature_of_employment: find.nature_of_employment,
-                annual_income: find.annual_income,
+                natureOfEmployment: find.natureOfEmployment,
+                annualIncome: find.annualIncome,
             })
         }
     }, []);
@@ -158,17 +166,27 @@ function ProfessionalRegister() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(values);
-        if (values.organisation_name && values.designation && values.nature_of_employment && values.annual_income)   {
-            let obj = JSON.parse(localStorage.getItem("register"));;
-            obj.organisation_name = values.organisation_name;
-            obj.designation = values.designation;
-            obj.nature_of_employment = values.nature_of_employment;
-            obj.annual_income = Number(values.annual_income);
-            localStorage.setItem("register", JSON.stringify(obj));
-            navigate('/educational');
+        if (values.organisationName && values.designation && values.natureOfEmployment && values.annualIncome)   {
+            if( !isNaN(values.annualIncome)){
+                if(values.annualIncome >= 0){
+                    let obj = JSON.parse(localStorage.getItem("register"));;
+                    obj.organisationName = values.organisationName;
+                    obj.designation = values.designation;
+                    obj.natureOfEmployment = values.natureOfEmployment;
+                    obj.annualIncome = Number(values.annualIncome);
+                    localStorage.setItem("register", JSON.stringify(obj));
+                    navigate('/educational');
+                }
+                else{
+                    setErrorMessages("Annual Income should be greater than 0");
+                }
+            }
+            else{
+                setErrorMessages("Annual Income should be a number...!!");
+            }
         }
         else {
-            alert("Please fill all the details");
+            setErrorMessages("All fields are required...!!");
         }
     };
     
@@ -237,8 +255,8 @@ function ProfessionalRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Organisation Name</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            value={values.organisation_name  || ''}
-                            onChange={handleChange('organisation_name')}
+                            value={values.organisationName  || ''}
+                            onChange={handleChange('organisationName')}
                             />
                         </FormControl>
                         <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
@@ -265,8 +283,8 @@ function ProfessionalRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Nature of Employment</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            value={values.nature_of_employment || ''}
-                            onChange={handleChange('nature_of_employment')}
+                            value={values.natureOfEmployment || ''}
+                            onChange={handleChange('natureOfEmployment')}
                             />
                         </FormControl>
                         <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
@@ -279,10 +297,11 @@ function ProfessionalRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Annual Income</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            value={values.annual_income  || ''}
-                            onChange={handleChange('annual_income')}
+                            value={values.annualIncome  || ''}
+                            onChange={handleChange('annualIncome')}
                             />
                         </FormControl>
+                        <p id='errormsg'>{errorMessages}</p>
                         <Stack spacing={2} direction="row">
                             <NavLink to="/identification">
                                 <Button variant="outlined" id="but" >Back</Button>
@@ -292,12 +311,12 @@ function ProfessionalRegister() {
                         </InputContainer>
                         <NotePointContainer>
                             <p style={{fontSize:'1.3rem'}}><b>Please Note</b></p>
-                            <u1>
+                            <ul>
                                 <li><p>The Customer ID is mentioned in the welcome letter and cheque book.</p></li>
                                 <li><p>You can also SMS "CustID" for savings account or CustIDCC XXXX(last 4 digits of credit card number) for credit card only customers to 5676782 from your registered mobile number to know your Customer ID.</p></li>
                                 <li><p>If you have not received your welcome letter, please contact your branch.</p></li>
                                 <li><p>Please ensure that your mobile number is registered with Axis Bank. You may visit the nearest Axis Bank ATM and click on "Registration-Mobile Number Update" to register. You may also visit your nearest branch.</p></li>
-                            </u1>                          
+                            </ul>                          
                         </NotePointContainer>
                     </AllInputContainer>
                 </OuterContainer>

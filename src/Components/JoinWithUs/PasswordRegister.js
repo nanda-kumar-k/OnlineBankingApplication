@@ -9,7 +9,7 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2'
+// import Swal from 'sweetalert2'
 
 
 const SliderContainer = styled.div`
@@ -106,6 +106,13 @@ const InputContainer = styled.div`
         margin-left: 0vw;
         margin-top: 8vh;
     }
+    #errormsg {
+        color: red;
+        font-size: 1rem;
+        margin-top: 1vh;
+        width: 40ch;
+        text-align:center ;
+    }
 `;
 
 const NotePointContainer = styled.div`
@@ -126,7 +133,7 @@ const NotePointContainer = styled.div`
 `;
 
 function PasswordRegister() {
-
+    const [errorMessages, setErrorMessages] = React.useState('');
     const [values, setValues] = React.useState({
         password: '',
         retypepassword: '',
@@ -150,43 +157,26 @@ function PasswordRegister() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(values);
-        if (values.password === values.retypepassword && values.password !== "")  {
-            let obj = JSON.parse(localStorage.getItem("register"));;
-            obj.password = values.password;
-            localStorage.setItem("register", JSON.stringify(obj));
-            console.log(obj);
-            navigate('/contractregister');
+        if (values.retypepassword && values.password)  {
+            if(values.password.length >= 8 ) {
+                if (values.retypepassword === values.password) {
+                    let obj = JSON.parse(localStorage.getItem("register"));;
+                    obj.password = values.password;
+                    localStorage.setItem("register", JSON.stringify(obj));
+                    console.log(obj);
+                    navigate('/contractregister');
+                }
+                else {
+                    setErrorMessages("Password and Retype Password are not same...!! Please try againPassword does not match");
+                }
+            }
+            else {
+                setErrorMessages("Password must be 8 characters long");
+            }
         }
         else {
-           
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Something went wrong!',
-                    footer: '<a href>Why do I have this issue?</a>'
-                })
+            setErrorMessages("Please fill all the fields...!!!");
             
-
-            const { value: file } =  Swal.fire({
-                title: 'Select image',
-                input: 'file',
-                inputAttributes: {
-                  'accept': 'image/*',
-                  'aria-label': 'Upload your profile picture'
-                }
-              })
-              
-              if (file) {
-                const reader = new FileReader()
-                reader.onload = (e) => {
-                  Swal.fire({
-                    title: 'Your uploaded picture',
-                    imageUrl: e.target.result,
-                    imageAlt: 'The uploaded picture'
-                  })
-                }
-                reader.readAsDataURL(file)
-              }
         }
     };
 
@@ -273,6 +263,7 @@ function PasswordRegister() {
                             onChange={handleChange('retypepassword')}
                             />
                         </FormControl>
+                        <p id='errormsg'>{errorMessages}</p>
                         <Stack spacing={2} direction="row">
                             <NavLink to="/family">
                                 <Button variant="outlined" id="but" >Back</Button>

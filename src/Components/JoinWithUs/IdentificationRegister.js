@@ -135,15 +135,15 @@ function IdentificationRegister() {
     const [errorMessages, setErrorMessages] = React.useState('');
 
     const [values, setValues] = React.useState({
-        aadhaar_number: '',
-        pan_number: '',
+        aadhaarNumber: '',
+        panNumber: '',
     });
     React.useEffect(() => {
         let find = JSON.parse(localStorage.getItem("register"));
         if (find) {
             setValues({
-                aadhaar_number: find.aadhaar_number,
-                pan_number: find.pan_number,
+                aadhaarNumber: find.aadhaarNumber,
+                panNumber: find.panNumber,
             })
         }
     }, []);
@@ -158,20 +158,24 @@ function IdentificationRegister() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(values);
-        if (values.aadhaar_number && values.pan_number )  {
-            let obj = JSON.parse(localStorage.getItem("register"));;
-            obj.aadhaar_number = Number(values.aadhaar_number);
-            obj.pan_number = values.pan_number;
-            localStorage.setItem("register", JSON.stringify(obj));
-            navigate('/professional');
+        if (values.aadhaarNumber && values.panNumber )  {
+            if(!isNaN(values.aadhaarNumber) && values.aadhaarNumber.length === 12){
+                let obj = JSON.parse(localStorage.getItem("register"));;
+                obj.aadhaarNumber = Number(values.aadhaarNumber);
+                obj.panNumber = values.panNumber;
+                localStorage.setItem("register", JSON.stringify(obj));
+                navigate('/professional');
+            }
+            else {
+                if( isNaN(values.aadhaarNumber)){
+                    setErrorMessages("Aadhaar Number should be a number");
+                }
+                else if (values.aadhaarNumber.length !== 12) {
+                    setErrorMessages("Aadhaar Number should be 12 digits");
+                }
+            }
         }
         else {
-            if(isNaN(values.aadhaar_number)){
-                setErrorMessages("Aadhaar Number should be a number");
-            }
-            else if (values.aadhaar_number.length !== 12) {
-                setErrorMessages("Aadhaar Number should be 12 digits");
-            }
             setErrorMessages("Please fill all the fields...!!!");
         }
     };
@@ -243,8 +247,8 @@ function IdentificationRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Enter Aadhaar Number</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            value={values.aadhaar_number  || ''  }
-                            onChange={handleChange('aadhaar_number')}
+                            value={values.aadhaarNumber  || ''  }
+                            onChange={handleChange('aadhaarNumber')}
                             />
                         </FormControl>
                         <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
@@ -257,8 +261,8 @@ function IdentificationRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Enter PAN Number</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            value={values.pan_number  || ''}
-                            onChange={handleChange('pan_number')}
+                            value={values.panNumber  || ''}
+                            onChange={handleChange('panNumber')}
                             />
                         </FormControl>
                         <p id='errormsg'>{errorMessages}</p>
@@ -271,12 +275,12 @@ function IdentificationRegister() {
                         </InputContainer>
                         <NotePointContainer>
                             <p style={{fontSize:'1.3rem'}}><b>Please Note</b></p>
-                            <u1>
+                            <ul>
                                 <li><p>The Customer ID is mentioned in the welcome letter and cheque book.</p></li>
                                 <li><p>You can also SMS "CustID" for savings account or CustIDCC XXXX(last 4 digits of credit card number) for credit card only customers to 5676782 from your registered mobile number to know your Customer ID.</p></li>
                                 <li><p>If you have not received your welcome letter, please contact your branch.</p></li>
                                 <li><p>Please ensure that your mobile number is registered with Axis Bank. You may visit the nearest Axis Bank ATM and click on "Registration-Mobile Number Update" to register. You may also visit your nearest branch.</p></li>
-                            </u1>                          
+                            </ul>                          
                         </NotePointContainer>
                     </AllInputContainer>
                 </OuterContainer>
