@@ -16,6 +16,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from "react-router-dom";
+import Navbar from '../Navbar/Navbar';
 
 
 const SliderContainer = styled.div`
@@ -201,6 +202,7 @@ function PersonalRegister() {
 
     return (
         <>
+            <Navbar/>
             <SliderContainer>
                 <OuterContainer>
                     <TitleContainer>

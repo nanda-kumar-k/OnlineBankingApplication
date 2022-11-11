@@ -11,6 +11,7 @@ import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
 // import Swal from 'sweetalert2'
 import authCustomerService from '../../services/auth.customer.service';
+import Navbar from '../Navbar/Navbar';
 
 const SliderContainer = styled.div`
     background-image: url(${background});
@@ -196,6 +197,7 @@ function PasswordRegister() {
 
     return (
         <>
+        <Navbar/>
             <SliderContainer>
                 <OuterContainer>
                     <TitleContainer>
