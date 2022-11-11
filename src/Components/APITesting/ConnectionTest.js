@@ -4,13 +4,14 @@ import React from 'react';
 
 function ConnectionTest() {
 
-    const [RLN, setRLN] = React.useState('');
+    // const [RLN, setRLN] = React.useState('');
     React.useEffect(  () => {
         async function fun() {
-        RLNDataService.checkUsernameAvailability('nandu')
+        await RLNDataService.checkUsernameAvailability('nandau')
             .then(response => {
-                setRLN(response.data);
-                console.log(RLN);
+                // setRLN(response.data);
+                console.log(response.data.statusCode);
+                // console.log(RLN);
             })
             .catch(e => {
                 console.log(e);

@@ -117,6 +117,13 @@ const InputContainer = styled.div`
         margin-left: 0vw;
         margin-top: 8vh;
     }
+    #errormsg {
+        color: red;
+        font-size: 1rem;
+        margin-top: 1vh;
+        width: 40ch;
+        text-align:center ;
+    }
 `;
 
 const NotePointContainer = styled.div`
@@ -138,24 +145,26 @@ const NotePointContainer = styled.div`
 
 function PersonalRegister() {
 
+    const [errorMessages, setErrorMessages] = React.useState('');
+
     const [dobvalue, setDobvalue] = React.useState(new Date());
     const [values, setValues] = React.useState({
-        first_name: '',
-        last_name: '',
+        firstName: '',
+        lastName: '',
         gender : '',
         address : '',
-        marital_status : ''
+        maritalStatus : ''
     });
     React.useEffect(() => {
         let find = JSON.parse(localStorage.getItem("register"));
         if (find) {
             setValues({
-                first_name: find.customer.first_name,
-                last_name: find.customer.last_name,
+                firstName: find.customer.firstName,
+                lastName: find.customer.lastName,
                 gender : find.gender,
                 dobvalue : setDobvalue(Date(find.dob)),
                 address : find.address,
-                marital_status : find.marital_status,
+                maritalStatus : find.maritalStatus,
                 customer_image : find.customer_image,
             })
         }
@@ -171,19 +180,19 @@ function PersonalRegister() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(values);
-        if (values.first_name  && values.last_name  && values.gender  && dobvalue  && values.address  && values.marital_status   )  {
+        if (values.firstName  && values.lastName  && values.gender  && dobvalue  && values.address  && values.maritalStatus   )  {
             let obj = JSON.parse(localStorage.getItem("register"));
-            obj.customer.first_name = values.first_name;
-            obj.customer.last_name = values.last_name;
+            obj.customer.firstName = values.firstName;
+            obj.customer.lastName = values.lastName;
             obj.gender = values.gender;
             obj.dob = Date(dobvalue);
             obj.address = values.address;
-            obj.marital_status = Boolean(values.marital_status);
+            obj.maritalStatus = Boolean(values.maritalStatus);
             localStorage.setItem("register", JSON.stringify(obj));
             navigate('/identification');
         }
         else {
-            alert("Please fill all the details");
+            setErrorMessages('Please fill all the fields...!!!');
         }
     };
 
@@ -252,8 +261,8 @@ function PersonalRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Enter First Name</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            value={values.first_name || ''}
-                            onChange={handleChange('first_name')}
+                            value={values.firstName || ''}
+                            onChange={handleChange('firstName')}
                             />
                         </FormControl>
                         <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '40ch', marginBottom:'20px', '& .MuiInputLabel-root': {
@@ -266,8 +275,8 @@ function PersonalRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Enter Last Name</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            value={values.last_name || ''}
-                            onChange={handleChange('last_name')}
+                            value={values.lastName || ''}
+                            onChange={handleChange('lastName')}
                             />
                         </FormControl>
                         <FormControl sx={{ m: 1, mt: 1, width: '40ch', marginTop:'20px',marginBottom:'20px'}}>
@@ -316,13 +325,14 @@ function PersonalRegister() {
                             row
                             aria-labelledby="demo-row-radio-buttons-group-label"
                             name="row-radio-buttons-group"
-                            value={values.marital_status || ''}
-                            onChange={handleChange('marital_status')}
+                            value={values.maritalStatus || ''}
+                            onChange={handleChange('maritalStatus')}
                         >
                             <FormControlLabel value="true" control={<Radio />} label="Yes" />
                             <FormControlLabel value="false" control={<Radio />} label="No" />
                         </RadioGroup>
                         </FormControl>
+                        <p id='errormsg'>{errorMessages}</p>
                         <Stack spacing={2} direction="row">
                             <NavLink to="/contractregister">
                                 <Button variant="outlined" id="but" >Back</Button>

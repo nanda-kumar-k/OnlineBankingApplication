@@ -104,6 +104,13 @@ const InputContainer = styled.div`
         margin-left: 0vw;
         margin-top: 8vh;
     }
+    #errormsg {
+        color: red;
+        font-size: 1rem;
+        margin-top: 1vh;
+        width: 40ch;
+        text-align:center ;
+    }
 `;
 
 const NotePointContainer = styled.div`
@@ -124,6 +131,9 @@ const NotePointContainer = styled.div`
 `;
 
 function IdentificationRegister() {
+
+    const [errorMessages, setErrorMessages] = React.useState('');
+
     const [values, setValues] = React.useState({
         aadhaar_number: '',
         pan_number: '',
@@ -151,12 +161,18 @@ function IdentificationRegister() {
         if (values.aadhaar_number && values.pan_number )  {
             let obj = JSON.parse(localStorage.getItem("register"));;
             obj.aadhaar_number = Number(values.aadhaar_number);
-            obj.pan_number = Number(values.pan_number);
+            obj.pan_number = values.pan_number;
             localStorage.setItem("register", JSON.stringify(obj));
             navigate('/professional');
         }
         else {
-            alert("Please fill all the details");
+            if(isNaN(values.aadhaar_number)){
+                setErrorMessages("Aadhaar Number should be a number");
+            }
+            else if (values.aadhaar_number.length !== 12) {
+                setErrorMessages("Aadhaar Number should be 12 digits");
+            }
+            setErrorMessages("Please fill all the fields...!!!");
         }
     };
 
@@ -245,6 +261,7 @@ function IdentificationRegister() {
                             onChange={handleChange('pan_number')}
                             />
                         </FormControl>
+                        <p id='errormsg'>{errorMessages}</p>
                         <Stack spacing={2} direction="row">
                             <NavLink to="/personaldetails">
                                 <Button variant="outlined" id="but" >Back</Button>
