@@ -1,6 +1,6 @@
 import Home from './Components/Home/Home';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Navbar from './Components/Navbar/Navbar';
+// import Navbar from './Components/Navbar/Navbar';
 import CustomerHome from './Components/CustomerHome/CustomerHome';
 import TransactionHistroy from './Components/Accounts/TransactionHistory';
 import Balance from './Components/Accounts/Balance';
@@ -32,11 +32,12 @@ import CustomerDeposit from './Components/Employee/CustomerDeposit';
 import CustomerTransaction from './Components/Employee/CustomerTransaction';
 import CustomerLoan from './Components/Employee/CustomerLoan';
 import ConnectionTest from './Components/APITesting/ConnectionTest';
+import BusinessCustomer from './Components/JoinWithUs/CustomerLogin/BusinessCustomer';
+import SavingsCustomer from './Components/JoinWithUs/CustomerLogin/SavingsCustomer';
 function App() {
   return (
     <>
       <Router>
-        <Navbar/>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="customerhome" element={<CustomerHome />} />
@@ -72,6 +73,8 @@ function App() {
           <Route path="customertransaction" element={<CustomerTransaction/>}/>
           <Route path="customerloan" element={<CustomerLoan/>}/>
           
+          <Route path="bussinesslogin" element={<BusinessCustomer/>}/>
+          <Route path="savingslogin" element={<SavingsCustomer/>}/>
 
           <Route path="testing" element={<ConnectionTest/>}/>
         </Routes>
