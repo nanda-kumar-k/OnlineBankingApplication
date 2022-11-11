@@ -114,6 +114,13 @@ const InputContainer = styled.div`
         margin-left: 0vw;
         margin-top: 8vh;
     }
+    #errormsg {
+        color: red;
+        font-size: 1rem;
+        margin-top: 1vh;
+        width: 40ch;
+        text-align:center ;
+    }
 `;
 
 const NotePointContainer = styled.div`
@@ -135,21 +142,23 @@ const NotePointContainer = styled.div`
 
 function FamilyRegister() {
 
+    const [errorMessages, setErrorMessages] = React.useState('');
+
     const [fvalue, setFvalue] = React.useState(new Date());
     const [mvalue, setMvalue] = React.useState(new Date());
 
     const [values, setValues] = React.useState({
-        father_name: '',
-        mother_name: '',
+        fatherName: '',
+        motherName: '',
     });
     React.useEffect(() => {
         let find = JSON.parse(localStorage.getItem("register"));
         if (find) {
             setValues({
-                father_name: find.father_name,
-                mother_name: find.mother_name,
-                father_dob : setFvalue(Date(find.father_dob)),
-                mother_dob : setMvalue(Date(find.mother_dob)),
+                fatherName: find.fatherName,
+                motherName: find.motherName,
+                fatherDob : setFvalue(Date(find.fatherDob)),
+                motherDob : setMvalue(Date(find.motherDob)),
             })
         }
     }, []);
@@ -164,17 +173,17 @@ function FamilyRegister() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(values);
-        if (values.father_name && values.mother_name && fvalue && mvalue)   {
+        if (values.fatherName && values.motherName && fvalue && mvalue)   {
             let obj = JSON.parse(localStorage.getItem("register"));;
-            obj.father_name = values.father_name;
-            obj.mother_name = values.mother_name;
-            obj.father_dob = Date(fvalue);
-            obj.mother_dob = Date(mvalue);
+            obj.fatherName = values.fatherName;
+            obj.motherName = values.motherName;
+            obj.fatherDob = Date(fvalue);
+            obj.motherDob = Date(mvalue);
             localStorage.setItem("register", JSON.stringify(obj));
             navigate('/setpassword');
         }
         else {
-            alert("Please fill all the details");
+            setErrorMessages("Please fill all the fields....!!!");
         }
     };
 
@@ -243,8 +252,8 @@ function FamilyRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Father's Name</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            value={values.father_name || ''}
-                            onChange={handleChange('father_name')}
+                            value={values.fatherName || ''}
+                            onChange={handleChange('fatherName')}
                             />
                         </FormControl>
                         <div style={{width:'40vw', marginTop:'20px', marginBottom:'20px', marginLeft:'10px'}}>
@@ -269,8 +278,8 @@ function FamilyRegister() {
                             <InputLabel htmlFor="filled-adornment-amount">Mother's Name</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            value={values.mother_name || ''}
-                            onChange={handleChange('mother_name')}
+                            value={values.motherName || ''}
+                            onChange={handleChange('motherName')}
                             />
                         </FormControl>
                         <div style={{width:'40vw', marginTop:'20px', marginBottom:'20px', marginLeft:'10px'}}>
@@ -285,7 +294,7 @@ function FamilyRegister() {
                                 />
                             </LocalizationProvider>
                         </div>
-                        
+                        <p id='errormsg'>{errorMessages}</p>
                         <Stack spacing={2} direction="row">
                             <NavLink to="/educational">
                                 <Button variant="outlined" id="but" >Back</Button>
