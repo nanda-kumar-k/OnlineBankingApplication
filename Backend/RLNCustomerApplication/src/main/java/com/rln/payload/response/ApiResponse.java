@@ -1,4 +1,4 @@
-package com.rln.apimessages;
+package com.rln.payload.response;
 
 import java.util.Date;
 
