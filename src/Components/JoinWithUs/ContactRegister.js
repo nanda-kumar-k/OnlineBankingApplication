@@ -7,6 +7,8 @@ import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import * as React from 'react';
 import { useNavigate } from "react-router-dom";
+import RLNDataService from "../../services/rln.customer.service";
+
 
 const SliderContainer = styled.div`
     background-image: url(${background});
@@ -132,6 +134,7 @@ const NotePointContainer = styled.div`
 
 function ContactRegister() {
 
+    const [errorMessages, setErrorMessages] = React.useState('');
     const [values, setValues] = React.useState({
         username : '',
         contactNumber: '',
@@ -142,7 +145,7 @@ function ContactRegister() {
         if (find) {
             setValues({
                 username: find.customer.username,
-                contactNumber: find.customer.contactNumber,
+                contactNumber: find.customer.contactNumber.toString(),
                 emailId: find.customer.emailId,
             })
         }
@@ -155,28 +158,55 @@ function ContactRegister() {
 
     const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         console.log(values);
-        if (values.contactNumber && values.emailId && values.username) {
-            let find = JSON.parse(localStorage.getItem("register"));
-            if (find) {
-                find.customer.username = values.username;
-                find.customer.contactNumber = Number(values.contactNumber);
-                find.customer.emailId = values.emailId;
-                localStorage.setItem("register", JSON.stringify(find));
-            }
-            else {
-                let obj = {
-                    customer: {
-                        username: values.username,
-                        contactNumber: values.contactNumber,
-                        emailId: values.emailId,
-                    }
+        if (values.contactNumber && values.emailId && values.username ) {
+            if(values.contactNumber.length === 10 && values.emailId.includes("@") && values.emailId.includes(".")) {
+                await RLNDataService.checkUsernameAvailability(values.username)
+                    .then(response => {
+                        console.log(response.data);
+                        if (response.data.statusCode === 101) {
+                            setErrorMessages(response.data.message);
+                        }
+                        else {
+                                let find = JSON.parse(localStorage.getItem("register"));
+                                if (find) {
+                                    find.customer.username = values.username;
+                                    find.customer.contactNumber = Number(values.contactNumber);
+                                    find.customer.emailId = values.emailId;
+                                    localStorage.setItem("register", JSON.stringify(find));
+                                }
+                                else {
+                                    let obj = {
+                                        customer: {
+                                            username: values.username,
+                                            contactNumber: values.contactNumber,
+                                            emailId: values.emailId,
+                                        }
+                                    }
+                                    localStorage.setItem("register", JSON.stringify(obj));
+                                }
+                                navigate('/personaldetails');
+                            }
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    });
                 }
-                localStorage.setItem("register", JSON.stringify(obj));
+            else {
+                if(isNaN(values.contactNumber)) {
+                    setErrorMessages("Contact Number should be a number");
+                }
+                else if(values.contactNumber.length !== 10 ) {
+                    setErrorMessages("Invalid Contact Number...!! Please enter a valid contact number");
+                }
+                else if(!values.emailId.includes("@") || !values.emailId.includes(".")) {
+                    setErrorMessages("Invalid Email Id...!! Please enter a valid email id");
+                }
+
             }
-            navigate('/personaldetails');
+                
         }
         else {
             alert("Please fill all the details");
@@ -282,7 +312,7 @@ function ContactRegister() {
                                 onChange={handleChange('emailId')}
                                 />
                             </FormControl>
-                            <p id='errormsg'>error message</p>
+                            <p id='errormsg'>{errorMessages}</p>
                             <Button variant="outlined" id="but" type='submit' onClick={handleSubmit} >Next</Button>
                             </form>
                         </InputContainer>

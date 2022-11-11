@@ -28,25 +28,25 @@ import lombok.Setter;
 public class CustomerProfile {
 	
 	@Id
-	private UUID customer_id;
+	private UUID customerId;
 	private String gender;
 	private Date dob;
 	private String address;
-	private boolean marital_status;
-	private BigInteger aadhaar_number;
-	private String pan_number;
-	private String organisation_name;
+	private boolean maritalStatus;
+	private BigInteger aadhaarNumber;
+	private String panNumber;
+	private String organisationName;
 	private String designation;
-	private String nature_of_employment;
-	private long annual_income;
+	private String natureOfEmployment;
+	private long annualIncome;
 	private String qualification;
-	private String father_name;
-	private Date father_dob;
-	private String mother_name;
-	private Date mother_dob;
+	private String fatherName;
+	private Date fatherDob;
+	private String motherName;
+	private Date motherDob;
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
-	private Date created_date = new Date();
+	private Date createdDate = new Date();
 	
 	
 	@OneToOne(fetch = FetchType.LAZY)
