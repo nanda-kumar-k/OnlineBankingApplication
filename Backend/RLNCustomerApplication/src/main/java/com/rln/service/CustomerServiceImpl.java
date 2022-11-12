@@ -20,6 +20,7 @@ import com.rln.model.CustomerProfile;
 import com.rln.payload.response.JwtResponse;
 import com.rln.repository.CustomerProfileRepository;
 import com.rln.repository.CustomerRepository;
+import com.rln.security.jwt.JwtUtils;
 import com.rln.security.services.UserDetailsImpl;
 
 
@@ -41,6 +42,19 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	
+	
+	
+	@Override
+	public String _GetUsernameFromToken(String token) {
+		
+		JwtUtils jwtUtils = new JwtUtils();
+		String username = jwtUtils.getUserNameFromJwtToken(token.substring(7));
+		
+		return username;
+	}
+	
+	
 	
 	@Override
 	public boolean _checkCustomer(String user) {
@@ -108,7 +122,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 	@Override
-	public ResponseEntity<?> _authenticateCustomer(Customer customer) {
+	public JwtResponse _authenticateCustomer(Customer customer) {
 		
 		Authentication authentication = authenticationManager.authenticate(
 		        new UsernamePasswordAuthenticationToken(customer.getUsername(), customer.getPassword()));
@@ -117,9 +131,10 @@ public class CustomerServiceImpl implements CustomerService {
 		String jwt = jwtUtils.generateJwtToken(authentication);
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		    
-		return ResponseEntity.ok(new JwtResponse(jwt, 
-		                         userDetails.getUsername()
-		                         ));
+		return new JwtResponse(jwt, 
+		                         userDetails.getUsername(),
+		                         userDetails.getAccountType()
+		                         );
 	}
 
 
@@ -135,5 +150,21 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		return false;
 	}
+
+
+	@Override
+	public Customer _checkCustomerBalance(String token) {
+		
+		String username = _GetUsernameFromToken(token);
+		
+		Optional<Customer> check = customerRepository.findByUsername(username);
+		
+		System.out.println(check.get());
+		
+		return check.get();
+	}
+
+
+	
 
 }

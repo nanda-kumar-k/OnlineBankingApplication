@@ -34,10 +34,12 @@ import CustomerLoan from './Components/Employee/CustomerLoan';
 import ConnectionTest from './Components/APITesting/ConnectionTest';
 import BusinessCustomer from './Components/JoinWithUs/CustomerLogin/BusinessCustomer';
 import SavingsCustomer from './Components/JoinWithUs/CustomerLogin/SavingsCustomer';
+import Navbar from './Components/Navbar/Navbar';
 function App() {
   return (
     <>
       <Router>
+        <Navbar/>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="customerhome" element={<CustomerHome />} />

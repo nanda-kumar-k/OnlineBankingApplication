@@ -6,10 +6,13 @@ import org.springframework.http.ResponseEntity;
 
 import com.rln.model.Customer;
 import com.rln.model.CustomerProfile;
+import com.rln.payload.response.JwtResponse;
 
 public interface CustomerService {
 	
-	boolean _checkUsernameAvailability(String username);
+	String _GetUsernameFromToken(String token);
+	
+	boolean _checkUsernameAvailability(String token);
 	
 	boolean _checkCustomer(String user);
 	
@@ -17,6 +20,8 @@ public interface CustomerService {
 	
 	boolean _checkAccountNumber(String bigInteger);
 	
-	ResponseEntity<?> _authenticateCustomer(Customer customer);
+	JwtResponse _authenticateCustomer(Customer customer);
+	
+	Customer _checkCustomerBalance(String username);
 
 }

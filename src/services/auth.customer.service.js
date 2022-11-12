@@ -7,24 +7,44 @@ const createRLNCustomer = () => {
     return axios.post(API_URL + "createrlncustomer", data);
 };
 
-const customerLogin = (username, password) => {
-    const response = async () => {
-        try {
-              const response = await axios.post(API_URL + "customerLogin", {
-                username,
-                password
-              });
-              if (response.data.accessToken) {
-                localStorage.setItem("customerUser", JSON.stringify(response.data));
-              }
-              return response.data;
-          }
-        catch (error) {
+const authenticateRLNCustomer = async (username, password) =>  {
+    return await axios.post(API_URL + "authenticaterlncustomer", {
+            username,
+            password,
+        })
+        .then((response) => {
+            if (response.data.token) {
+                localStorage.setItem("customerLogin", JSON.stringify(response.data));
+            }
+            return response.data;
+        })
+        .catch((error) => {
+            console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
             console.log(error);
-          }
-    }
-    return response();
-};
+            return "Invalid Credentials...!!! Please try again";
+        })
+      };    
+
+
+//     let data = {
+//         username: username,
+//         password: password
+//     }
+//     axios.post(API_URL + "authenticaterlncustomer", data).then((response) => {
+//         if(response.data.token){
+//             localStorage.setItem("customerLogin", JSON.stringify(response.data));
+//         }
+//         return response.data;
+//       }
+//     )
+//     .catch((error) => {
+//         console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+//         console.log(error);
+//         return error;
+//     });
+//     ;
+    
+// };
 
 // const customerLogout = () => {
 //     localStorage.removeItem("user");
@@ -34,7 +54,7 @@ const customerLogin = (username, password) => {
 
 const CustomerAuthService = {
   createRLNCustomer,
-  customerLogin,
+  authenticateRLNCustomer,
   // register,
   // getCurrentUser
 };

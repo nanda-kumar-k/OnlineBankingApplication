@@ -11,35 +11,55 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.CreatedDate;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 
 @Entity
 @Table
-
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Transaction {
+	
 	
 	@Id
 	@GeneratedValue(generator = "uuid2")
 	@GenericGenerator(name = "uuid2", strategy = "uuid2")
-	@Column(columnDefinition = "BINARY(16)", insertable = false, updatable = false, nullable = false)
-	private UUID transaction_id;
 	@Column(insertable = false, updatable = false, nullable = false)
-	private UUID customer_id;
+	private UUID transactionId;
+	@Column(insertable = false, updatable = false, nullable = false)
+	private UUID customerId;
+	@Column(nullable = false, updatable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
-	private Date transaction_date;
-	private String transaction_type;
-	private long reciever_account_number;
-	private long sender_acount_number;
-	private long transaction_amount;
-	@Value("${some.key:false}")
-	private boolean transaction_status;
+	private Date transactionDate = new Date();
+	@Column(nullable = false)
+	private long amountTransfer;
+	@Column(nullable = false)
+	private String recieverName;
+	@Column(nullable = false)
+	private long recieverAccountNumber;
+	@Column(nullable = false)
+	private String senderName;
+	@Column(nullable = false)
+	private long senderAccountNumber;
+	@Column(nullable = false)
+	private boolean transactionStatus = false;
+	
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
-	private Customer customer_ref;
+	@JoinColumn(name = "customerId", referencedColumnName = "customer_id")
+	private Customer customerRef;
 
 }
