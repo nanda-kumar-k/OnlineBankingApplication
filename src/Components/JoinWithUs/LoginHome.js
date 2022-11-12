@@ -6,7 +6,6 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { NavLink } from 'react-router-dom';
-import Navbar from '../Navbar/Navbar';
 const SliderContainer = styled.div`
     background-image: url(${background});
     background-size: 100% 100%;
@@ -138,7 +137,6 @@ function LoginHome() {
 
     return (
         <>
-            <Navbar/>
             <SliderContainer>
                 <OuterContainer>
                     <InformContainer>

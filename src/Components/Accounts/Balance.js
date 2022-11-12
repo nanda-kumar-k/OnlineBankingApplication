@@ -3,7 +3,9 @@ import background from "../CustomerHome/Images/background.png";
 import AllLinks from "../CustomerHome/AllLinks";
 import styled from "styled-components";
 import BalanaceImg from "./Images/balance.jpg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
+import React from "react";
+import RLNDataService from "../../services/rln.customer.service";
 
 export const CHRightContainer = styled.div`
     padding: 1vh 1vw;
@@ -61,6 +63,25 @@ const NotePoint = styled.div`
 
 
 function Balance() {
+
+    const [balance, setBalance] = React.useState('');
+    const parms = useParams();
+    const navigate = useNavigate();
+    const fetchDataFun = () => {
+        navigate('/login');
+    }
+    React.useEffect(() => {
+        RLNDataService.checkCustomerBalance().then((response) => {
+            console.log(response);
+            if(response){
+                setBalance(response.data);
+            }
+            else{
+                navigate('/login');
+            }
+        })
+    },[parms,navigate]);
+
     return (
         <>
         <CHContainer>
@@ -77,9 +98,9 @@ function Balance() {
                 <BalanceContainer>
                     <BalanceCard>
                         <img src={BalanaceImg} alt="" />
-                        <div style={{display:'flex'}}><h3>Account Number : </h3><h3> 123456789</h3></div>
-                        <div style={{display:'flex'}}><h3>Account Type : </h3><h3> Current</h3></div>
-                        <div style={{display:'flex'}}><h3>Balance : </h3><h3> 145217.5</h3></div>
+                        <div style={{display:'flex'}}><h3>Account Number : </h3><h3> {balance.accountNumber}</h3></div>
+                        <div style={{display:'flex'}}><h3>Account Type : </h3><h3> {balance.accountType}</h3></div>
+                        <div style={{display:'flex'}}><h3>Balance : </h3><h3>{balance.balance}</h3></div>
                         <p style={{marginTop:'20px'}}>To Check Your Transaction History.   <NavLink to='/Transaction'>Click Her</NavLink> !!!.</p>
                         <NotePoint>
                         <p style={{marginTop:'20px',textAlign:'left'}}><b>Note</b></p>

@@ -1,4 +1,3 @@
-import Navbar from '../Navbar/Navbar';
 import styled from 'styled-components';
 import background from './Images/background.png'
 // import { NavLink } from 'react-router-dom';
@@ -174,7 +173,6 @@ function EducationalRegister() {
 
     return (
         <>
-        <Navbar />
             <SliderContainer>
                 <OuterContainer>
                     <TitleContainer>

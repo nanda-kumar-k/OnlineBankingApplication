@@ -15,5 +15,6 @@ public interface CustomerRepository extends CrudRepository<Customer, UUID> {
 	
 	Optional<Customer>findByUsername(String user);
 	Optional<Customer>findByAccountNumber(String acc);
+
 	
 }

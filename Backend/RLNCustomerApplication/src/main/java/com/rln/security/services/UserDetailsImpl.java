@@ -21,13 +21,16 @@ public class UserDetailsImpl implements UserDetails {
 
   @JsonIgnore
   private String password;
+  
+  private String accountType;
 
   private Collection<? extends GrantedAuthority> authorities;
 
-  public UserDetailsImpl(String username, String password) {
+  public UserDetailsImpl(String username, String password, String accountType) {
 //	  this.customer_id = customer_id;
     this.username = username;
     this.password = password;
+    this.accountType = accountType;
 //    this.authorities = authorities;
   }
   
@@ -39,7 +42,8 @@ public class UserDetailsImpl implements UserDetails {
 
     return new UserDetailsImpl(
         user.getUsername(), 
-        user.getPassword()
+        user.getPassword(),
+        user.getAccountType()
 //        user.getCustomer_id()
 //        authorities);
         );
@@ -102,4 +106,14 @@ public void setCustomer_id(UUID customer_id) {
     UserDetailsImpl user = (UserDetailsImpl) o;
     return Objects.equals(customer_id, user.customer_id);
   }
+
+
+public String getAccountType() {
+	return accountType;
+}
+
+
+public void setAccountType(String accountType) {
+	this.accountType = accountType;
+}
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rln.model.Customer;
 import com.rln.model.CustomerProfile;
 import com.rln.payload.response.ApiResponse;
+import com.rln.payload.response.JwtResponse;
 import com.rln.security.jwt.JwtUtils;
 import com.rln.service.CustomerService;
 
@@ -77,11 +78,33 @@ public class CustomerController {
 	
 	
 	@PostMapping("/authenticaterlncustomer")
-	public ResponseEntity<?> authenticateCustomer(@RequestBody Customer customer){
+	public JwtResponse authenticateCustomer(@RequestBody Customer customer){
 		
 		return customerService._authenticateCustomer(customer);
 	}
 	
+	
+	@GetMapping("/checkbalance") 
+	@PreAuthorize("isAuthenticated()")
+	public ApiResponse<Customer> __checkCustomerBalance(@RequestHeader("Authorization") String token) {
+		
+		ApiResponse<Customer> res = new ApiResponse<>();
+		res.setTimestamp(new Date());
+		
+		Customer customer = customerService._checkCustomerBalance(token);
+		
+		Customer cres = new Customer();
+		cres.setAccountNumber(customer.getAccountNumber());
+		cres.setAccountType(customer.getAccountType());
+		cres.setBalance(customer.getBalance());
+		cres.setUsername(customer.getUsername());
+		
+		res.setData(cres);
+		res.setStatusCode(200);
+		res.setMessage("Data found");
+		
+		return res;
+	}
 	
 	//permitAll()
 //	@PreAuthorize("hasAuthority('Admin')")

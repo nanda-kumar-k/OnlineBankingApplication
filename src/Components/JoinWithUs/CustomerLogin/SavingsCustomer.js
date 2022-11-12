@@ -1,4 +1,3 @@
-import Navbar from "./LoginNavbar";
 import React from 'react'
 import styled from "styled-components";
 import IconButton from '@mui/material/IconButton';
@@ -11,6 +10,14 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useNavigate } from "react-router-dom";
 import { NavLink } from 'react-router-dom';
 import loginimg from './Images/loginimg.jpg'
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "swiper/css/bundle";
+import "./LSlider.css";
+import { Autoplay} from "swiper";
+import CustomerAuthService from '../../../services/auth.customer.service';
 
 
 const LoginContainer = styled.div`
@@ -24,15 +31,18 @@ const LoginContainer = styled.div`
 `;
 
 const LoginLeft = styled.div`
-    height: 68vh;
+    height: 70vh;
     width: 36vw;
-    /* background-color: yellow; */
+    /* background-color: rgb(213, 231, 247); */
     padding: 14vh 2vw 0 2vw;
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
     align-items: center;
     text-align: center;
+    /* box-shadow: 0px 1px whitesmoke; */
+    border-bottom: 1px solid #E6E6E6;
+
 
     p{
         margin-top: 2vh;
@@ -101,44 +111,66 @@ const LoginRight = styled.div`
     align-items: center;
 `;
 
-const LoImg = styled.img`
-    height: 100%;
-    width: 100%;
-    object-fit: contain;
-`;
-
-
-
 function SavingsCustomer() {
    
     const navigate = useNavigate();
-    
+    const [errorMessages, setErrorMessages] = React.useState('');
     const [values, setValues] = React.useState({
-        amount: '',
+        username: '',
         password: '',
-        weight: '',
-        weightRange: '',
         showPassword: false,
       });
     
-      const handleChange = (prop) => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
-      };
+    const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+    };
     
-      const handleClickShowPassword = () => {
-        setValues({
-          ...values,
-          showPassword: !values.showPassword,
-        });
-      };
+    const handleClickShowPassword = () => {
+    setValues({
+        ...values,
+        showPassword: !values.showPassword,
+    });
+    };
     
-      const handleMouseDownPassword = (event) => {
+    const handleMouseDownPassword = (event) => {
         event.preventDefault();
-      };
+    };
+
+    const handleLogin = (event) => {
+        console.log("Login button clicked");
+        console.log(values.username);
+        console.log(values.password);
+        event.preventDefault();
+        if(values.username && values.password ){
+            if(values.password.length >= 8){
+                CustomerAuthService.authenticateRLNCustomer(values.username, values.password)
+                .then((response) => {
+                    console.log(response);
+                    if(response.token){
+                        console.log("Login Success");
+                        navigate('/customer/dashboard');
+                    }
+                    else {
+                        setErrorMessages(response);
+                    }
+                })
+                .catch((error) => {
+                    setErrorMessages("Server Not responding ...!!! Please try after sometime");
+                });
+            }
+            else {
+                setErrorMessages("Password must be 8 characters long");
+            }
+        }
+        else{
+            setErrorMessages("Please fill all the fields");
+        }
+    }
+
+    
 
     return (
         <>
-        <Navbar/>
         <LoginContainer>
             <LoginLeft>
                 <h2>Login With RLN Online Banking</h2>
@@ -173,7 +205,8 @@ function SavingsCustomer() {
                 </FormControl>
                  <p>Forgot Password ?. <NavLink to = "#" >Reset Here</NavLink ></p>
                  <p style={{marginBottom:"20px"}}>Don't Have account ?. <NavLink to = "#">Register Here</NavLink ></p>
-                 <SubBut> Login </SubBut>
+                 <p>{errorMessages}</p>
+                 <SubBut onClick={handleLogin}> Login </SubBut>
                  <hr/>
                 <NotePoint>
                         <h3>Note</h3>
@@ -183,7 +216,27 @@ function SavingsCustomer() {
                 </NotePoint>
             </LoginLeft>
             <LoginRight>
-                <LoImg src={loginimg} alt="loginimg"/>
+                <Swiper
+                    spaceBetween={30}
+                    centeredSlides={true}
+                    autoplay={{
+                    delay: 5000,
+                    disableOnInteraction: false,
+                    }}
+                    
+                    modules={[Autoplay]}
+                    className="mySwiper"
+                >
+                    <SwiperSlide><img src={loginimg} alt="" /></SwiperSlide>
+                    <SwiperSlide><img src={loginimg} alt="S" /></SwiperSlide>
+                    <SwiperSlide>Slide 3</SwiperSlide>
+                    <SwiperSlide>Slide 4</SwiperSlide>
+                    <SwiperSlide>Slide 5</SwiperSlide>
+                    <SwiperSlide>Slide 6</SwiperSlide>
+                    <SwiperSlide>Slide 7</SwiperSlide>
+                    <SwiperSlide>Slide 8</SwiperSlide>
+                    <SwiperSlide>Slide 9</SwiperSlide>
+                </Swiper>
             </LoginRight>
         </LoginContainer>
         
