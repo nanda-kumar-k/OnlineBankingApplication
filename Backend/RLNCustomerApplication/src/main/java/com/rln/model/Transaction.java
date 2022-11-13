@@ -6,21 +6,17 @@ import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,10 +34,10 @@ public class Transaction {
 	
 	
 	@Id
-	@GeneratedValue(generator = "uuid2")
-	@GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "player_seq")
+    @SequenceGenerator(name = "player_seq", sequenceName = "player_sequence")
 	@Column(insertable = false, updatable = false, nullable = false)
-	private UUID transactionId;
+	private long transactionId;
 	@Column(insertable = false, updatable = false, nullable = false)
 	private UUID customerrefid;
 	@Column(nullable = false, updatable = false)

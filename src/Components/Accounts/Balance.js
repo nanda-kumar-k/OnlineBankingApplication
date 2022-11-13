@@ -67,9 +67,9 @@ function Balance() {
     const [balance, setBalance] = React.useState('');
     const parms = useParams();
     const navigate = useNavigate();
-    const fetchDataFun = () => {
-        navigate('/login');
-    }
+    // const fetchDataFun = () => {
+    //     navigate('/login');
+    // }
     React.useEffect(() => {
         RLNDataService.checkCustomerBalance().then((response) => {
             console.log(response);
