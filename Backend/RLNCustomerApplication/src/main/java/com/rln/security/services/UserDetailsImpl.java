@@ -15,7 +15,7 @@ import com.rln.model.Customer;
 public class UserDetailsImpl implements UserDetails {
   private static final long serialVersionUID = 1L;
   
-  private UUID customer_id;
+  private long customer_id;
   
   private String username;
 
@@ -88,12 +88,12 @@ public class UserDetailsImpl implements UserDetails {
   }
 
 
-public UUID getCustomer_id() {
+public long getCustomer_id() {
 	return customer_id;
 }
 
 
-public void setCustomer_id(UUID customer_id) {
+public void setCustomer_id(long customer_id) {
 	this.customer_id = customer_id;
 }
 
