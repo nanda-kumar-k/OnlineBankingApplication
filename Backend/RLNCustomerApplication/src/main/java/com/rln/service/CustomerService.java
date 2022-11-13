@@ -2,6 +2,8 @@ package com.rln.service;
 
 
 
+import java.util.Optional;
+
 import org.springframework.http.ResponseEntity;
 
 import com.rln.model.Customer;
@@ -22,6 +24,10 @@ public interface CustomerService {
 	
 	JwtResponse _authenticateCustomer(Customer customer);
 	
-	Customer _checkCustomerBalance(String username);
+	Customer _checkCustomerBalance(String token);
+	
+	Optional<Customer> _getCustomerDetailsByAccountNumber(String username);
+	
+	boolean _createOrUpdateCustomer(Customer customer);
 
 }
