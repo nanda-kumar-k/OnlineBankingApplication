@@ -59,7 +59,7 @@ public class TransactionServiceImpl implements TransactionService {
 				customerService._createOrUpdateCustomer(customer);
 				customerService._createOrUpdateCustomer(reciever.get());
 				transactionRepository.save(transaction);
-				return "Done";
+				return "success";
 			}
 			
 		}
@@ -86,7 +86,10 @@ public class TransactionServiceImpl implements TransactionService {
 			
 			if( li.get(i).getCustomerrefid() == (customer.getCustomer_id()) ) {
 				
-				res.add(li.get(i));
+				Transaction filter = li.get(i);
+				filter.setCustomer(null);
+	
+				res.add(filter);
 			}
 		}
 		
