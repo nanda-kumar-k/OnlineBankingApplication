@@ -7,47 +7,62 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.CreatedDate;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Deposit {
 	
 	@Id
-	@GeneratedValue(generator = "uuid2")
-	@GenericGenerator(name = "uuid2", strategy = "uuid2")
-	@Column(columnDefinition = "BINARY(16)", insertable = false, updatable = false, nullable = false)
-	private UUID deposit_id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "deposit_seq")
+    @SequenceGenerator(name = "deposit_seq", sequenceName = "deposit_sequence")
+	@Column(insertable = false,  updatable = false, nullable = false)
+	private long depositTableId;
+	@Column(updatable = false, nullable = false)
+	private String depositId;
 	@Column(insertable = false, updatable = false, nullable = false)
-	private UUID customer_id;
+	private long customerrefid;
 	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
-	private Date deposit_date;
+	private Date depositDate = new Date();
 	@Column(nullable = false)
-	private long deposit_amount;
+	private long depositAmount;
 	@Column(nullable = false)
-	private float deposit_interest;
+	private float depositInterest;
 	@Column(nullable = false)
-	private Date deposit_end_date;
+	private Date depositEndDate;
 	@Column(nullable = false)
-	private String nominee_name;
+	private String nomineeName;
 	@Column(nullable = false)
-	@Value("${some.key:false}")
-	private boolean deposite_status;
+	private boolean depositeActiveStatus = true;
 	@Column(nullable = false)
-	private long deposite_current_amount;
+	private long depositeCurrentAmount = 0;
 	
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
-	private Customer customer_ref;
+	@JoinColumn(name = "customerrefid", referencedColumnName = "customer_id")
+	private Customer customer;
 	
 
 }

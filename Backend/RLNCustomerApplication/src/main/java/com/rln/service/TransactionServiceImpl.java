@@ -47,7 +47,7 @@ public class TransactionServiceImpl implements TransactionService {
 		
 		if(Objects.nonNull(transaction.getAmountTransfer())) {
 			
-			if(customer.getBalance() - transaction.getAmountTransfer() <= 100) {
+			if(customer.getBalance() - transaction.getAmountTransfer() <= 100 && transaction.getAmountTransfer() <= 0 ) {
 				
 				return "Transaction Failed...!! ( Insufficient Bank Balance ).";
 			}

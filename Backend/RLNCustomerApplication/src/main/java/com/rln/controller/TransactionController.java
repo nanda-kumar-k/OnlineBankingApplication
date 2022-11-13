@@ -32,7 +32,8 @@ public class TransactionController {
 	
 	@PostMapping("/transferamount")
 	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<String> __customerAmountTransfer(@RequestBody Transaction transaction , @RequestHeader("Authorization") String token){
+	public ApiResponse<String> __customerAmountTransfer(
+			@RequestBody Transaction transaction , @RequestHeader("Authorization") String token){
 		
 		ApiResponse<String> res = new ApiResponse<>();
 		
@@ -58,7 +59,8 @@ public class TransactionController {
 	
 	@GetMapping("/details")
 	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<List<Transaction>> __customerTransactionsDetails(@RequestHeader("Authorization") String token) {
+	public ApiResponse<List<Transaction>> __customerTransactionsDetails(
+			@RequestHeader("Authorization") String token) {
 		
 		ApiResponse<List<Transaction>> res = new ApiResponse<>();
 		
