@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -39,7 +40,7 @@ public class DepositController {
 		if( status.equals("created") ) {
 			
 			res.setStatusCode(200);
-			res.setMessage("new deposite opned...!!");
+			res.setMessage("new deposite created...!!");
 			
 		}
 		else {
@@ -77,6 +78,33 @@ public class DepositController {
 		return res;
 		
 	}
+	
+	
+	@GetMapping("/closedeposit/{depsoitid}")
+	@PreAuthorize("isAuthenticated()")
+	public ApiResponse<String> __closeDeposit ( 
+			@RequestHeader("Authorization") String token , @PathVariable("depsoitid") String depsoitid ) {
+		
+		ApiResponse<String> res = new ApiResponse<>();
+		res.setTimestamp(new Date());
+		
+		if( depositService._closeDeposit(depsoitid, token) ) {
+			
+			res.setStatusCode(200);
+			res.setMessage("deposit closed successfully...!!");
+			
+		}
+		else {
+			
+			res.setStatusCode(400);
+			res.setMessage("we can't close your deposit, please contract nearest rln bank...!!");
+		}
+		
+		return res;
+		
+	}
+	
+	
 	
 	
 

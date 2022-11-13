@@ -1,5 +1,8 @@
 package com.rln.service;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +14,6 @@ import org.springframework.stereotype.Service;
 import com.rln.model.Customer;
 import com.rln.model.Deposit;
 import com.rln.model.RLNBankDetails;
-import com.rln.model.Transaction;
 import com.rln.repository.CustomerRepository;
 import com.rln.repository.DepositRepository;
 
@@ -21,18 +23,30 @@ public class DepositServiceImpl implements DepositService {
 	@Autowired
 	private DepositRepository depositRepository;
 
-	
 	@Autowired
 	private CustomerService customerService;
-	
 	
 	@Autowired
 	private CustomerRepository customerRepository;
 	
-	
 	@Autowired
 	private RLNBankDetailsService bankDetailsService;
 
+	
+	public double calculateCompoundAmount(double p, double t, double r, int n) {
+        double amount = p * Math.pow(1 + (r / n), n * t);
+//        System.out.println("Compound Interest after " + t + " years: "+cinterest);
+//        System.out.println("Amount after " + t + " years: "+amount);
+        
+        return amount;
+    }
+	
+	public double calculateCompoundInterest(double p, double t, double r, int n) {
+		double amount = p * Math.pow(1 + (r / n), n * t);
+        double cinterest = amount - p;
+        
+        return cinterest;
+	}
 	
 	@Override
 	public String _openNewCUstomerDeposit(Deposit deposit, String token) {
@@ -107,5 +121,55 @@ public class DepositServiceImpl implements DepositService {
 		}
 		
 		return res;
+	}
+
+
+	@Override
+	public boolean _closeDeposit(String depositid, String token) {
+		
+		Deposit deposit = depositRepository.findByDepositId(depositid);
+		Customer customer =  customerService._checkCustomerBalance(token);
+		
+		if ( deposit != null ) {
+			
+//			LocalDate start = LocalDate.parse((CharSequence) deposit.getDepositDate());
+			LocalDate end = LocalDate.now();
+			Period ti = Period.between(new java.sql.Date(deposit.getDepositEndDate().getTime()).toLocalDate(), end);
+//			System.out.println(end);
+//			System.out.println(new java.sql.Date(deposit.getDepositEndDate().getTime()).toLocalDate());
+//			System.out.println(ti.getMonths());
+			int years = ti.getYears();
+			int months = ti.getMonths();
+			int numberOfMonthsBetweenDates =  months+years*12;
+			double t;
+			if(numberOfMonthsBetweenDates <= 12) {
+				t = (Double.valueOf(numberOfMonthsBetweenDates)) / 12.00 ;
+			}
+			else {
+				t = (Double.valueOf(years)) ;
+			}
+			double r = Double.valueOf(deposit.getDepositInterest()) / 100.0;
+			
+//			System.out.println(years);
+//			System.out.println(months);
+//			System.out.println(numberOfMonthsBetweenDates);
+//			System.out.println(t);
+//			System.out.println(r);
+			double amount = calculateCompoundAmount(deposit.getDepositAmount(), t, r, 3);
+			System.out.println(amount);
+			
+			deposit.setDepositeCurrentAmount(amount);
+			deposit.setDepositeActiveStatus(false);
+			depositRepository.save(deposit);
+			
+			customer.setBalance((customer.getBalance() + amount));
+			
+			customerRepository.save(customer);
+			
+			return true;
+			
+		}
+		
+		return false;
 	}
 }
