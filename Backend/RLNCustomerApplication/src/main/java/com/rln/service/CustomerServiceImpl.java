@@ -54,14 +54,32 @@ public class CustomerServiceImpl implements CustomerService {
 		return username;
 	}
 	
+	@Override
+	public Optional<Customer> _getCustomerDetailsByAccountNumber(String accountNo) {
+		
+		Optional<Customer> user = customerRepository.findByAccountNumber(accountNo);
+
+		
+		return user;
+	}
 	
+	@Override
+	public boolean _createOrUpdateCustomer(Customer customer) {
+		
+		Customer check = customerRepository.save(customer);
+		
+		if(check != null) {
+			return true;
+		}
+		
+		return false;
+	}
 	
 	@Override
 	public boolean _checkCustomer(String user) {
 		
 		Optional<Customer> check = customerRepository.findByUsername(user);
 		
-		System.out.println(check);
 		
 		if (check.isEmpty()) {
 			return false;
@@ -159,10 +177,14 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		Optional<Customer> check = customerRepository.findByUsername(username);
 		
-		System.out.println(check.get());
-		
 		return check.get();
 	}
+
+	
+
+
+
+	
 
 
 	

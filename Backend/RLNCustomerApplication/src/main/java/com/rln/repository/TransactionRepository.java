@@ -13,6 +13,6 @@ import com.rln.model.Transaction;
 @Repository
 public interface TransactionRepository extends CrudRepository<Transaction, UUID>{
 	
-	List<Transaction> findByCustomerId(UUID uuid);
+	List<Transaction> findByCustomerrefid(UUID uuid);
 
 }

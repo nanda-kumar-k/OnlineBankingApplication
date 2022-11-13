@@ -30,9 +30,10 @@ public class TransactionController {
 	
 	@PostMapping("/transferamount")
 	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<String> __customerAmountTransfer(@RequestBody Transaction transaction , @RequestHeader("Authorization") String token){
-		transactionService._customerAmountTransfer(transaction, token);
-		return null;
+	public String __customerAmountTransfer(@RequestBody Transaction transaction , @RequestHeader("Authorization") String token){
+		
+		return transactionService._customerAmountTransfer(transaction, token);
+		
 		
 	}
 	
