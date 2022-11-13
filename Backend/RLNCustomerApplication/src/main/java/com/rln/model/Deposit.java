@@ -47,7 +47,7 @@ public class Deposit {
 	@CreatedDate
 	private Date depositDate = new Date();
 	@Column(nullable = false)
-	private long depositAmount;
+	private double depositAmount;
 	@Column(nullable = false)
 	private float depositInterest;
 	@Column(nullable = false)
@@ -57,7 +57,7 @@ public class Deposit {
 	@Column(nullable = false)
 	private boolean depositeActiveStatus = true;
 	@Column(nullable = false)
-	private long depositeCurrentAmount = 0;
+	private double depositeCurrentAmount = 0;
 	
 	
 	@ManyToOne(cascade = CascadeType.ALL)

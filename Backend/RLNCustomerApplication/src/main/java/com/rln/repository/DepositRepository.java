@@ -7,6 +7,8 @@ import com.rln.model.Deposit;
 
 
 @Repository
-public interface DepositRepository extends CrudRepository<Deposit, Long>{
+public interface DepositRepository extends CrudRepository<Deposit, Long> {
+	
+	Deposit findByDepositId( String depositid );
 
 }
