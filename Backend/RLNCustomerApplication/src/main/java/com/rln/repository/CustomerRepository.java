@@ -16,19 +16,11 @@ import com.rln.model.Customer;
 
 
 @Repository
-public interface CustomerRepository extends CrudRepository<Customer, UUID> {
+public interface CustomerRepository extends CrudRepository<Customer, Long> {
 	
 	Optional<Customer>findByUsername(String user);
 	Optional<Customer>findByAccountNumber(String acc);
 	
-	@Transactional
-	@Modifying
-	@Query("update Customer e set e.balance=?1 where e.username=?2 ")
-	int updateRecord(long balance, String username);
-	
-	@Transactional
-	@Modifying
-	@Query("select e from Customer e")
-	List<Customer> getAllCustomer();
+
 	
 }

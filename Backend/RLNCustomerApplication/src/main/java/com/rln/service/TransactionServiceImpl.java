@@ -2,7 +2,9 @@ package com.rln.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,19 +42,33 @@ public class TransactionServiceImpl implements TransactionService {
 		transaction.setCustomer(customer);
 		transaction.setSenderAccountNumber(customer.getAccountNumber());
 		transaction.setSenderName(customer.getFirstName() + customer.getLastName());
-		Transaction tr =  transactionRepository.save(transaction);  
-		
-		
-		Customer customr =  customerService._checkCustomerBalance(token);
-		
-		transaction.setCustomer(customer);
-		transaction.setSenderAccountNumber(customer.getAccountNumber());
-		transaction.setSenderName("kumarrrrrrrrrrr");
+		transaction.setTransactionId(UUID.randomUUID().toString());
 		transactionRepository.save(transaction);  
 		
-//		transactionRepository.createCustomerTransaction(0, token, token, token, token, customer.getCustomer_id());
+		if(Objects.nonNull(transaction.getAmountTransfer())) {
+			
+			if(customer.getBalance() - transaction.getAmountTransfer() <= 100) {
+				
+				return "Transaction Failed...!! ( Insufficient Bank Balance ).";
+			}
+			else {
+				
+				customer.setBalance(customer.getBalance() - transaction.getAmountTransfer());
+				reciever.get().setBalance(reciever.get().getBalance() + transaction.getAmountTransfer());
+				transaction.setTransactionStatus(true);
+				customerService._createOrUpdateCustomer(customer);
+				customerService._createOrUpdateCustomer(reciever.get());
+				transactionRepository.save(transaction);
+				return "Done";
+			}
+			
+		}
+		else {
+			
+			return "Transaction Failed...!!";
+		}
 		
-		return "";
+		
 
 	
 	}
@@ -68,7 +84,7 @@ public class TransactionServiceImpl implements TransactionService {
 		
 		for( int i = 0; i < li.size(); i++) {
 			
-			if( li.get(0).getCustomerrefid().equals(customer.getCustomer_id()) ) {
+			if( li.get(i).getCustomerrefid() == (customer.getCustomer_id()) ) {
 				
 				res.add(li.get(i));
 			}

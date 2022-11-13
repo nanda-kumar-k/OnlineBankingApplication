@@ -7,10 +7,13 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,7 +31,10 @@ import lombok.Setter;
 public class CustomerProfile {
 	
 	@Id
-	private UUID customerId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customerpprofile_seq")
+    @SequenceGenerator(name = "customerprofile_seq", sequenceName = "customerprofile_sequence")
+	@Column(insertable = false, updatable = false, nullable = false)
+	private long customerId;
 	private String gender;
 	private Date dob;
 	private String address;

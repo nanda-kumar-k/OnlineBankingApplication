@@ -7,6 +7,7 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -36,11 +37,10 @@ import lombok.Setter;
 public class Customer {
 	
 	@Id
-//	@SequenceGenerator(name = "uuid2", sequenceName = "uuid2" )
-	@GeneratedValue(generator = "uuid2")
-	@GenericGenerator(name = "uuid2", strategy = "uuid2")
-	@Column(insertable = false, updatable = false, nullable = false)
-	private UUID customer_id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")
+    @SequenceGenerator(name = "customer_seq", sequenceName = "customer_sequence")
+	@Column(insertable = false,updatable = false, nullable = false)
+	private long customer_id;
 	@Column(nullable = false)
 	private String accountNumber;
 	@Column(nullable = false)

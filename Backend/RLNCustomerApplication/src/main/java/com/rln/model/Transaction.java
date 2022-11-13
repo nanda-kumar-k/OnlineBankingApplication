@@ -32,14 +32,15 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Transaction {
 	
-	
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "player_seq")
-    @SequenceGenerator(name = "player_seq", sequenceName = "player_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_seq")
+    @SequenceGenerator(name = "transaction_seq", sequenceName = "transaction_sequence")
+	@Column(insertable = false,  updatable = false, nullable = false)
+	private long transid;
 	@Column(insertable = false, updatable = false, nullable = false)
-	private long transactionId;
-	@Column(insertable = false, updatable = false, nullable = false)
-	private UUID customerrefid;
+	private long customerrefid;
+	@Column(nullable = false, updatable = false)
+	private String transactionId;
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
