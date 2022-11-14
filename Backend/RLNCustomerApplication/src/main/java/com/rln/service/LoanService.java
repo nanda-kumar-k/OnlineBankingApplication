@@ -13,6 +13,6 @@ public interface LoanService {
 	
 	LoansResponse _getAllLoans(String token);
 	
-	String _closeLoan(String loanid, String token);
+	String _closeLoan(String loanid);
 
 }

@@ -80,6 +80,7 @@ public class LoanServiceImpl implements LoanService {
 			
 			homeLoan.setCustomer(customer);
 			homeLoan.setHomeLoanId(loanId);
+			homeLoan.setLoanPendingAmount(homeLoan.getLoanAmount());
 			homeLoan.setLoanInterest(bankDetails.getHomeLoanInterest());
 			homeLoanRepository.save(homeLoan);
 			
@@ -137,6 +138,7 @@ public class LoanServiceImpl implements LoanService {
 			
 			educationalLoan.setCustomer(customer);
 			educationalLoan.setEducationalLoanId(loanId);
+			educationalLoan.setLoanPendingAmount(educationalLoan.getLoanAmount());
 			educationalLoan.setLoanInterest(bankDetails.getEducationLoanInterest());
 			educationalRepository.save(educationalLoan);
 			
@@ -213,12 +215,40 @@ public class LoanServiceImpl implements LoanService {
 
 	
 	@Override
-	public String _closeLoan(String loanid, String token) {
+	public String _closeLoan(String loanid) {
 		
-		Customer customer =  customerService._checkCustomerBalance(token);
+		HomeLoan homeLoan = homeLoanRepository.findByHomeLoanId(loanid);
+		EducationalLoan educationalLoan = educationalRepository.findByEducationalLoanId(loanid);
 		
+		if ( homeLoan != null ) {
+			
+			if ( homeLoan.getLoanPendingAmount() <= 0 ) {
+				
+				homeLoan.setLoanStatus(false);
+				homeLoanRepository.save(homeLoan);
+				
+				return "closed";
+			}
+			
+		}
+		else if ( educationalLoan != null ) {
+			
+			if ( educationalLoan.getLoanPendingAmount() <= 0 ) {
+				
+				educationalLoan.setLoanStatus(false);
+				educationalRepository.save(educationalLoan);
+				
+				return "closed";
+			}
+			 
+		}
+		else  {
+			
+			return "Loan Cannot be close, please contact near RLN Bank...!!";
+		}
 		
-		return null;
+		return "Internal Server error, Try after some time...!!";
+		
 	}
 
 }
