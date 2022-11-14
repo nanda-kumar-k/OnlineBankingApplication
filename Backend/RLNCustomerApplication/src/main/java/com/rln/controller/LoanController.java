@@ -76,12 +76,27 @@ public class LoanController {
 	@GetMapping("/closehomeloan/{loanid}")
 	@PreAuthorize("isAuthenticated()")
 	public ApiResponse<String> __closeHomeLoan(
-			@PathVariable("loanid") String loanid , @RequestHeader("Authorization") String token ) {
+			@PathVariable("loanid") String loanid ) {
 		
 		ApiResponse<String> res = new ApiResponse<>();
 		res.setTimestamp(new Date());
+		String checkRes = loanService._closeLoan(loanid);
+		
+		if ( checkRes.equals("closed") ) {
+			
+			res.setMessage("Loan Closed successfully...!!");
+			res.setStatusCode(200);
+		}
+		else {
+			
+			res.setMessage(checkRes);
+			res.setStatusCode(400);
+		}
 		
 		return res;
 	}
+	
+	
+	
 
 }

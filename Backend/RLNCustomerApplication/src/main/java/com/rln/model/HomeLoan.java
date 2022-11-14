@@ -60,7 +60,7 @@ public class HomeLoan {
 	@Column(nullable = false)
 	private String nomineeName;
 	@Column(nullable = false)
-	private long loanCurrentAmount = 0;
+	private long loanPendingAmount = 0;
 	@Column(nullable = false)
 	private boolean loanStatus = true;
 	@Column(nullable = false)
