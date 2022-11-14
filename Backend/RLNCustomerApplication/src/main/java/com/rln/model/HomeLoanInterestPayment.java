@@ -37,9 +37,9 @@ public class HomeLoanInterestPayment {
 	
 	
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "customer_id", referencedColumnName = "loan_id")
-	private HomeLoan homeLoan_ref;
+//	@ManyToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "customer_id", referencedColumnName = "loan_id")
+//	private HomeLoan homeLoan_ref;
 	
 
 

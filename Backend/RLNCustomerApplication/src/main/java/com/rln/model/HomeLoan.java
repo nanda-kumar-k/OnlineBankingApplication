@@ -35,25 +35,27 @@ import lombok.Setter;
 public class HomeLoan {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_seq")
-    @SequenceGenerator(name = "transaction_seq", sequenceName = "transaction_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "homeloan_seq")
+    @SequenceGenerator(name = "homeloan_seq", sequenceName = "homanloan_sequence")
 	@Column(insertable = false,  updatable = false, nullable = false)
-	private long loanTableid;
+	private long homeTableId;
 	@Column(insertable = false, updatable = false, nullable = false)
 	private long customerrefid;
-	@Column(nullable = false)
-	private String loanId;
+	@Column(updatable = false,nullable = false)
+	private String homeLoanId;
 	@Column(nullable = false)
 	private long loanAmount;
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
-	private Date loanDate;
+	private Date loanDate = new Date();
 	@Column(nullable = false)
 	private float loanInterest;
 	@Column(nullable = false)
 	private String homeAddress;
 	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	@CreatedDate
 	private Date loanEndDate;
 	@Column(nullable = false)
 	private String nomineeName;
@@ -68,7 +70,7 @@ public class HomeLoan {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "customerrefid", referencedColumnName = "customer_id")
-	private Customer customer_ref;
+	private Customer customer;
 
 
 }
