@@ -34,8 +34,8 @@ public class EducationalLoanInterestPayment {
 	private boolean status;
 	
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "customer_id", referencedColumnName = "loan_id")
-	private EducationalLoan educationalLoan_ref;
+//	@ManyToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "customer_id", referencedColumnName = "loan_id")
+//	private EducationalLoan educationalLoan_ref;
 
 }
