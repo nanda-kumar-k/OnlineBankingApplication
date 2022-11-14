@@ -1,24 +1,27 @@
 package com.rln.service;
 
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.rln.model.Customer;
 import com.rln.model.EducationalLoan;
 import com.rln.model.HomeLoan;
+import com.rln.model.LoanInterestPayment;
 import com.rln.model.RLNBankDetails;
 import com.rln.payload.response.ApiResponse;
 import com.rln.payload.response.LoansResponse;
-import com.rln.repository.EducationalLoanInterestPaymentRepository;
 import com.rln.repository.EducationalLoanRepository;
-import com.rln.repository.HomeLoanInterestPaymentRepository;
+import com.rln.repository.LoanInterestPaymentRepository;
 import com.rln.repository.HomeLoanRepository;
 
 @Service
@@ -28,20 +31,21 @@ public class LoanServiceImpl implements LoanService {
 	private HomeLoanRepository homeLoanRepository;
 	
 	@Autowired
-	private HomeLoanInterestPaymentRepository homeLoanInterestPaymentRepository;
+	private LoanInterestPaymentRepository loanInterestPaymentRepository;
 	
 	
 	@Autowired
 	private EducationalLoanRepository educationalRepository;
 	
-	@Autowired
-	private EducationalLoanInterestPaymentRepository educationalLoanInterestPaymentRepository;
 
 	@Autowired
 	private CustomerService customerService;
 	
 	@Autowired
 	private RLNBankDetailsService bankDetailsService;
+	
+	@Autowired
+	private FilesStorageService filesStorageService;
 	
 	@Override
 	public ApiResponse<String> _openNewHomeLoan(HomeLoan homeLoan , String token) {
@@ -76,7 +80,10 @@ public class LoanServiceImpl implements LoanService {
 		if ( bankDetails != null ) {
 			
 			Customer customer = customerService._checkCustomerBalance(token);
-			String loanId = UUID.randomUUID().toString();
+			
+			Random random = new Random();
+			BigInteger bigInteger = BigInteger.valueOf(Math.round(random.nextFloat() * Math.pow(10,8)));
+			String loanId = bigInteger.toString();
 			
 			homeLoan.setCustomer(customer);
 			homeLoan.setHomeLoanId(loanId);
@@ -134,7 +141,10 @@ public class LoanServiceImpl implements LoanService {
 		if ( bankDetails != null ) {
 			
 			Customer customer = customerService._checkCustomerBalance(token);
-			String loanId = UUID.randomUUID().toString();
+			
+			Random random = new Random();
+			BigInteger bigInteger = BigInteger.valueOf(Math.round(random.nextFloat() * Math.pow(10,8)));
+			String loanId = bigInteger.toString();
 			
 			educationalLoan.setCustomer(customer);
 			educationalLoan.setEducationalLoanId(loanId);
@@ -159,6 +169,75 @@ public class LoanServiceImpl implements LoanService {
 		
 	}
 
+	
+	@Override
+	public String _uploadLoanDocuments(MultipartFile file, String loanid) {
+		
+		HomeLoan homeLoan = homeLoanRepository.findByHomeLoanId(loanid);
+		EducationalLoan educationalLoan = educationalRepository.findByEducationalLoanId(loanid);
+		
+		if( homeLoan != null ) {
+			try {
+				
+				String url = filesStorageService.save(file);
+				
+				if(url.equals("failed")) {
+					
+					return "Could not upload the file...!! Try again";
+					
+				}
+				else {
+					
+					homeLoan.setDocumentUrl(url);
+					homeLoanRepository.save(homeLoan);
+					return "uploaded";
+					
+				}
+				
+			}
+			catch(Exception e) {
+				
+				return "Could not upload the file...!! Try again";
+				
+			}
+		}
+		
+		else if( educationalLoan != null ) {
+				
+			try {
+				
+				String url = filesStorageService.save(file);
+				
+				if(url.equals("failed")) {
+					
+					return "Could not upload the file...!! Try again";
+					
+				}
+				else {
+					
+					educationalLoan.setDocumentUrl(url);
+					educationalRepository.save(educationalLoan);
+					return "uploaded";
+					
+				}
+				
+			}
+			catch(Exception e) {
+				
+				return "Could not upload the file...!! Try again";
+				
+			}
+			
+		}
+		
+		else {
+			
+			return "Loan Id Not found...!!! Contact nearest RLN Bank...!!";
+		}
+	}
+	
+	
+	
 	@Override
 	public LoansResponse _getAllLoans(String token) {
 		
@@ -229,6 +308,9 @@ public class LoanServiceImpl implements LoanService {
 				
 				return "closed";
 			}
+			else {
+				return "Loan Can't close...!! Please clear all balance before closing the loan...!!";
+			}
 			
 		}
 		else if ( educationalLoan != null ) {
@@ -240,6 +322,11 @@ public class LoanServiceImpl implements LoanService {
 				
 				return "closed";
 			}
+			
+			else  {
+				
+				return "Loan Can't close...!! Please clear all balance before closing the loan...!!";
+			}
 			 
 		}
 		else  {
@@ -247,8 +334,63 @@ public class LoanServiceImpl implements LoanService {
 			return "Loan Cannot be close, please contact near RLN Bank...!!";
 		}
 		
-		return "Internal Server error, Try after some time...!!";
+	}
+
+	@Override
+	public String _loanPayment(LoanInterestPayment interestPayment, String token) {
 		
+		Customer customer =  customerService._checkCustomerBalance(token);
+		HomeLoan homeLoan = homeLoanRepository.findByHomeLoanId(interestPayment.getLoanId());
+		EducationalLoan educationalLoan = educationalRepository.findByEducationalLoanId(interestPayment.getLoanId());
+		
+		
+		if ( homeLoan != null || educationalLoan != null ) {
+			
+			if ( customer.getBalance() - interestPayment.getAmountPaid() >=100 ) {
+				
+				bankDetailsService._updateBalance(interestPayment.getAmountPaid(), true);
+				
+				interestPayment.setStatus(true);
+				interestPayment.setLoanPaymentId(UUID.randomUUID().toString());
+				interestPayment.setCustomer(customer);
+				loanInterestPaymentRepository.save(interestPayment);
+				
+				return "paid";
+				
+			}
+			else {
+				
+				return "Balance Insufficient to pay...!! Check your balance..!!";
+			}
+			
+		}
+		
+		else {
+			
+			return "Loan Id Is Wrong...!! Please Try again..!!";
+		}
+		
+	}
+
+	@Override
+	public List<LoanInterestPayment> _allLoanPayemnts(String token) {
+		
+		Customer customer = customerService._checkCustomerBalance(token);
+		List<LoanInterestPayment> interestPayments = (List<LoanInterestPayment>)
+				loanInterestPaymentRepository.findAll();
+		
+		List<LoanInterestPayment> res = new ArrayList<>();
+		
+		for ( int i = 0; i < interestPayments.size(); i++ ) {
+			
+			if ( customer.getCustomer_id() == interestPayments.get(i).getCustomerrefid() ) {
+				
+				res.add(interestPayments.get(i));
+			}
+		}
+		
+		
+		return res;
 	}
 
 }
