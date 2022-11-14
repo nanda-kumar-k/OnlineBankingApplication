@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.rln.model.Customer;
 import com.rln.model.CustomerProfile;
@@ -43,7 +44,8 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
-	
+	@Autowired
+	private FilesStorageService filesStorageService;
 	
 	@Override
 	public String _GetUsernameFromToken(String token) {
@@ -138,7 +140,45 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 	}
 
-
+	
+	@Override
+	public String _uploadCustomerPhoto(MultipartFile file, String username) {
+		
+		Customer customer = customerRepository.findByUsername(username).get();
+		
+		if( customer != null ) {
+			try {
+				
+				String url = filesStorageService.save(file);
+				
+				if(url.equals("failed")) {
+					
+					return "Could not upload the file...!! Try again";
+					
+				}
+				else {
+					
+					customer.setImgUrl(url);
+					customerRepository.save(customer);
+					return "uploaded";
+					
+				}
+				
+			}
+			catch(Exception e) {
+				
+				return "Could not upload the file...!! Try again";
+				
+			}
+		}
+		
+		else {
+			
+			return "Customer Not found...!!! Contact nearest RLN Bank...!!";
+		}
+	}
+	
+	
 	@Override
 	public JwtResponse _authenticateCustomer(Customer customer) {
 		
@@ -179,6 +219,8 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		return check.get();
 	}
+
+	
 
 	
 

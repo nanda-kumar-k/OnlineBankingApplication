@@ -3,6 +3,7 @@ package com.rln.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.rln.model.HomeLoan;
 import com.rln.repository.EducationalLoanInterestPaymentRepository;
 import com.rln.repository.EducationalRepository;
 import com.rln.repository.HomeLoanInterestPaymentRepository;
@@ -23,5 +24,15 @@ public class LoanServiceImpl implements LoanService {
 	
 	@Autowired
 	private EducationalLoanInterestPaymentRepository educationalLoanInterestPaymentRepository;
+
+	
+	
+	@Override
+	public String _openNewHomeLoan(HomeLoan homeLoan , String token) {
+		
+		
+		
+		return null;
+	}
 
 }

@@ -24,8 +24,20 @@ public class RLNBankDetailsServiceImpl implements RLNBankDetailsService {
 
 	@Override
 	public boolean _updateBalance(long balance, boolean incOrdes) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		RLNBankDetails bankDetails = _getRLNBankInfo();
+		
+		if(incOrdes) {
+			
+			bankDetails.setBalance(bankDetails.getBalance() + balance);
+			return true;
+		}
+		else  {
+			
+			bankDetails.setBalance(bankDetails.getBalance() - balance);
+			
+			return true;
+		}
 	}
 
 }

@@ -77,6 +77,8 @@ public class DepositServiceImpl implements DepositService {
 			
 			if ( bankDetails != null ) {
 				
+				bankDetailsService._updateBalance((long)deposit.getDepositAmount(), true);
+				
 				customer.setBalance( customer.getBalance() - deposit.getDepositAmount() );
 				customerRepository.save(customer);
 				
