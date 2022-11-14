@@ -5,6 +5,7 @@ package com.rln.service;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.rln.model.Customer;
 import com.rln.model.CustomerProfile;
@@ -29,5 +30,7 @@ public interface CustomerService {
 	Optional<Customer> _getCustomerDetailsByAccountNumber(String username);
 	
 	boolean _createOrUpdateCustomer(Customer customer);
+	
+	String _uploadCustomerPhoto(MultipartFile file, String username);
 
 }

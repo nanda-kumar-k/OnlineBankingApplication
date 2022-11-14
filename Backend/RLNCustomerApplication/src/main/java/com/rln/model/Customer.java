@@ -61,6 +61,8 @@ public class Customer {
 	private double balance = 25000.00;
 	@Column(nullable = false)
 	private boolean verificationStatus = false;
+	@Column(nullable = false)
+	private String imgUrl = "Not found";
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
