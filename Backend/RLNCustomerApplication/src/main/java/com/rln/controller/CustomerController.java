@@ -138,8 +138,8 @@ public class CustomerController {
 		return res;
 	}
 	
-	  @GetMapping("/uploads/customerimages/{filename:.+}")
-	  public ResponseEntity<Resource> getFile(@PathVariable String filename) {
+	 @GetMapping("/uploads/customerimages/{filename:.+}")
+	 public ResponseEntity<Resource> getFile(@PathVariable String filename) {
 		
 	    Resource file = storageService.load(filename);
 	    

@@ -25,23 +25,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Entity
 @Table
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EducationalLoanInterestPayment {
+public class LoanInterestPayment {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "eduloanpayment_seq")
-    @SequenceGenerator(name = "eduloanpayment_seq", sequenceName = "eduloanpayment_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "loanpayment_seq")
+    @SequenceGenerator(name = "loanpayment_seq", sequenceName = "loanpayment_sequence")
 	@Column(insertable = false,  updatable = false, nullable = false)
 	private long paymentTableId;
 	@Column(updatable = false,nullable = false)
-	private String educationalPaymentId;
+	private String loanPaymentId;
 	@Column(insertable = false, updatable = false, nullable = false)
-	private long educationalLoanref;
+	private String loanId;
+	@Column(insertable = false, updatable = false, nullable = false)
+	private long customerrefid;
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
@@ -52,8 +55,11 @@ public class EducationalLoanInterestPayment {
 	private boolean status = false;
 	
 	
+	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "educationalLoanref", referencedColumnName = "educationalTableId")
-	private EducationalLoan educationalLoan;
+	@JoinColumn(name = "customerrefid", referencedColumnName = "customer_id")
+	private Customer customer;
+	
+
 
 }
