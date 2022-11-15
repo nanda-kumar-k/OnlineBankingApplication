@@ -41,7 +41,7 @@ public class LoanInterestPayment {
 	private long paymentTableId;
 	@Column(updatable = false,nullable = false)
 	private String loanPaymentId;
-	@Column(insertable = false, updatable = false, nullable = false)
+	@Column(updatable = false, nullable = false)
 	private String loanId;
 	@Column(insertable = false, updatable = false, nullable = false)
 	private long customerrefid;

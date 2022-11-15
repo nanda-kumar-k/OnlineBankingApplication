@@ -53,8 +53,8 @@ public class LoanServiceImpl implements LoanService {
 		ApiResponse<String> res = new ApiResponse<>();
 		res.setTimestamp(new Date());
 		
-		LocalDate end = LocalDate.now();
-		Period ti = Period.between(new java.sql.Date(homeLoan.getLoanEndDate().getTime()).toLocalDate(), end);
+		LocalDate open = LocalDate.now();
+		Period ti = Period.between(open ,new java.sql.Date(homeLoan.getLoanEndDate().getTime()).toLocalDate());
 		
 		int years = ti.getYears();
 		int months = ti.getMonths();
@@ -87,7 +87,7 @@ public class LoanServiceImpl implements LoanService {
 			
 			homeLoan.setCustomer(customer);
 			homeLoan.setHomeLoanId(loanId);
-			homeLoan.setLoanPendingAmount(homeLoan.getLoanAmount());
+//			homeLoan.setLoanPendingAmount(homeLoan.getLoanAmount());
 			homeLoan.setLoanInterest(bankDetails.getHomeLoanInterest());
 			homeLoanRepository.save(homeLoan);
 			
@@ -114,8 +114,8 @@ public class LoanServiceImpl implements LoanService {
 		ApiResponse<String> res = new ApiResponse<>();
 		res.setTimestamp(new Date());
 		
-		LocalDate end = LocalDate.now();
-		Period ti = Period.between(new java.sql.Date(educationalLoan.getLoanEndDate().getTime()).toLocalDate(), end);
+		LocalDate open = LocalDate.now();
+		Period ti = Period.between(open, new java.sql.Date(educationalLoan.getLoanEndDate().getTime()).toLocalDate());
 		
 		int years = ti.getYears();
 		int months = ti.getMonths();
@@ -148,7 +148,7 @@ public class LoanServiceImpl implements LoanService {
 			
 			educationalLoan.setCustomer(customer);
 			educationalLoan.setEducationalLoanId(loanId);
-			educationalLoan.setLoanPendingAmount(educationalLoan.getLoanAmount());
+//			educationalLoan.setLoanPendingAmount(educationalLoan.getLoanAmount());
 			educationalLoan.setLoanInterest(bankDetails.getEducationLoanInterest());
 			educationalRepository.save(educationalLoan);
 			
@@ -343,28 +343,67 @@ public class LoanServiceImpl implements LoanService {
 		HomeLoan homeLoan = homeLoanRepository.findByHomeLoanId(interestPayment.getLoanId());
 		EducationalLoan educationalLoan = educationalRepository.findByEducationalLoanId(interestPayment.getLoanId());
 		
+		if ( customer.getBalance() - interestPayment.getAmountPaid() <=100 ) { 
 		
-		if ( homeLoan != null || educationalLoan != null ) {
+			return "Balance Insufficient to pay...!! Check your balance..!!";
 			
-			if ( customer.getBalance() - interestPayment.getAmountPaid() >=100 ) {
+		}
+		
+		boolean find = false;
+		
+		if ( homeLoan != null ) {
+			
+			if( homeLoan.isLoanVerification() ) {
 				
-				bankDetailsService._updateBalance(interestPayment.getAmountPaid(), true);
+				if ( interestPayment.getAmountPaid() <= homeLoan.getLoanPendingAmount()  ) {
+					
+					find = true;
+				}
+				else {
+					
+					return "Check amount once....!! it's more than your loan amount...!!";
+				}
 				
-				interestPayment.setStatus(true);
-				interestPayment.setLoanPaymentId(UUID.randomUUID().toString());
-				interestPayment.setCustomer(customer);
-				loanInterestPaymentRepository.save(interestPayment);
-				
-				return "paid";
-				
+					
 			}
 			else {
 				
-				return "Balance Insufficient to pay...!! Check your balance..!!";
+				return " Loan verification is pending, please contract nearest RLN Bank...!! ";
+			}
+			
+		}
+		else if ( educationalLoan != null ) {
+			
+			if ( educationalLoan.isLoanVerification() ) {
+				
+				if( interestPayment.getAmountPaid() <= educationalLoan.getLoanPendingAmount()  ) {
+					
+					find = true;
+				}
+				else {
+					
+					return "Check amount once....!! it's more than your loan amount...!!";
+				}
+			}
+			else {
+				
+				return " Loan verification is pending, please contract nearest RLN Bank...!! ";
 			}
 			
 		}
 		
+		if ( find ) {
+			
+			bankDetailsService._updateBalance(interestPayment.getAmountPaid(), true);
+			
+			interestPayment.setStatus(true);
+			interestPayment.setLoanPaymentId(UUID.randomUUID().toString());
+			interestPayment.setCustomer(customer);
+			loanInterestPaymentRepository.save(interestPayment);
+			
+			return "paid";			
+			
+		}
 		else {
 			
 			return "Loan Id Is Wrong...!! Please Try again..!!";
