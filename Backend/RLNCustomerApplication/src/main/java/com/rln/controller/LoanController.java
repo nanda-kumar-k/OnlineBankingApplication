@@ -58,9 +58,10 @@ public class LoanController {
 	}
 	
 	
-	@PostMapping("/uploadcustomerphoto/{loanid}")
+	@PostMapping("/uploadloansdocument/{loanid}")
+	@PreAuthorize("isAuthenticated()")
 	public ApiResponse<String> __uploadCustomerPhoto(
-			@RequestParam("file") MultipartFile file , @PathVariable("loan") String loanid) {
+			@RequestParam("file") MultipartFile file , @PathVariable("loanid") String loanid) {
 		
 		ApiResponse<String> res = new ApiResponse<>();
 		res.setTimestamp(new Date());
@@ -107,7 +108,7 @@ public class LoanController {
 	}
 	
 	
-	@GetMapping("/closehomeloan/{loanid}")
+	@GetMapping("/closeloan/{loanid}")
 	@PreAuthorize("isAuthenticated()")
 	public ApiResponse<String> __closeHomeLoan(
 			@PathVariable("loanid") String loanid ) {
