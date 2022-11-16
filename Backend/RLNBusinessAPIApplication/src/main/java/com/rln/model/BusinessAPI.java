@@ -29,8 +29,8 @@ import lombok.Setter;
 public class BusinessAPI {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")
-    @SequenceGenerator(name = "customer_seq", sequenceName = "customer_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "businessapi_seq")
+    @SequenceGenerator(name = "businessapi_seq", sequenceName = "businessapi_sequence")
 	@Column(insertable = false,updatable = false, nullable = false)
 	private long apiTableId;
 	@Column(insertable = false, updatable = false, nullable = false)
