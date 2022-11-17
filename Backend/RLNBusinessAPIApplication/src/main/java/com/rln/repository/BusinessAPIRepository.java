@@ -11,5 +11,7 @@ import com.rln.model.BusinessAPI;
 public interface BusinessAPIRepository extends CrudRepository<BusinessAPI, Long>{
 	
 	BusinessAPI findByApiKeyAndAuthDomain(String apikey, String authdomain);
+	
+	BusinessAPI findByAuthDomain(String authdomain);
 
 }
