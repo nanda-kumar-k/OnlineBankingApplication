@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.rln.payload.request.BusinessApiPaymentRequest;
 import com.rln.payload.request.CustomerAuthentication;
@@ -28,6 +29,9 @@ public class BusinessApiController {
 	
 	@Autowired
 	public BusinessService businessService;
+	
+	
+	RestTemplate restTemplate = new RestTemplate();
 	
 	
 	@PostMapping("/")
@@ -95,7 +99,24 @@ public class BusinessApiController {
 		return new ResponseEntity<> ("", HttpStatus.BAD_REQUEST );
 	}
 	
+	@PostMapping("/{requestid}/{authdomain}/{paymentid}")
+	public ResponseEntity<Object> __customerPaymentDetailsAuthentication(
+			@PathVariable("requestid") String requestid, @PathVariable("authdomain") String authdomain , @PathVariable("paymentid") String paymentid
+			) {
+		
+		return new ResponseEntity<> ("", HttpStatus.BAD_REQUEST );
+	}
 	
+	
+	@GetMapping("/{requestid}/{authdomain}/{paymentid}/{username}/{amount}")
+	public ResponseEntity<Object> __amountPaymentAuthentication(
+			@PathVariable("requestid") String requestid , @PathVariable("authdomain") String authdomain , 
+			@PathVariable("paymentid") String paymentid , @PathVariable("username") String username , 
+			@PathVariable("amount") String amount
+			) {
+		
+		return new ResponseEntity<> ("", HttpStatus.BAD_REQUEST );
+	}
 	
 	
 	@GetMapping("/")

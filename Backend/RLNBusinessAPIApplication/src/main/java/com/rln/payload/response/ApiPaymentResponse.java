@@ -14,4 +14,5 @@ public class ApiPaymentResponse {
 	private String message;
 	private String description;
 	private String data;
+	private String purpose;
 }
