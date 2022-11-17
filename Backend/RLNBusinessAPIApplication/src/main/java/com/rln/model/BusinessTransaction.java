@@ -63,7 +63,8 @@ public class BusinessTransaction {
 	private boolean paymentStatus = false;
 	@Column(nullable = false)
 	private int paymentRequestCount = 0;
-	
+	@Column(updatable = false,nullable = false)
+	private String authDomain;
 	
 	
 	

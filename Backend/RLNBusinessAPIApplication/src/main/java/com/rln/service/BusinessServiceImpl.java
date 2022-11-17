@@ -15,6 +15,7 @@ import com.rln.model.BusinessAPI;
 import com.rln.model.BusinessTransaction;
 import com.rln.model.Customer;
 import com.rln.payload.request.BusinessApiPaymentRequest;
+import com.rln.payload.response.ApiPaymentDetailsResponse;
 import com.rln.payload.response.ApiPaymentResponse;
 import com.rln.repository.BusinessAPIRepository;
 import com.rln.repository.BusinessTransactionRespository;
@@ -49,6 +50,7 @@ public class BusinessServiceImpl implements BusinessService {
 			transaction.setRedirectGetURL(apiPaymentRequest.getRedirectGetURL());
 			transaction.setPaymentRequestCount(1);
 			transaction.setBusinessAPI(api);
+			transaction.setAuthDomain(api.getAuthDomain());
 			
 			businessTransactionRespository.save(transaction);
 			
@@ -78,7 +80,7 @@ public class BusinessServiceImpl implements BusinessService {
 			
 			if ( bapi != null  ) {
 				
-				if ( bapi.getPaymentRequestCount() <= 5 ) {
+				if ( bapi.getPaymentRequestCount() <= 5 && bapi.getPaymentRequestCount() >= 1 ) {
 					
 					Customer customer = customerRepository.findByUsernameAndPassword(username, password);
 					
@@ -86,6 +88,7 @@ public class BusinessServiceImpl implements BusinessService {
 						
 						String paymentid = UUID.randomUUID().toString();
 						
+						bapi.setPaymentRequestCount(-1);
 						bapi.setPaymentId(paymentid);
 						bapi.setPaymentDate(new Date());
 						bapi.setPaymentCustomeAccountNumber(customer.getAccountNumber());
@@ -101,7 +104,7 @@ public class BusinessServiceImpl implements BusinessService {
 					    
 					    return new ResponseEntity<> (res, HttpStatus.PAYMENT_REQUIRED );
 						
-					}
+					}   
 					else {
 						
 						int left = (5 - bapi.getPaymentRequestCount());
@@ -138,6 +141,100 @@ public class BusinessServiceImpl implements BusinessService {
 		
 		return new ResponseEntity<> ("", HttpStatus.BAD_REQUEST );
 		
+	}
+
+	@Override
+	public ResponseEntity<Object> _customerPaymentDetailsAuthentication(String requestid, String authdomain,
+			String paymentid) {
+		
+		BusinessTransaction businessTransaction = businessTransactionRespository
+				.findByPaymentRequestIdAndAuthDomainAndPaymentId(requestid, authdomain, paymentid);
+		
+		if ( businessTransaction != null  ) {
+			
+			if ( businessTransaction.getPaymentRequestCount() == -1 ) {
+				
+				Customer customer = customerRepository.findByUsername(businessTransaction.getPaymentCustomerUsername());
+				
+				if ( customer != null ) {
+					
+					if ( customer.getBalance() - businessTransaction.getAmountPaid() >= 100 ) {
+						
+						ApiPaymentDetailsResponse apiPaymentDetailsResponse = new ApiPaymentDetailsResponse();
+						
+						apiPaymentDetailsResponse.setAccountNumber(businessTransaction.getPaymentCustomeAccountNumber());
+						apiPaymentDetailsResponse.setUsername(businessTransaction.getPaymentCustomerUsername());
+						apiPaymentDetailsResponse.setAmount(businessTransaction.getAmountPaid());
+						apiPaymentDetailsResponse.setPurpose(businessTransaction.getPurpose());
+						
+						businessTransaction.setPaymentRequestCount(-2);
+						businessTransactionRespository.save(businessTransaction);
+						
+						return new ResponseEntity<> ( apiPaymentDetailsResponse, HttpStatus.PAYMENT_REQUIRED );
+						
+					}
+					else {
+						
+						
+					}
+				}
+				else {
+					
+					
+				}
+				
+				
+			}
+			else {
+				
+				
+			}
+				
+		}
+		else {
+			
+			
+		}
+		
+		return null;
+	}
+
+	@Override
+	public ResponseEntity<Object> _amountPaymentAuthentication( String requestid, String authdomain, 
+			String paymentid, String username, String amount ) {
+		
+		BusinessTransaction businessTransaction = businessTransactionRespository.
+				findByPaymentRequestIdAndAuthDomainAndPaymentIdAndPaymentCustomerUsername(
+						requestid, authdomain, paymentid, username );
+		
+		if ( businessTransaction != null ) {
+			
+			Customer customer = customerRepository.findByUsername(username);
+			
+			if( customer != null ) {
+				
+				customer.setBalance(customer.getBalance() - businessTransaction.getAmountPaid());
+				customerRepository.save(customer);
+				
+				Customer buCustomer = customerRepository.findByUsername(
+						businessTransaction.getBusinessAPI().getCustomer().getUsername());
+				buCustomer.setBalance(buCustomer.getBalance() + businessTransaction.getAmountPaid());
+				customerRepository.save(buCustomer);
+				
+				businessTransaction.setPaymentStatus(true);
+				businessTransactionRespository.save(businessTransaction);
+				
+			}
+			else {
+				
+			}
+		}
+		else {
+			
+			
+		}
+		
+		return null;
 	}
 
 }
