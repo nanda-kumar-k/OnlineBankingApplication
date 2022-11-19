@@ -20,14 +20,18 @@ const TextScroll = styled.marquee`
     height: 5vh;
     background-color: #d3ebfa;
     font-size: 1.6rem;
+    font-weight: 100;
+    color: #000;
+
 `;
 
 
 
 const LoginContainer = styled.div`
-    height: 80vh;
+    height: 78vh;
     width: 80vw;
-    background-color: #3498db;
+    background-color: #d3ebfa;
+    background:  linear-gradient(#b9e1fa,white);
     display: flex;
     padding: 2vh 10vw;
     font-family: "Lato-Bold" !important;
@@ -38,7 +42,7 @@ const LoginLeft = styled.div`
     height: 70vh;
     width: 36vw;
     /* background-color: rgb(213, 231, 247); */
-    padding: 5vh 2vw 0 2vw;
+    padding: 8vh 2vw 0 2vw;
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
@@ -86,7 +90,7 @@ const NotePoint = styled.div`
     width: 36vw;
     /* background-color: red; */
     text-align: left;
-    padding: 2vh 2vw;
+    padding: 2vh 2vw 0 2vw;
     margin-top: 2vh;
     margin-bottom: 2vh;
     h3{
@@ -105,14 +109,25 @@ const NotePoint = styled.div`
 `;
 
 const LoginRight = styled.div`
-    height: 78vh;
+    height: 70vh;
     width: 36vw;
     /* background-color: green; */
-    padding: 2vh 2vw;
+    padding: 8vh 2vw 0 2vw;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    /* align-items: center; */
+
+    h3{
+        margin-bottom: 2vh;
+    }
+    p{
+        
+        margin-bottom: 1vh;
+    }
+    li {
+        margin-left: 1vw;
+    }
 `;
 
 function CustomerAuth() {
@@ -152,12 +167,12 @@ function CustomerAuth() {
 
     return (
         <>
-            <TextScroll behavior="scroll" direction="left" scrollamount="10" style={{ color: "red" }}>
+            <TextScroll behavior="scroll" direction="left" scrollamount="10" >
                 Welcome to Online Banking Application
             </TextScroll>
             <LoginContainer>
             <LoginLeft>
-                <h2>RLN Online Banking</h2>
+                <h2>RLN Online Net Banking</h2>
                 <h2 style={{marginBottom:'30px'}}>Login</h2>
                 <FormControl sx={{ m: 1, width: '40ch', marginBottom:'3ch' }} variant="standard" >
                     <InputLabel htmlFor="standard-adornment-password">Enter User Name</InputLabel>
@@ -198,7 +213,12 @@ function CustomerAuth() {
                 </NotePoint>
             </LoginLeft>
             <LoginRight>
-                
+                <h3>Disclaimer</h3>
+                <ul>
+                    <li><p>By clicking on Login button, you agree to our Terms and Conditions</p></li>
+                    <li><p>By clicking on Login button, you agree to our Terms and Conditions</p></li>
+                    <li><p>By clicking on Login button, you agree to our Terms and Conditions</p></li>
+                </ul>
             </LoginRight>
             </LoginContainer>
         
