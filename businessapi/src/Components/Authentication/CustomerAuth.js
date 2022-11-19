@@ -7,8 +7,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { useNavigate } from "react-router-dom";
-import { NavLink } from 'react-router-dom';
+// import { useNavigate } from "react-router-dom";
+// import { NavLink } from 'react-router-dom';
 
 
 
@@ -133,8 +133,8 @@ const LoginRight = styled.div`
 function CustomerAuth() {
 
 
-    const navigate = useNavigate();
-    const [errorMessages, setErrorMessages] = React.useState('');
+    // const navigate = useNavigate();
+    // const [errorMessages, setErrorMessages] = React.useState('');
     const [values, setValues] = React.useState({
         username: '',
         password: '',
@@ -202,7 +202,7 @@ function CustomerAuth() {
                         }
                     />
                 </FormControl>
-                 <p>{errorMessages}</p>
+                 <p></p>
                  <SubBut onClick={handleLogin}> Login </SubBut>
                  <hr/>
                 <NotePoint>
