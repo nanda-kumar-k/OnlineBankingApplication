@@ -1,6 +1,8 @@
+
+
 import styled from "styled-components";
 import paymentimg from "./Images/payment.png";
-
+import failure from "./Images/failure.gif";
 
 const TextScroll = styled.marquee`
     margin-top: 10px;
@@ -33,7 +35,7 @@ const ConformationContainer = styled.div`
     width: 23vw;
      background:  linear-gradient(#b9e1fa,white);
     padding: 2vh 1vw;
-    /* display: flex; */
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -41,11 +43,6 @@ const ConformationContainer = styled.div`
     box-shadow: 0px 1px whitesmoke;
     border-bottom: 1px solid #E6E6E6;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    img {
-        margin: 10px 0;
-        width: 120px;
-        height: 120px;
-    }
     hr {
         width: 100%;
         margin-top: 2vh;
@@ -62,32 +59,13 @@ const ConformationContainer = styled.div`
             text-align: left;
             padding: 0 1vw;
         }
-    }
-
-    .butrow {
-        display: flex;
-        width: 23vw;
-        justify-content: space-between;
-
-        #pay {
-            &:hover{
-                background-color: #4CAF50;
-            }
         }
-
-        #cancel {
-            &:hover{
-                background-color: #f44336;
-            }
-        }
-    }
 `;
-
 
 const SubBut = styled.button`
     height: 5vh;
-    width: 10vw;
-    background-color: #64b4e9;
+    width: 20vw;
+    background-color: rgb(249, 133, 133) ;
     color: white;
     border: none;
     border-radius: 5px;
@@ -96,11 +74,24 @@ const SubBut = styled.button`
     cursor: pointer;
     margin-top: 2vh;
     margin-bottom: 2vh;
-    
+    &:hover{
+        background-color: #64b4e9;
+    }
 `;
 
+const InfoImg = styled.img`
+    margin: 10px 0;
+    width: 120px;
+    height: 120px;
+`;
 
-function PaymentConformation() { 
+const PaySuccessImg = styled.img`
+    margin-left: 5px;
+    width: 15vw;
+    height: 30vh;
+`;
+
+function PaymentFailure() { 
     return (
         <>
             <TextScroll behavior="scroll" direction="left" scrollamount="10" >
@@ -110,32 +101,11 @@ function PaymentConformation() {
                 <ConformationContainer>
                     <h1>RLN Online Net Banking</h1>
                     <h2>Payment Conformation</h2>
-                    <img src={paymentimg} alt="" />
-                    <div className="info">
-                        <table>
-                            <tr>
-                                <td>Customer Username : </td>
-                                <td>nandakumar</td>
-                            </tr>
-                            <tr>
-                                <td>Account Number : </td>
-                                <td>123456789</td>
-                            </tr>
-                            <tr>
-                                <td>Amount :</td>
-                                <td>100000.2</td>
-                            </tr>
-                            <tr>
-                                <td>Purpose :</td>
-                                <td>Napsack</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div className="butrow"> 
-                        <SubBut id="cancel"> Cancel </SubBut>
-                        <SubBut id="pay"> Pay </SubBut>
-                    </div>
+                    <InfoImg src={paymentimg} alt="" />
+                  
+                    <PaySuccessImg src={failure} alt="" />    
                     
+                    <SubBut > Continue </SubBut>
                     <hr/>
                 </ConformationContainer>
             </PaymentContainer>
@@ -143,4 +113,4 @@ function PaymentConformation() {
     )
 }
 
-export default PaymentConformation;
+export default PaymentFailure;
