@@ -79,6 +79,32 @@ public class DepositController {
 		
 	}
 	
+	@GetMapping("/specificdeposit/{depsoitid}")
+	@PreAuthorize("isAuthenticated()")
+	public ApiResponse<Deposit> __specificDeposit(
+			@RequestHeader("Authorization") String token , @PathVariable("depsoitid") String depsoitid ) {
+		
+		ApiResponse<Deposit> res = new ApiResponse<>();
+		res.setTimestamp(new Date());
+		
+		Deposit check = depositService._specificDeposit(depsoitid, token);
+		
+		if ( check != null ) {
+			
+			res.setData(check);
+			res.setMessage("Data found...!!");
+			res.setStatusCode(200);
+		}
+		else {
+			
+			res.setStatusCode(204);
+			res.setMessage("No Deposits Found.!!!");
+		}
+		
+		return res;
+		
+	}
+	
 	
 	@GetMapping("/closedeposit/{depsoitid}")
 	@PreAuthorize("isAuthenticated()")

@@ -11,4 +11,6 @@ public interface DepositService {
 	List<Deposit> _getAllDeposits( String token );
 	
 	boolean _closeDeposit( String depositid , String token);
+	
+	Deposit _specificDeposit(String depositid, String token);
 }
