@@ -8,13 +8,13 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import RLNDataService from "../../services/rln.customer.service";
+
 
 const CHRightContainer = styled.div`
     padding: 1vh 1vw;
@@ -54,13 +54,22 @@ const TransferImg = styled.img`
 const TransferForm = styled.div`
     position: absolute;
     width: 64vw;
-    height: 50vh;
+    height: 65vh;
     display: flex;
     flex-wrap: wrap;
-    /* flex-direction: column; */
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     /* overflow: scroll; */
+
+    #errormsg {
+       
+        color: red;
+        font-size: 1rem;
+        margin-top: 1vh;
+        width: 40ch;
+        text-align:center ;
+    }
 `;
 
 const DepositContainer = styled.div`
@@ -77,12 +86,11 @@ const DepositNote = styled.div`
 `;
 
 function NewDeposit() {
-
+    const [errorMessages, setErrorMessages] = React.useState('');
+    const [depositEndDate, setDepositEndDate] = React.useState(new Date());
     const [values, setValues] = React.useState({
-        senderaccount: '',
-        receiveraccount: '',
-        accounttype: '',
-        amount: ''
+        depositAmount: '',
+        nomineeName: ''
       });
     
       const handleChange = (prop) => (event) => {
@@ -93,7 +101,45 @@ function NewDeposit() {
       const handleSubmit = (event) => {
         event.preventDefault();
         console.log(values);
-        };  
+
+        if(values.depositAmount && values.nomineeName ){
+
+            if(!isNaN(values.depositAmount)) {
+                const date = new Date(depositEndDate);
+                const ded = date.toISOString().split('T')[0];
+                let data = {
+                    depositAmount: values.depositAmount,
+                    nomineeName: values.nomineeName,
+                    depositEndDate: ded
+                }
+
+                RLNDataService.openNewDeposit(data).then((response) => {
+                    console.log(response);
+                    if(response.statusCode === 200){
+                        setErrorMessages(response.message);
+                    }
+                    else if (response.statusCode === 401){
+                        setErrorMessages(response.message);
+                    }
+                    else {
+                        setErrorMessages(response.message);
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                }
+                );
+                
+            }
+            else{
+                setErrorMessages("Deposit amount should be a number");
+            }
+
+
+        }
+        else{
+            setErrorMessages('Please fill all the fields');
+        }
+    }
 
     return (
         <>
@@ -123,28 +169,9 @@ function NewDeposit() {
                                     <InputLabel htmlFor="filled-adornment-amount">Enter Amount To Fix</InputLabel>
                                     <FilledInput
                                     id="filled-adornment-amount"
-                                    value={values.receiveraccount}
-                                    onChange={handleChange('receiveraccount')}
+                                    value={values.depositAmount}
+                                    onChange={handleChange('depositAmount')}
                                     />
-                                </FormControl>
-                                <FormControl variant="standard" sx={{ m: 1, width: '50ch', '& .MuiInputLabel-root': {
-                                    color: 'balck',
-                                    fontSize: '1.2rem',
-                                    }, }}>
-                                    <InputLabel id="demo-simple-select-standard-label">Select Account Type</InputLabel>
-                                    <Select
-                                    labelId="demo-simple-select-standard-label"
-                                    id="demo-simple-select-standard"
-                                    value={values.accounttype}
-                                    onChange={handleChange('accounttype')}
-                                    label="Select Account Type"
-                                    >
-                                    <MenuItem value="">
-                                        <em>None</em>
-                                    </MenuItem>
-                                    <MenuItem value={1}>Current</MenuItem>
-                                    <MenuItem value={2}>Savings</MenuItem>
-                                    </Select>
                                 </FormControl>
                                 <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '50ch', '& .MuiInputLabel-root': {
                                     color: 'balck',
@@ -156,22 +183,8 @@ function NewDeposit() {
                                     <InputLabel htmlFor="filled-adornment-amount">Nominee Name</InputLabel>
                                     <FilledInput
                                     id="filled-adornment-amount"
-                                    value={values.receiveraccount}
-                                    onChange={handleChange('receiveraccount')}
-                                    />
-                                </FormControl>
-                                <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '50ch', '& .MuiInputLabel-root': {
-                                    color: 'balck',
-                                    fontSize: '1.2rem',
-                                    },
-                                    '& .MuiFilledInput-root':{
-                                        backgroundColor: 'white',
-                                    } }} >
-                                    <InputLabel htmlFor="filled-adornment-amount">Nominee Account No</InputLabel>
-                                    <FilledInput
-                                    id="filled-adornment-amount"
-                                    value={values.amount}
-                                    onChange={handleChange('amount')}
+                                    value={values.nomineeName}
+                                    onChange={handleChange('nomineeName')}
                                     />
                                 </FormControl>
                                 <FormControl sx={{ m: 1, mt: 1, width: '50ch', '& .MuiTextField-root': {
@@ -181,15 +194,16 @@ function NewDeposit() {
                                     <LocalizationProvider dateAdapter={AdapterDayjs} >
                                         <DatePicker
                                             label="Select Closing Date of Fixed Deposit" 
-                                            // value={value}
-                                            // onChange={(newValue) => {
-                                            // setValue(newValue);
-                                            // }}                            
+                                            value={depositEndDate}
+                                            onChange={(newValue) => {
+                                            setDepositEndDate(newValue);
+                                            }}                            
                                             renderInput={(params) => <TextField {...params} /> }
                                         />
                                     </LocalizationProvider>
-                                </FormControl>         
+                                </FormControl>        
                             </DepositContainer>
+                            <p id='errormsg'>{errorMessages}</p> 
                             <Button variant="contained" endIcon={<SendIcon />} sx={{ m: 1, mt: 1, width: '50ch',marginBottom:'0px', backgroundColor: '#3498db', '& .MuiButton-root': {
                                 color: 'balck',
                                 // fontWeight: 'bold',

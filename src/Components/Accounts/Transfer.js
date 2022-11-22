@@ -8,9 +8,10 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 import * as React from 'react';
+import RLNDataService from "../../services/rln.customer.service";
+
+
 const CHRightContainer = styled.div`
     padding: 1vh 1vw;
     width: 64vw;
@@ -55,15 +56,25 @@ const TransferForm = styled.div`
 
 
     /* https://mui.com/material-ui/react-text-field/ */
+
+    #errormsg {
+        color: red;
+        font-size: 1.2rem;
+        margin-top: 1vh;
+        width: 40ch;
+        text-align:center ;
+        margin-bottom: 1vh;
+    }
 `;
 
 function Transfer() {
 
+    const [errorMessages, setErrorMessages] = React.useState('');
+
     const [values, setValues] = React.useState({
-        senderaccount: '',
-        receiveraccount: '',
-        accounttype: '',
-        amount: ''
+        amountTransfer: '',
+        recieverName: '',
+        recieverAccountNumber: ''
       });
     
       const handleChange = (prop) => (event) => {
@@ -71,11 +82,60 @@ function Transfer() {
         // console.log(values);
       };
 
-      const handleSubmit = (event) => {
+      const handleSubmit = async (event) => {
         event.preventDefault();
         console.log(values);
-        };  
+        if (values.amountTransfer && values.recieverName && values.recieverAccountNumber) {
+            
+            if (values.recieverAccountNumber.length === 12) {
 
+                if (!isNaN(values.recieverAccountNumber)) {
+
+                    if (!isNaN(values.amountTransfer)) {
+                        if (Number(values.amountTransfer) > 0) {
+
+                            let data = {
+                                amountTransfer: values.amountTransfer,
+                                recieverName: values.recieverName,
+                                recieverAccountNumber: values.recieverAccountNumber
+                            };
+
+                           await RLNDataService.customerAmountTransfer(data).then(response => {
+                                console.log(response);
+                                if (response.statusCode === 200) {
+                                    setErrorMessages(response.message);
+                                }
+                                else if (response.statusCode === 401) {
+                                    setErrorMessages(response.message);
+                                }
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                // navigate('/setpassword');
+                            });                           
+                        } else {
+                            setErrorMessages("Amount should be greater than 0");
+                        }
+                    } else {
+                        setErrorMessages('Please enter a valid amount');
+                    } 
+                } 
+                else {
+                    setErrorMessages('Account Number should be in 12 digits number');
+                }
+            }
+            else  {
+                setErrorMessages("Account Number should be 12 digits number");
+            }
+
+            
+        }
+        else {
+            setErrorMessages('Please fill all the fields');
+        }
+
+        };  
+        
     return (
         <>
         <CHContainer>
@@ -92,21 +152,21 @@ function Transfer() {
                     <TransferContainer>
                         <TransferImg src={TransferBackground} alt="" />
                         <TransferForm>
-                        <h2 style={{marginBottom:'20px'}}>Account Details</h2>
-                        <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '50ch', marginBottom:'20px', '& .MuiInputLabel-root': {
-                            color: 'balck',
-                            fontSize: '1.2rem',
-                            },
-                            '& .MuiFilledInput-root':{
-                                backgroundColor: 'white',
-                            } }} >
-                            <InputLabel htmlFor="filled-adornment-amount">Your Account Number</InputLabel>
-                            <FilledInput
-                            id="filled-adornment-amount"
-                            value={values.senderaccount}
-                            onChange={handleChange('senderaccount')}
-                            />
-                        </FormControl>
+                            <h2 style={{marginBottom:'20px'}}>Account Details</h2>
+                            <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '50ch', marginBottom:'20px', '& .MuiInputLabel-root': {
+                                color: 'balck',
+                                fontSize: '1.2rem',
+                                },
+                                '& .MuiFilledInput-root':{
+                                    backgroundColor: 'white',
+                                } }} >
+                                <InputLabel htmlFor="filled-adornment-amount">Account Number</InputLabel>
+                                <FilledInput
+                                id="filled-adornment-amount"
+                                value={values.recieverAccountNumber}
+                                onChange={handleChange('recieverAccountNumber')}
+                                />
+                            </FormControl>
                             <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '50ch',marginBottom:'20px', '& .MuiInputLabel-root': {
                                 color: 'balck',
                                 fontSize: '1.2rem',
@@ -114,31 +174,12 @@ function Transfer() {
                                 '& .MuiFilledInput-root':{
                                     backgroundColor: 'white',
                             } }} >
-                                <InputLabel htmlFor="filled-adornment-amount">Account Number</InputLabel>
+                                <InputLabel htmlFor="filled-adornment-amount">Account Holder Name</InputLabel>
                                 <FilledInput
                                 id="filled-adornment-amount"
-                                value={values.receiveraccount}
-                                onChange={handleChange('receiveraccount')}
+                                value={values.recieverName}
+                                onChange={handleChange('recieverName')}
                                 />
-                            </FormControl>
-                            <FormControl variant="standard" sx={{ m: 1, width: '50ch',marginBottom:'20px', '& .MuiInputLabel-root': {
-                                color: 'balck',
-                                fontSize: '1.2rem',
-                                }, }}>
-                                <InputLabel id="demo-simple-select-standard-label">Select Account Type</InputLabel>
-                                <Select
-                                labelId="demo-simple-select-standard-label"
-                                id="demo-simple-select-standard"
-                                value={values.accounttype}
-                                onChange={handleChange('accounttype')}
-                                label="Select Account Type"
-                                >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={1}>Current</MenuItem>
-                                <MenuItem value={2}>Savings</MenuItem>
-                                </Select>
                             </FormControl>
                             <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '50ch',marginBottom:'20px', '& .MuiInputLabel-root': {
                                 color: 'balck',
@@ -150,10 +191,11 @@ function Transfer() {
                                 <InputLabel htmlFor="filled-adornment-amount">Amount</InputLabel>
                                 <FilledInput
                                 id="filled-adornment-amount"
-                                value={values.amount}
-                                onChange={handleChange('amount')}
+                                value={values.amountTransfer}
+                                onChange={handleChange('amountTransfer')}
                                 />
                             </FormControl>
+                            <p id='errormsg'>{errorMessages}</p>
                             <Button variant="contained" endIcon={<SendIcon />} sx={{ m: 1, mt: 1, width: '50ch',marginBottom:'50px', backgroundColor: '#3498db', '& .MuiButton-root': {
                                 color: 'balck',
                                 // fontWeight: 'bold',

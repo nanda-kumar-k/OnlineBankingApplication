@@ -53,21 +53,32 @@ public class DepositServiceImpl implements DepositService {
 		
 		Customer customer =  customerService._checkCustomerBalance(token);
 		
-		if ( customer.getBalance() - deposit.getDepositAmount() <= 100 && deposit.getDepositAmount() <= 0) {
+		if ( deposit.getDepositAmount() <= 500 ) {
 			
-			return " Insufficient Bank Balance To open new Fix Deposit...!!";
+			return "Minimum amount to fix is 500...!! please enter valid amount...!!";
 			
 		}
 		
-//		SimpleDateFormat dateOnly = new SimpleDateFormat("MM/dd/yyyy");
-		Date today = new Date();
-//		String from = dateOnly.format(today);
-//		String to = dateOnly.format(deposit.getDepositEndDate());
-		if( today.compareTo(deposit.getDepositEndDate()) < 0  ) {
+		if ( customer.getBalance() - deposit.getDepositAmount() <= 100 ) {
+			
+			return "Insufficient Bank Balance To open new Fix Deposit...!!";
+			
+		}
+
+		LocalDate open = LocalDate.now();
+		Period ti = Period.between(open ,new java.sql.Date(deposit.getDepositEndDate().getTime()).toLocalDate());
+		
+		int years = ti.getYears();
+		int months = ti.getMonths();
+		int numberOfMonthsBetweenDates =  months+years*12;
+		System.out.println(years);
+		System.out.println(months);
+		System.out.println(numberOfMonthsBetweenDates);
+		if( years < 1 && numberOfMonthsBetweenDates < 1  ) {
 			
 //			Period ti = Period.between(null, null);
 			
-			return " Invalid closing date of the deposit...!!! ";
+			return "minimum 1 month should be fix the amount...!! Try again...!!";
 		}
 		
 		else {

@@ -53,9 +53,9 @@ public class DepositController {
 	}
 	
 	
-	@GetMapping("/getall")
+	@GetMapping("/getalldeposits")
 	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<List<Deposit>> __getAllDetails(@RequestHeader("Authorization") String token) {
+	public ApiResponse<List<Deposit>> __getAllDeposits(@RequestHeader("Authorization") String token) {
 		
 		ApiResponse<List<Deposit>> res = new ApiResponse<>();
 		res.setTimestamp(new Date());

@@ -2,7 +2,9 @@ import { CHContainer, CHLeft, CHNavbar, CHRight, BackImg } from "../CustomerHome
 import background from "../CustomerHome/Images/background.png";
 import AllLinks from "../CustomerHome/AllLinks";
 import styled from "styled-components";
-
+import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import RLNDataService from "../../services/rln.customer.service";
 
 export const CHRightContainer = styled.div`
     padding: 1vh 1vw;
@@ -24,7 +26,7 @@ const TranTable = styled.table`
     th {
         border: 1px solid #dddddd;
         text-align: left;
-        padding: 8px;
+        padding: 4px;
         position: sticky;
         top: 0vh;
         background-color: white;
@@ -32,7 +34,7 @@ const TranTable = styled.table`
     td {
         border: 1px solid #dddddd;
         text-align: left;
-        padding: 8px;
+        padding: 4px;
         border-collapse: collapse;
     }
     tr:nth-child(even) {
@@ -44,6 +46,27 @@ const TranTable = styled.table`
 `
 
 function AllDeposits() {
+
+    const [alldeposits, setAlldeposits] = React.useState('');
+    const [noData, setNoData] = React.useState(false);
+    const parms = useParams();
+    const navigate = useNavigate();
+    // const fetchDataFun = () => {
+    //     navigate('/login');
+    // }
+    React.useEffect(() => {
+        RLNDataService.getAllDeposits().then((response) => {
+            console.log(response);
+            if(response.statusCode === 200) {
+                setAlldeposits(response.data);
+            }
+            else if (response.statusCode === 204) {
+                setNoData(true);
+                // navigate('/login');
+            }
+        })
+    },[parms,navigate]);
+
     return (
         <>
         <CHContainer>
@@ -65,69 +88,23 @@ function AllDeposits() {
                             <th>Deposit Interest</th>
                             <th>Deposit Duration</th>
                             <th>Nominee Name</th>
-                            <th>Nominee Account No</th>
                             <th>Deposit Status</th>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2021-01-01</td>
-                            <td>10000</td>
-                            <td>10%</td>
-                            <td>1 Year</td>
-                            <td>John Doe</td>
-                            <td>123456789012</td>
-                            <td>Active</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2021-01-01</td>
-                            <td>10000</td>
-                            <td>10%</td>
-                            <td>1 Year</td>
-                            <td>John Doe</td>
-                            <td>123456789012</td>
-                            <td>Active</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2021-01-01</td>
-                            <td>10000</td>
-                            <td>10%</td>
-                            <td>1 Year</td>
-                            <td>John Doe</td>
-                            <td>123456789012</td>
-                            <td>Active</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2021-01-01</td>
-                            <td>10000</td>
-                            <td>10%</td>
-                            <td>1 Year</td>
-                            <td>John Doe</td>
-                            <td>123456789012</td>
-                            <td>Active</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2021-01-01</td>
-                            <td>10000</td>
-                            <td>10%</td>
-                            <td>1 Year</td>
-                            <td>John Doe</td>
-                            <td>123456789012</td>
-                            <td>Active</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2021-01-01</td>
-                            <td>10000</td>
-                            <td>10%</td>
-                            <td>1 Year</td>
-                            <td>John Doe</td>
-                            <td>123456789012</td>
-                            <td>Active</td>
-                        </tr>
+                        {alldeposits && alldeposits.map((item) => {
+                            return (
+                                <tr key={item.depositId}>
+                                    <td>{item.depositId}</td>
+                                    <td>{item.depositDate}</td>
+                                    <td>{item.depositAmount}</td>
+                                    <td>{item.depositInterest}</td>
+                                    <td>{item.depositEndDate}</td>
+                                    <td>{item.nomineeName}</td>
+                                    {item.depositeActiveStatus ? <td style={{color: "green"}}>Active</td> : <td style={{color: "red"}}>Closed</td> }
+                                </tr>
+                            )
+                        })}
+
+                        {noData && <tr><td colSpan="7" style={{textAlign: "center"}}>No Data Found</td></tr>}
                         
                     </TranTable>
                 </CHRightContainer>

@@ -31,7 +31,6 @@ public class TransactionServiceImpl implements TransactionService {
 	public String _customerAmountTransfer(Transaction transaction, String token) {
 		
 		Optional<Customer> reciever = customerService._getCustomerDetailsByAccountNumber(transaction.getRecieverAccountNumber());
-		System.out.println("ttttttttt");
 		if(reciever.isEmpty()) {
 			
 			return "Transaction Failed...!! ( Invalid Account Number ) Try again...!";
@@ -40,14 +39,14 @@ public class TransactionServiceImpl implements TransactionService {
 		Customer customer =  customerService._checkCustomerBalance(token);
 		
 		transaction.setCustomer(customer);
-		transaction.setSenderAccountNumber(customer.getAccountNumber());
-		transaction.setSenderName(customer.getFirstName() + customer.getLastName());
+//		transaction.setSenderAccountNumber(customer.getAccountNumber());
+//		transaction.setSenderName(customer.getFirstName() + customer.getLastName());
 		transaction.setTransactionId(UUID.randomUUID().toString());
 		transactionRepository.save(transaction);  
 		
 		if(Objects.nonNull(transaction.getAmountTransfer())) {
 			
-			if(customer.getBalance() - transaction.getAmountTransfer() <= 100 && transaction.getAmountTransfer() <= 0 ) {
+			if(customer.getBalance() - transaction.getAmountTransfer() <= 100 || transaction.getAmountTransfer() <= 0 ) {
 				
 				return "Transaction Failed...!! ( Insufficient Bank Balance ).";
 			}
@@ -84,7 +83,8 @@ public class TransactionServiceImpl implements TransactionService {
 		
 		for( int i = 0; i < li.size(); i++) {
 			
-			if( li.get(i).getCustomerrefid() == (customer.getCustomer_id()) ) {
+			if( customer.getCustomer_id() == li.get(i).getCustomerrefid() || 
+					li.get(i).getSenderAccountNumber().equals( customer.getAccountNumber() ) ) {
 				
 				Transaction filter = li.get(i);
 				filter.setCustomer(null);

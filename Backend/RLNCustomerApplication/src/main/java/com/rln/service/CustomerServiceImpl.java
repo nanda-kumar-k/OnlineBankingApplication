@@ -111,6 +111,10 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		String acc = bigInteger.toString();
 		
+		if (acc.length() != 12 ) {
+			_createRLNCustomer(customerProfile);
+		}
+		
 		if ( _checkAccountNumber(acc )) {
 			
 			customerProfile.getCustomer().setAccountNumber(acc);
