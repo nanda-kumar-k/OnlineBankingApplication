@@ -9,6 +9,8 @@ const API_TRANSACTION_URL = "http://localhost:2001/api/customer/transactions/";
 
 const API_DEPOSIT_URL = "http://localhost:2001/api/customer/deposit/";
 
+const API_LOANS_URL = "http://localhost:2001/api/customer/loans/";
+
 function checkUsernameAvailability (username) {
     return axios.get(API_URL + "checkuser", {
         params: {
@@ -113,6 +115,66 @@ const getAllDeposits = async () => {
 }
 
 
+const specificDeposit = async (depositId) => {
+    let checkHeader = authHeader();
+    if(checkHeader){
+        return await axios.get(API_DEPOSIT_URL + "specificdeposit/" + depositId, {
+            headers: checkHeader
+        })
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            console.log(error);
+            return '';
+        })
+    }
+    else{
+        return '';
+    }
+}
+
+
+const closeDeposit = async (depositId) => {
+    let checkHeader = authHeader();
+    if(checkHeader){
+        return await axios.get(API_DEPOSIT_URL + "closedeposit/" + depositId, {
+            headers: checkHeader
+        })
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            console.log(error);
+            return '';
+        })
+    }
+    else{
+        return '';
+    }
+};
+
+
+const openEdicationalLoan = async (data) => {
+    let checkHeader = authHeader();
+    if(checkHeader){
+        return await axios.post(API_LOANS_URL + "openeducationalloan", data, { headers: checkHeader })
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            console.log(error);
+            return '';
+        })
+    }
+    else{
+        return '';
+    }
+};
+
 
 const testconnection = () => {
     return http.get(`http://localhost:2001/api/customer/test1`);
@@ -125,7 +187,10 @@ const RLNDataService = {
     customerAmountTransfer,
     customerTransactionsDetails,
     openNewDeposit,
-    getAllDeposits
+    getAllDeposits,
+    specificDeposit,
+    closeDeposit,
+    openEdicationalLoan
 };
 
 

@@ -35,6 +35,7 @@ import ConnectionTest from './Components/APITesting/ConnectionTest';
 import BusinessCustomer from './Components/JoinWithUs/CustomerLogin/BusinessCustomer';
 import SavingsCustomer from './Components/JoinWithUs/CustomerLogin/SavingsCustomer';
 import Navbar from './Components/Navbar/Navbar';
+import SpecificDeposit from './Components/Deposits/SpecificDeposit';
 function App() {
   return (
     <>
@@ -65,6 +66,7 @@ function App() {
           <Route path="neweducationloan" element={<NewEducationalLoan/>}/>
           <Route path="alldeposits" element={<AllDeposits/>}/>
           <Route path="allloans" element={<AllLoans/>}/>
+          <Route path="specificdeposit/:id" element={<SpecificDeposit/>}/>
           <Route path="superadmindashboard" element={<SDashboard/>}/>
           <Route path="employeedashboard" element={<EDashboard/>}/>
           <Route path="employeeallcustomers" element={<EAllCustomers/>}/>

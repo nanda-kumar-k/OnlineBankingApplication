@@ -185,4 +185,41 @@ public class DepositServiceImpl implements DepositService {
 		
 		return false;
 	}
+
+	@Override
+	public Deposit _specificDeposit(String depositid, String token) {
+		
+		Deposit deposit = depositRepository.findByDepositId(depositid);
+		
+		if ( deposit != null ) {
+			
+			LocalDate end = LocalDate.now();
+			Period ti = Period.between(new java.sql.Date(deposit.getDepositEndDate().getTime()).toLocalDate(), end);
+
+			int years = ti.getYears();
+			int months = ti.getMonths();
+			int numberOfMonthsBetweenDates =  months+years*12;
+			double t;
+			
+			if(numberOfMonthsBetweenDates <= 12) {
+				t = (Double.valueOf(numberOfMonthsBetweenDates)) / 12.00 ;
+			}
+			else {
+				t = (Double.valueOf(years)) ;
+			}
+			
+			double r = Double.valueOf(deposit.getDepositInterest()) / 100.0;
+			double amount = calculateCompoundAmount(deposit.getDepositAmount(), t, r, 3);
+
+			
+			deposit.setDepositeCurrentAmount(amount);
+					
+			return deposit;
+			
+		}
+		else {
+			return null;
+		}
+		
+	}
 }

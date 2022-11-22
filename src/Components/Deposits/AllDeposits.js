@@ -3,8 +3,9 @@ import background from "../CustomerHome/Images/background.png";
 import AllLinks from "../CustomerHome/AllLinks";
 import styled from "styled-components";
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, NavLink } from "react-router-dom";
 import RLNDataService from "../../services/rln.customer.service";
+
 
 export const CHRightContainer = styled.div`
     padding: 1vh 1vw;
@@ -42,6 +43,11 @@ const TranTable = styled.table`
     }
     tr:nth-child(odd) {
         background-color: white;
+    }
+
+    a{
+        text-decoration: none;
+        color: #007bff;
     }
 `
 
@@ -89,6 +95,7 @@ function AllDeposits() {
                             <th>Deposit Duration</th>
                             <th>Nominee Name</th>
                             <th>Deposit Status</th>
+                            <th>More Info</th>
                         </tr>
                         {alldeposits && alldeposits.map((item) => {
                             return (
@@ -100,6 +107,7 @@ function AllDeposits() {
                                     <td>{item.depositEndDate}</td>
                                     <td>{item.nomineeName}</td>
                                     {item.depositeActiveStatus ? <td style={{color: "green"}}>Active</td> : <td style={{color: "red"}}>Closed</td> }
+                                    <td><NavLink to={"/specificdeposit/" + item.depositId}>View</NavLink></td>
                                 </tr>
                             )
                         })}

@@ -8,8 +8,6 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -31,17 +29,26 @@ const CHRightContainer = styled.div`
         border-bottom: 1px solid #E6E6E6;
         /* margin-bottom: 25px; */
     }
+
+    #errormsg {
+        color: red;
+        font-size: 1.2rem;
+        margin-top: 1vh;
+        text-align:center ;
+        margin-bottom: 1vh;
+    }
 `;
 
 const LoanContainer = styled.div`
     width: 64vw;
-    height: 60vh;
+    height: 50vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     position: relative;
     z-index: 10;
+    
 `;
 
 const TransferImg = styled.img`
@@ -51,53 +58,57 @@ const TransferImg = styled.img`
     opacity: 30%;
 `;
 
-const InputFileContainer = styled.div`
-    width: 50ch;
-    height: 7.7vh;
-    display: flex;
-    z-index: 1;
-    justify-content:center ;
-    align-items: center;
-    background-color: white;
-    font-family: "Roboto","Helvetica","Arial",sans-serif;
-    border: solid 0.5px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    color:rgba(0, 0, 0, 0.6);
-    button {
-        cursor: pointer;
-        background: transparent;
-        border: 0;
-        margin-right: 10px;
-    } 
+// const InputFileContainer = styled.div`
+//     width: 50ch;
+//     height: 7.7vh;
+//     display: flex;
+//     z-index: 1;
+//     justify-content:center ;
+//     align-items: center;
+//     background-color: white;
+//     font-family: "Roboto","Helvetica","Arial",sans-serif;
+//     border: solid 0.5px rgba(0, 0, 0, 0.2);
+//     border-radius: 5px;
+//     color:rgba(0, 0, 0, 0.6);
+//     button {
+//         cursor: pointer;
+//         background: transparent;
+//         border: 0;
+//         margin-right: 10px;
+//     } 
 
-    button:focus {
-        outline: none;
-    }
+//     button:focus {
+//         outline: none;
+//     }
 
-     button img {
-        width: 20px;
-        height: 20px;
-    }
+//      button img {
+//         width: 20px;
+//         height: 20px;
+//     }
     
-    input[type='file'] {
-        display: none;
-    }
-`;
+//     input[type='file'] {
+//         display: none;
+//     }
+// `;
 
-const FImg = styled.img`
-    width: 20px;
-    height: 20px;
-`;
+// const FImg = styled.img`
+//     width: 20px;
+//     height: 20px;
+// `;
 
 const DepositNote = styled.div``;
 
 function NewEducationalLoan() {
 
+    const [loanEndDate, setLoanEndDate] = React.useState(new Date());
+    const [errorMessages, setErrorMessages] = React.useState('');
     const [values, setValues] = React.useState({
-        senderaccount: '',
-        receiveraccount: '',
-        accounttype: '',
-        amount: ''
+        loanAmount: '',
+        institutionName: '',
+        degree: '',
+        yearOfStudy: '',
+        institutionAddress : '',
+        nomineeName: '',
       });
     
       const handleChange = (prop) => (event) => {
@@ -108,13 +119,44 @@ function NewEducationalLoan() {
       const handleSubmit = (event) => {
         event.preventDefault();
         console.log(values);
+
+        if ( values.loanAmount && values.institutionName && values.degree && values.yearOfStudy && values.institutionAddress && values.nomineeName  ) {
+           
+            if ( !isNaN (values.loanAmount) && !isNaN (values.yearOfStudy) ) {
+
+                if ( Number(values.loanAmount) >= 10000 ) {
+                    
+                    if ( Number(values.yearOfStudy) >= 1 && Number(values.yearOfStudy) <= 5 ) {
+                        
+
+
+                    } else {
+                        setErrorMessages("Year of Study should be between 1 and 5....!!");
+                    }
+
+
+                }
+                else {
+                    setErrorMessages('Loan Amount should be greater than 10000...!!');
+                }
+
+            }
+            else {
+                setErrorMessages('Loan Amount and year of study should be a number...!!');
+            }
+
+        }
+        else {
+            setErrorMessages("Please fill all the fields...!!");
+        }
+
         };  
-    const [file, setFile] = React.useState([]);
-    const inputFile = React.useRef(null);
+    // const [file, setFile] = React.useState([]);
+    // const inputFile = React.useRef(null);
     
-    const FhandleChange = (e) => {
-        setFile([...file, e.target.files[0]]);
-    };    
+    // const FhandleChange = (e) => {
+    //     setFile([...file, e.target.files[0]]);
+    // };    
     return (
         <>
         <CHContainer>
@@ -141,28 +183,9 @@ function NewEducationalLoan() {
                             <InputLabel htmlFor="filled-adornment-amount">Enter Loan Amount</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            value={values.receiveraccount}
-                            onChange={handleChange('receiveraccount')}
+                            value={values.loanAmount}
+                            onChange={handleChange('loanAmount')}
                             />
-                        </FormControl>
-                        <FormControl variant="standard" sx={{ m: 1, width: '50ch', '& .MuiInputLabel-root': {
-                            color: 'balck',
-                            fontSize: '1.2rem',
-                            }, }}>
-                            <InputLabel id="demo-simple-select-standard-label">Select Account Type To Transfer Amount</InputLabel>
-                            <Select
-                            labelId="demo-simple-select-standard-label"
-                            id="demo-simple-select-standard"
-                            value={values.accounttype}
-                            onChange={handleChange('accounttype')}
-                            label="Select Account Type"
-                            >
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            <MenuItem value={1}>Current</MenuItem>
-                            <MenuItem value={2}>Savings</MenuItem>
-                            </Select>
                         </FormControl>
                         <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '50ch', '& .MuiInputLabel-root': {
                             color: 'balck',
@@ -174,8 +197,8 @@ function NewEducationalLoan() {
                             <InputLabel htmlFor="filled-adornment-amount">Enter Collage Name</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            value={values.receiveraccount}
-                            onChange={handleChange('receiveraccount')}
+                            value={values.institutionName}
+                            onChange={handleChange('institutionName')}
                             />
                         </FormControl>
                         <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '50ch', '& .MuiInputLabel-root': {
@@ -188,8 +211,8 @@ function NewEducationalLoan() {
                             <InputLabel htmlFor="filled-adornment-amount">Enter Stream</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            value={values.receiveraccount}
-                            onChange={handleChange('receiveraccount')}
+                            value={values.degree}
+                            onChange={handleChange('degree')}
                             />
                         </FormControl>
                         <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '50ch', '& .MuiInputLabel-root': {
@@ -202,8 +225,8 @@ function NewEducationalLoan() {
                             <InputLabel htmlFor="filled-adornment-amount">Year Of Study</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            value={values.receiveraccount}
-                            onChange={handleChange('receiveraccount')}
+                            value={values.yearOfStudy}
+                            onChange={handleChange('yearOfStudy')}
                             />
                         </FormControl>
                         <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '50ch', '& .MuiInputLabel-root': {
@@ -216,8 +239,8 @@ function NewEducationalLoan() {
                             <InputLabel htmlFor="filled-adornment-amount">Collage Address</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            value={values.receiveraccount}
-                            onChange={handleChange('receiveraccount')}
+                            value={values.institutionAddress}
+                            onChange={handleChange('institutionAddress')}
                             />
                         </FormControl>
                         <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '50ch', '& .MuiInputLabel-root': {
@@ -230,22 +253,8 @@ function NewEducationalLoan() {
                             <InputLabel htmlFor="filled-adornment-amount">Nominee Name</InputLabel>
                             <FilledInput
                             id="filled-adornment-amount"
-                            value={values.receiveraccount}
-                            onChange={handleChange('receiveraccount')}
-                            />
-                        </FormControl>
-                        <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '50ch', '& .MuiInputLabel-root': {
-                            color: 'balck',
-                            fontSize: '1.2rem',
-                            },
-                            '& .MuiFilledInput-root':{
-                                backgroundColor: 'white',
-                            } }} >
-                            <InputLabel htmlFor="filled-adornment-amount">Nominee Account No</InputLabel>
-                            <FilledInput
-                            id="filled-adornment-amount"
-                            value={values.amount}
-                            onChange={handleChange('amount')}
+                            value={values.nomineeName}
+                            onChange={handleChange('nomineeName')}
                             />
                         </FormControl>
                         <FormControl sx={{ m: 1, mt: 1, width: '50ch', '& .MuiTextField-root': {
@@ -255,22 +264,17 @@ function NewEducationalLoan() {
                             <LocalizationProvider dateAdapter={AdapterDayjs} >
                                 <DatePicker
                                     label="Select Closing Date of Educational Loan" 
-                                    // value={value}
-                                    // onChange={(newValue) => {
-                                    // setValue(newValue);
-                                    // }}                            
+                                    value={loanEndDate}
+                                    onChange={(newValue) => {
+                                    setLoanEndDate(newValue);
+                                    }}                            
                                     renderInput={(params) => <TextField {...params} /> }
                                 />
                             </LocalizationProvider>
                         </FormControl>
-                        <InputFileContainer>   
-                        <button onClick={() => inputFile.current.click()}>
-                            <FImg src="https://www.svgrepo.com/show/12604/paper-clip.svg" />
-                        </button>
-                        <input type="file" onChange={FhandleChange} ref={inputFile} />
-                        <p>Uploaded Files:</p> {file.map((x) => x.name).join(', ')}
-                        </InputFileContainer>
+                        
                     </LoanContainer>
+                    <p id='errormsg'>{errorMessages}</p>
                     <LoanContainer style={{height:'10vh'}}>
                         <Button variant="contained" endIcon={<SendIcon />} sx={{ m: 1, mt: 1, width: '50ch',marginBottom:'0px', backgroundColor: '#3498db', '& .MuiButton-root': {
                             color: 'balck',
@@ -296,3 +300,12 @@ function NewEducationalLoan() {
 }
 
 export default NewEducationalLoan;
+
+
+// <InputFileContainer>   
+//                             <button onClick={() => inputFile.current.click()}>
+//                                 <FImg src="https://www.svgrepo.com/show/12604/paper-clip.svg" />
+//                             </button>
+//                             <input type="file" onChange={FhandleChange} ref={inputFile} />
+//                             <p>Uploaded Files:</p> {file.map((x) => x.name).join(', ')}
+//                         </InputFileContainer>
