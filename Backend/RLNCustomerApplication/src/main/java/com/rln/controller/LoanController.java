@@ -29,7 +29,7 @@ import com.rln.service.LoanService;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
-@RequestMapping("/api/customer/loan")
+@RequestMapping("/api/customer/loans")
 public class LoanController {
 	
 	@Autowired
@@ -47,7 +47,6 @@ public class LoanController {
 		
 	}
 	
-	
 	@PostMapping("/openeducationalloan")
 	@PreAuthorize("isAuthenticated()")
 	public ApiResponse<String> __openEdicationalLoan(
@@ -60,17 +59,18 @@ public class LoanController {
 	
 	@PostMapping("/uploadloansdocument/{loanid}")
 	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<String> __uploadCustomerPhoto(
+	public ApiResponse<String> __uploadLoanDocuments(
 			@RequestParam("file") MultipartFile file , @PathVariable("loanid") String loanid) {
 		
 		ApiResponse<String> res = new ApiResponse<>();
 		res.setTimestamp(new Date());
-		
+		System.out.println(file);
+		System.out.println("111111111111111");
 		String checkRes =  loanService._uploadLoanDocuments(file, loanid);
-		
+		System.out.println("22222222222222222");
 		if(checkRes.equals("uploaded")) {
 			
-			res.setMessage("Image uploaded successfully");
+			res.setMessage("Document  uploaded successfully");
 			res.setStatusCode(200);
 			
 		}

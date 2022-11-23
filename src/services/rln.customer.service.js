@@ -143,6 +143,7 @@ const closeDeposit = async (depositId) => {
             headers: checkHeader
         })
         .then((response) => {
+            console.log(response.data);
             return response.data;
         })
         .catch((error) => {
@@ -162,6 +163,7 @@ const openEdicationalLoan = async (data) => {
     if(checkHeader){
         return await axios.post(API_LOANS_URL + "openeducationalloan", data, { headers: checkHeader })
         .then((response) => {
+            console.log(response.data);
             return response.data;
         })
         .catch((error) => {
@@ -174,6 +176,78 @@ const openEdicationalLoan = async (data) => {
         return '';
     }
 };
+
+
+const uploadLoanDocument = async (loanid, file) => {
+    let checkHeader = authHeader();
+    // var FormData = require('form-data');
+    const user = JSON.parse(localStorage.getItem('customerLogin'));
+    const data = new FormData();
+    data.append('file', file);
+    
+
+    if(checkHeader){
+        return await axios.post(API_LOANS_URL + "uploadloansdocument/"+ loanid, { 
+            headers: { 
+            Authorization: 'Bearer ' + user.token, 
+            'Content-Type': 'multipart/form-data'  
+            },   
+        },data)
+        .then((response) => {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch((error) => {
+            console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            console.log(error);
+            return '';
+        })
+    }
+    else{
+        return '';
+    }
+};
+
+
+
+const openNewHomeLoan = async (data) => {
+    let checkHeader = authHeader();
+    if(checkHeader){
+        return await axios.post(API_LOANS_URL + "opennewhomeloan", data, { headers: checkHeader })
+        .then((response) => {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch((error) => {
+            console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            console.log(error);
+            return '';
+        })
+    }
+    else{
+        return '';
+    }
+};
+
+
+const getAllLoans = async () => {
+    let checkHeader = authHeader();
+    if(checkHeader){
+        return await axios.get(API_LOANS_URL + "getallloans", { headers: checkHeader })
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            console.log(error);
+            return '';
+        })
+    }
+    else{
+        return '';
+    }
+}
+
 
 
 const testconnection = () => {
@@ -190,7 +264,10 @@ const RLNDataService = {
     getAllDeposits,
     specificDeposit,
     closeDeposit,
-    openEdicationalLoan
+    openEdicationalLoan,
+    uploadLoanDocument,
+    openNewHomeLoan,
+    getAllLoans
 };
 
 

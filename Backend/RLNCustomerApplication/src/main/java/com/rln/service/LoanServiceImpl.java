@@ -87,7 +87,7 @@ public class LoanServiceImpl implements LoanService {
 			
 			homeLoan.setCustomer(customer);
 			homeLoan.setHomeLoanId(loanId);
-//			homeLoan.setLoanPendingAmount(homeLoan.getLoanAmount());
+			homeLoan.setLoanPendingAmount(homeLoan.getLoanAmount());
 			homeLoan.setLoanInterest(bankDetails.getHomeLoanInterest());
 			homeLoanRepository.save(homeLoan);
 			
@@ -148,7 +148,7 @@ public class LoanServiceImpl implements LoanService {
 			
 			educationalLoan.setCustomer(customer);
 			educationalLoan.setEducationalLoanId(loanId);
-//			educationalLoan.setLoanPendingAmount(educationalLoan.getLoanAmount());
+			educationalLoan.setLoanPendingAmount(educationalLoan.getLoanAmount());
 			educationalLoan.setLoanInterest(bankDetails.getEducationLoanInterest());
 			educationalRepository.save(educationalLoan);
 			
@@ -173,9 +173,11 @@ public class LoanServiceImpl implements LoanService {
 	@Override
 	public String _uploadLoanDocuments(MultipartFile file, String loanid) {
 		
+		System.out.println(file);
+		System.out.println("3333333333333333");
 		HomeLoan homeLoan = homeLoanRepository.findByHomeLoanId(loanid);
 		EducationalLoan educationalLoan = educationalRepository.findByEducationalLoanId(loanid);
-		
+		System.out.println("4444444444444444");
 		if( homeLoan != null ) {
 			try {
 				
