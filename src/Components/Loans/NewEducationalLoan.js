@@ -13,7 +13,7 @@ import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
+import RLNDataService from "../../services/rln.customer.service";
 
 const CHRightContainer = styled.div`
     padding: 1vh 1vw;
@@ -118,17 +118,39 @@ function NewEducationalLoan() {
 
       const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(values);
-
+      
         if ( values.loanAmount && values.institutionName && values.degree && values.yearOfStudy && values.institutionAddress && values.nomineeName  ) {
            
             if ( !isNaN (values.loanAmount) && !isNaN (values.yearOfStudy) ) {
 
                 if ( Number(values.loanAmount) >= 10000 ) {
-                    
+
+                    const date = new Date(loanEndDate);
+                    const loandate = date.toISOString().split('T')[0];
                     if ( Number(values.yearOfStudy) >= 1 && Number(values.yearOfStudy) <= 5 ) {
                         
+                        let data = {
+                            loanAmount: values.loanAmount,
+                            institutionName: values.institutionName,
+                            degree: values.degree,
+                            yearOfStudy: values.yearOfStudy,
+                            institutionAddress: values.institutionAddress,
+                            nomineeName: values.nomineeName,
+                            loanEndDate: loandate
+                        }
 
+                        RLNDataService.openEdicationalLoan(data).then( res => {
+                            console.log(res.data);
+                            if ( res.statusCode === 200 ) {
+                                localStorage.setItem('loanId', res.data);
+                                setErrorMessages(res.message);
+                            }
+                            else {
+                                setErrorMessages(res.message);
+                            }
+                        }).catch( err => {
+                            console.log(err);
+                        });
 
                     } else {
                         setErrorMessages("Year of Study should be between 1 and 5....!!");

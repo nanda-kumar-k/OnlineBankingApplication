@@ -2,7 +2,9 @@ import { CHContainer, CHLeft, CHNavbar, CHRight, BackImg } from "../CustomerHome
 import background from "../CustomerHome/Images/background.png";
 import AllLinks from "../CustomerHome/AllLinks";
 import styled from "styled-components";
-
+import React from "react";
+import RLNDataService from "../../services/rln.customer.service";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const CHRightContainer = styled.div`
     padding: 1vh 1vw;
@@ -44,6 +46,28 @@ const TranTable = styled.table`
 `
 
 function AllLoans() {
+
+    const [allData, setAllData] = React.useState('');
+    const [noData, setNoData] = React.useState(false);
+    const parms = useParams();
+    const navigate = useNavigate();
+
+    React.useEffect(() => {
+        RLNDataService.getAllLoans().then((response) => {
+            console.log(response);
+            if(response.statusCode === 200) {
+                setAllData(response.data);
+            }
+            else if (response.statusCode === 204) {
+                setNoData(true);
+                // navigate('/login');
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    },[parms,navigate]);
+
     return (
         <>
         <CHContainer>

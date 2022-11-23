@@ -36,6 +36,7 @@ import BusinessCustomer from './Components/JoinWithUs/CustomerLogin/BusinessCust
 import SavingsCustomer from './Components/JoinWithUs/CustomerLogin/SavingsCustomer';
 import Navbar from './Components/Navbar/Navbar';
 import SpecificDeposit from './Components/Deposits/SpecificDeposit';
+import LoanDocumentUpload from './Components/Loans/LoanDocumentUpload';
 function App() {
   return (
     <>
@@ -66,6 +67,7 @@ function App() {
           <Route path="neweducationloan" element={<NewEducationalLoan/>}/>
           <Route path="alldeposits" element={<AllDeposits/>}/>
           <Route path="allloans" element={<AllLoans/>}/>
+          <Route path="loandocuments" element={<LoanDocumentUpload/>}/>
           <Route path="specificdeposit/:id" element={<SpecificDeposit/>}/>
           <Route path="superadmindashboard" element={<SDashboard/>}/>
           <Route path="employeedashboard" element={<EDashboard/>}/>
