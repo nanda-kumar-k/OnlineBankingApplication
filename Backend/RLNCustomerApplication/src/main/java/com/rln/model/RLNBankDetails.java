@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+ 
 @Entity
 @Table
 @Setter
@@ -51,4 +51,5 @@ public class RLNBankDetails {
 	@CreatedDate
 	private Date date;
 
+	
 }

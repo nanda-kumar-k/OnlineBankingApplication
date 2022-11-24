@@ -25,5 +25,7 @@ public interface LoanService {
 	List<LoanInterestPayment> _allLoanPayemnts(String token);
 	
 	String _uploadLoanDocuments(MultipartFile file, String loanid);
+	
+	LoansResponse _specificLoan(String loanid);
 
 }

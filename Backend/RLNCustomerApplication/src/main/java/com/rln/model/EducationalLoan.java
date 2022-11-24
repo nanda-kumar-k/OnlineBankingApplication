@@ -69,7 +69,7 @@ public class EducationalLoan {
 	@Column(nullable = false)
 	private boolean loanStatus = true;
 	@Column(nullable = false)
-	private boolean loanVerification = false;
+	private boolean loanVerification = true;
 	@Column(nullable = false)
 	private String documentUrl = "Not found";
 	

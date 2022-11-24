@@ -249,6 +249,64 @@ const getAllLoans = async () => {
 }
 
 
+const loanPayment = async (data) => {
+    let checkHeader = authHeader()
+    if (checkHeader) {
+
+        return await axios.post(API_LOANS_URL + "loanpayment",data, { headers: checkHeader })
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            console.log(error);
+            return '';
+        })
+    }
+    else{
+        return '';
+    }
+}
+
+const allLoanPayments = async () => {
+    let checkHeader = authHeader();
+    if(checkHeader){
+        return await axios.get(API_LOANS_URL + "allloanpayments", { headers: checkHeader })
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            console.log(error);
+            return '';
+        })
+    }
+    else{
+        return '';
+    }
+}
+
+
+const specificLoan = async (loanId) => {
+    let checkHeader = authHeader();
+    if(checkHeader){
+        return await axios.get(API_LOANS_URL + "specificloan/" + loanId, {
+            headers: checkHeader
+        })
+        .then((response) => {
+            console.log(response.data.data.homeloans)
+            return response.data.data;
+        })
+        .catch((error) => {
+            console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            console.log(error);
+            return '';
+        })
+    }
+    else{
+        return '';
+    }   
+}
 
 const testconnection = () => {
     return http.get(`http://localhost:2001/api/customer/test1`);
@@ -267,7 +325,10 @@ const RLNDataService = {
     openEdicationalLoan,
     uploadLoanDocument,
     openNewHomeLoan,
-    getAllLoans
+    getAllLoans,
+    loanPayment,
+    allLoanPayments,
+    specificLoan
 };
 
 

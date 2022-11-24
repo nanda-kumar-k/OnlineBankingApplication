@@ -107,10 +107,33 @@ public class LoanController {
 		return res;
 	}
 	
+	@GetMapping("/specificloan/{loanid}")
+	@PreAuthorize("isAuthenticated()")
+	public ApiResponse<LoansResponse> __specificLoan(@PathVariable("loanid") String loanid){
+		
+		ApiResponse<LoansResponse> res = new ApiResponse<>();
+		res.setTimestamp(new Date());
+		LoansResponse check = loanService._specificLoan(loanid);
+		
+		if ( check.getHomeloans().isEmpty() || check.getEducationalLoans().isEmpty() ) {
+			
+			res.setData(check);
+			res.setMessage("Data found");
+			res.setStatusCode(200);
+			
+		}
+		else {
+			
+			res.setMessage("No Loans Founded...!!");
+			res.setStatusCode(204);
+		}
+		
+		return res;
+	}
 	
 	@GetMapping("/closeloan/{loanid}")
 	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<String> __closeHomeLoan(
+	public ApiResponse<String> __closeLoan(
 			@PathVariable("loanid") String loanid ) {
 		
 		ApiResponse<String> res = new ApiResponse<>();
