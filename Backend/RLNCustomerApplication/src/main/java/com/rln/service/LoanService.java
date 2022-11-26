@@ -9,6 +9,7 @@ import com.rln.model.HomeLoan;
 import com.rln.model.LoanInterestPayment;
 import com.rln.payload.response.ApiResponse;
 import com.rln.payload.response.LoansResponse;
+import com.rln.payload.response.SpecificLoanResponse;
 
 public interface LoanService {
 	
@@ -26,6 +27,6 @@ public interface LoanService {
 	
 	String _uploadLoanDocuments(MultipartFile file, String loanid);
 	
-	LoansResponse _specificLoan(String loanid);
+    SpecificLoanResponse _specificLoan(String loanid);
 
 }

@@ -55,7 +55,7 @@ const EachInfo = styled.div`
 
 const EachButton = styled.div`
     width: 54vw;
-    height: 5vh;
+    height: 3vh;
     /* margin-top: 100px; */
     display: flex;
     /* justify-content: center; */
@@ -95,7 +95,8 @@ const SButton = styled.div`
 
 function SpecificLoan() {
 
-    const [loan, setLoan] = React.useState('');
+    const [loansData, setLoansData] = React.useState('');
+    const [eduData, setEduData] = React.useState('');
     const [noData, setNoData] = React.useState(false);
     const [errormessage, setErrormessage] = React.useState('');
     const parms = useParams();
@@ -104,10 +105,18 @@ function SpecificLoan() {
     React.useEffect(() => {
         let urlElements = window.location.href.split('/');
         let loanId = urlElements[urlElements.length - 1];
+        console.log(loanId);
         RLNDataService.specificLoan(loanId).then((response) => {
-            // console.log(response);
+            console.log(response);
             if(response.statusCode === 200) {
-                setLoan(response.data);
+
+                if(response.data.homeloans !== undefined) {
+                    setLoansData(response.data.homeloans);
+                }
+                if(response.data.educationalLoans !== undefined) {
+                    setEduData(response.data.educationalLoans);
+                }
+                // setLoansData(response.data);
                 setNoData(true);
             }
             else if (response.statusCode === 204) {
@@ -116,179 +125,199 @@ function SpecificLoan() {
             }
         })
     },[parms,navigate]);
+    
 
-    const closeDepositFun = () => {
+    const closeLoanSubmit = () => {
         let urlElements = window.location.href.split('/');
-        let depositId = urlElements[urlElements.length - 1];
-        RLNDataService.closeDeposit(depositId).then((response) => {
+        let loanId = urlElements[urlElements.length - 1];
+        console.log(loanId);
+        RLNDataService.closeLoan(loanId).then((response) => {
             console.log(response);
             if(response.statusCode === 200) {
-                navigate('/alldeposits');
-            }
-            else if (response.statusCode === 400) {
                 setErrormessage(response.message);
+                // navigate('/customerhome/loans');
+            }
+            else {
+                setErrormessage(response.message);
+                // setNoData(true);
+                // navigate('/login');
             }
         })
     }
 
+
     return (
         <>
         <CHContainer>
-            <BackImg src={background} alt="" />
-            <CHLeft>
-                <CHNavbar>
-                    <AllLinks/>
-                </CHNavbar>
-            </CHLeft>
-            <CHRight>
-                <CHRightContainer>
-                    <h2>All Fixed Deposits</h2>
-                    <hr/>
-                    <SpecificDepositContainer>
-                    <>
-                        {loan.homeloans[0] ? 
-                            <>
-                                <EachRow>
-                                    <EachInfo>
-                                        <h3>Loan ID</h3>
-                                        <p>{loan.homeloans[0].homeLoanId}</p>
-                                    </EachInfo>
-                                    <EachInfo>
-                                        <h3>Loan Date</h3>
-                                        <p>{loan.homeloans[0].loanDate}</p>
-                                    </EachInfo>
-                                </EachRow>
-                                <EachRow>
-                                    <EachInfo>
-                                        <h3>Loan Amount</h3>
-                                        <p>{loan.homeloans[0].loanAmount}</p>
-                                    </EachInfo>
-                                    <EachInfo>
-                                        <h3>Loan Interest</h3>
-                                        <p>{loan.homeloans[0].loanInterest}</p>
-                                    </EachInfo>
-                                </EachRow>
-                                <EachRow>
-                                    <EachInfo>
-                                        <h3>Home Address</h3>
-                                        <p>{loan.homeloans[0].homeAddress}</p>
-                                    </EachInfo>
-                                    <EachInfo>
-                                        <h3>Loan Duration</h3>
-                                        <p>{loan.homeloans[0].loanEndDate}</p>
-                                    </EachInfo>
-                                </EachRow>
-                                <EachRow>
-                                    <EachInfo>
-                                        <h3>Nominee Name</h3>
-                                        <p>{loan.homeloans[0].nomineeName}</p>
-                                    </EachInfo>
-                                    <EachInfo>
-                                        <h3>Pending Amount</h3>
-                                        <p>{loan.homeloans[0].loanPendingAmount}</p>
-                                    </EachInfo>
-                                </EachRow>
-                                <EachRow>
-                                    <EachInfo>
-                                        <h3>Loan Verification</h3>
-                                        {loan.homeloans[0].loanVerification ? <p style={{color: "green"}}>Done</p> : <p style={{color: "red"}}>Pending</p> }
-                                    </EachInfo>
-                                    <EachInfo>
-                                        <h3>Loan Status</h3>
-                                        {loan.homeloans[0].loanStatus ? <p style={{color: "green"}}>Active</p> : <p style={{color: "red"}}>Closed</p> }
-                                    </EachInfo>
-                                </EachRow>
-                            </>
-                             : 
-                             <>
-                             <EachRow>
-                                 <EachInfo>
-                                     <h3>Loan ID</h3>
-                                     <p>{loan.educationalLoans[0].educationalLoanId}</p>
-                                 </EachInfo>
-                                 <EachInfo>
-                                     <h3>Loan Date</h3>
-                                     <p>{loan.educationalLoans[0].loanDate}</p>
-                                 </EachInfo>
-                             </EachRow>
-                             <EachRow>
-                                 <EachInfo>
-                                     <h3>Loan Amount</h3>
-                                     <p>{loan.educationalLoans[0].loanAmount}</p>
-                                 </EachInfo>
-                                 <EachInfo>
-                                     <h3>Loan Interest</h3>
-                                     <p>{loan.educationalLoans[0].loanInterest}</p>
-                                 </EachInfo>
-                             </EachRow>
-                             <EachRow>
-                                 <EachInfo>
-                                     <h3>Institution Name</h3>
-                                     <p>{loan.educationalLoans[0].institutionName}</p>
-                                 </EachInfo>
-                                 <EachInfo>
-                                     <h3>Degree</h3>
-                                     <p>{loan.educationalLoans[0].degree}</p>
-                                 </EachInfo>
-                             </EachRow>
-                             <EachRow>
-                                 <EachInfo>
-                                     <h3>Year Of Study</h3>
-                                     <p>{loan.educationalLoans[0].yearOfStudy}</p>
-                                 </EachInfo>
-                                 <EachInfo>
-                                     <h3>Institution Address</h3>
-                                     <p>{loan.educationalLoans[0].institutionAddress}</p>
-                                 </EachInfo>
-                             </EachRow>
-                             <EachRow>
+        <BackImg src={background} alt="" />
+        <CHLeft>
+            <CHNavbar>
+                <AllLinks/>
+            </CHNavbar>
+        </CHLeft>
+        <CHRight>
+            <CHRightContainer>
+                <h2>Loan</h2>
+                <hr/>
+                <SpecificDepositContainer>
+                
+                <>
+                    {loansData ? 
+                        <>
+                            <EachRow>
                                 <EachInfo>
-                                     <h3>Loan Duration</h3>
-                                     <p>{loan.educationalLoans[0].loanEndDate}</p>
-                                 </EachInfo>
-                                 <EachInfo>
-                                     <h3>Nominee Name</h3>
-                                     <p>{loan.educationalLoans[0].nomineeName}</p>
-                                 </EachInfo>
-                             </EachRow>
-                             <EachRow>
+                                    <h3>Loan ID</h3>
+                                    <p>{loansData.homeLoanId}</p>
+                                </EachInfo>
                                 <EachInfo>
-                                     <h3>Pending Amount</h3>
-                                     <p>{loan.educationalLoans[0].loanPendingAmount}</p>
-                                 </EachInfo>
-                                 <EachInfo>
-                                     <h3>Loan Verification</h3>
-                                     {loan.educationalLoans[0].loanVerification ? <p style={{color: "green"}}>Done</p> : <p style={{color: "red"}}>Pending</p> }
-                                 </EachInfo>
-                             </EachRow>
-                             <EachRow>
-                                 <EachInfo>
-                                     <h3>Loan Status</h3>
-                                     {loan.educationalLoans[0].loanStatus ? <p style={{color: "green"}}>Active</p> : <p style={{color: "red"}}>Closed</p> }
-                                 </EachInfo>
-                             </EachRow>
-                         </> 
-                        }
+                                    <h3>Loan Date</h3>
+                                    <p>{loansData.loanDate}</p>
+                                </EachInfo>
+                            </EachRow>
+                            <EachRow>
+                                <EachInfo>
+                                    <h3>Loan Amount</h3>
+                                    <p>{loansData.loanAmount}</p>
+                                </EachInfo>
+                                <EachInfo>
+                                    <h3>Loan Interest</h3>
+                                    <p>{loansData.loanInterest}</p>
+                                </EachInfo>
+                            </EachRow>
+                            <EachRow>
+                                <EachInfo>
+                                    <h3>Home Address</h3>
+                                    <p>{loansData.homeAddress}</p>
+                                </EachInfo>
+                                <EachInfo>
+                                    <h3>Loan Duration</h3>
+                                    <p>{loansData.loanEndDate}</p>
+                                </EachInfo>
+                            </EachRow>
+                            <EachRow>
+                                <EachInfo>
+                                    <h3>Nominee Name</h3>
+                                    <p>{loansData.nomineeName}</p>
+                                </EachInfo>
+                                <EachInfo>
+                                    <h3>Pending Amount</h3>
+                                    <p>{loansData.loanPendingAmount}</p>
+                                </EachInfo>
+                            </EachRow>
+                            <EachRow>
+                                <EachInfo>
+                                    <h3>Loan Verification</h3>
+                                    {loansData.loanVerification ? <p style={{color: "green"}}>Done</p> : <p style={{color: "red"}}>Pending</p> }
+                                </EachInfo>
+                                <EachInfo>
+                                    <h3>Loan Status</h3>
+                                    {loansData.loanStatus ? <p style={{color: "green"}}>Active</p> : <p style={{color: "red"}}>Closed</p> }
+                                </EachInfo>
+                            </EachRow>
                         </>
-                        <>{!noData && (
-                            <>
-                                <h3 styel={{textAlign : "center"}}>Invlaid Request...!!</h3>
-                            </>
-                        )}
+                         : 
+                         <>
+                         <EachRow>
+                             <EachInfo>
+                                 <h3>Loan ID</h3>
+                                 <p>{eduData.educationalLoanId}</p>
+                             </EachInfo>
+                             <EachInfo>
+                                 <h3>Loan Date</h3>
+                                 <p>{eduData.loanDate}</p>
+                             </EachInfo>
+                         </EachRow>
+                         <EachRow>
+                             <EachInfo>
+                                 <h3>Loan Amount</h3>
+                                 <p>{eduData.loanAmount}</p>
+                             </EachInfo>
+                             <EachInfo>
+                                 <h3>Loan Interest</h3>
+                                 <p>{eduData.loanInterest}</p>
+                             </EachInfo>
+                         </EachRow>
+                         <EachRow>
+                             <EachInfo>
+                                 <h3>Institution Name</h3>
+                                 <p>{eduData.institutionName}</p>
+                             </EachInfo>
+                             <EachInfo>
+                                 <h3>Degree</h3>
+                                 <p>{eduData.degree}</p>
+                             </EachInfo>
+                         </EachRow>
+                         <EachRow>
+                             <EachInfo>
+                                 <h3>Year Of Study</h3>
+                                 <p>{eduData.yearOfStudy}</p>
+                             </EachInfo>
+                             <EachInfo>
+                                 <h3>Institution Address</h3>
+                                 <p>{eduData.institutionAddress}</p>
+                             </EachInfo>
+                         </EachRow>
+                         <EachRow>
+                            <EachInfo>
+                                 <h3>Loan Duration</h3>
+                                 <p>{eduData.loanEndDate}</p>
+                             </EachInfo>
+                             <EachInfo>
+                                 <h3>Nominee Name</h3>
+                                 <p>{eduData.nomineeName}</p>
+                             </EachInfo>
+                         </EachRow>
+                         <EachRow>
+                            <EachInfo>
+                                 <h3>Pending Amount</h3>
+                                 <p>{eduData.loanPendingAmount}</p>
+                             </EachInfo>
+                             <EachInfo>
+                                 <h3>Loan Verification</h3>
+                                 {eduData.loanVerification ? <p style={{color: "green"}}>Done</p> : <p style={{color: "red"}}>Pending</p> }
+                             </EachInfo>
+                         </EachRow>
+                         <EachRow>
+                             <EachInfo>
+                                 <h3>Loan Status</h3>
+                                 {eduData.loanStatus ? <p style={{color: "green"}}>Active</p> : <p style={{color: "red"}}>Closed</p> }
+                             </EachInfo>
+                         </EachRow>
+                     </> 
+                    }
+                    </>
+                    <>{!noData && (
+                        <>
+                            <h3 styel={{textAlign : "center"}}>Invlaid Request...!!</h3>
                         </>
-                        <EachRow>
-                            <p >{errormessage}</p>
-                        </EachRow>
-                        <EachRow>
-                            <EachButton>
-                                <>{loan.educationalLoans[0].loanStatus || loan.homeloans[0].loanStatus ?  <SButton id="close" onClick={closeDepositFun}> Close Deposit </SButton> : <></>}</>
-                                <NavLink to="/alldeposits"><SButton> Back </SButton></NavLink>
-                            </EachButton>
-                        </EachRow>
-                    </SpecificDepositContainer>
-                </CHRightContainer>
-            </CHRight>
-        </CHContainer>
+                    )}
+                    </>
+                    <EachRow>
+                        <p >{errormessage}</p>
+                    </EachRow>
+                    <EachRow>
+                        <EachButton>
+                            <>{
+                                loansData ?
+                                <>
+                                    {loansData.loanStatus ? 
+                                        <SButton id="close" onClick={closeLoanSubmit} > Close loan </SButton> : <></>
+                                    }
+                                </>
+                                :
+                                <>
+                                    {eduData.loanStatus ?
+                                        <SButton id="close" onClick={closeLoanSubmit} > Close loan </SButton> : <></>
+                                    }
+                                </>
+                            }</>
+                            <NavLink to="/allloans"><SButton> Back </SButton></NavLink> 
+                        </EachButton>
+                    </EachRow>
+                </SpecificDepositContainer>
+            </CHRightContainer>
+        </CHRight>
+    </CHContainer>
         </>
     )
 }

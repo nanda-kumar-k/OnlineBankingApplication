@@ -11,6 +11,7 @@ const API_DEPOSIT_URL = "http://localhost:2001/api/customer/deposit/";
 
 const API_LOANS_URL = "http://localhost:2001/api/customer/loans/";
 
+
 function checkUsernameAvailability (username) {
     return axios.get(API_URL + "checkuser", {
         params: {
@@ -294,8 +295,7 @@ const specificLoan = async (loanId) => {
             headers: checkHeader
         })
         .then((response) => {
-            console.log(response.data.data.homeloans)
-            return response.data.data;
+            return response.data;
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
@@ -307,6 +307,51 @@ const specificLoan = async (loanId) => {
         return '';
     }   
 }
+
+
+const closeLoan = async (loanId) => {
+    let checkHeader = authHeader();
+    if(checkHeader){
+        return await axios.get(API_LOANS_URL + "closeloan/" + loanId, {
+            headers: checkHeader
+        })
+        .then((response) => {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch((error) => {
+            console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            console.log(error);
+            return '';
+        })
+    }
+    else{
+        return '';
+    }
+};
+
+
+const getCustomerProfile = async () => {
+    let checkHeader = authHeader();
+    if(checkHeader){
+        return await axios.get(API_URL + "customerprofile", {
+            headers: checkHeader
+        })
+        .then((response) => {
+            console.log(response.data);
+            console.log("customer profile");
+            return response.data;
+        })
+        .catch((error) => {
+            console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            console.log(error);
+            return '';
+        })
+    }
+    else{
+        return '';
+    }
+};
 
 const testconnection = () => {
     return http.get(`http://localhost:2001/api/customer/test1`);
@@ -328,7 +373,9 @@ const RLNDataService = {
     getAllLoans,
     loanPayment,
     allLoanPayments,
-    specificLoan
+    specificLoan,
+    closeLoan,
+    getCustomerProfile
 };
 
 

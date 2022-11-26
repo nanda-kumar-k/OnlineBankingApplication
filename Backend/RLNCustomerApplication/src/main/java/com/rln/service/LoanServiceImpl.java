@@ -20,6 +20,7 @@ import com.rln.model.LoanInterestPayment;
 import com.rln.model.RLNBankDetails;
 import com.rln.payload.response.ApiResponse;
 import com.rln.payload.response.LoansResponse;
+import com.rln.payload.response.SpecificLoanResponse;
 import com.rln.repository.EducationalLoanRepository;
 import com.rln.repository.LoanInterestPaymentRepository;
 import com.rln.repository.HomeLoanRepository;
@@ -303,41 +304,25 @@ public class LoanServiceImpl implements LoanService {
 	}
 
 	@Override
-	public LoansResponse _specificLoan(String loanid) {
+	public SpecificLoanResponse _specificLoan(String loanid) {
 		
 		HomeLoan homeLoan = homeLoanRepository.findByHomeLoanId(loanid);
 		EducationalLoan educationalLoan = educationalRepository.findByEducationalLoanId(loanid);
-		LoansResponse res = new LoansResponse();
+		SpecificLoanResponse res = new SpecificLoanResponse();
 		
 		if ( homeLoan != null ) {
-			
-			if ( homeLoan.getLoanPendingAmount() <= 0 ) {
 				
-				List<HomeLoan> lis = new ArrayList<>();
-				lis.add(homeLoan);
-				res.setHomeloans(lis);
+			res.setHomeloans(homeLoan);
 				
-				return res;
-			}
-			else {
-				return null;
-			}
+			return res;
 			
 		}
 		else if ( educationalLoan != null ) {
 			
-			if ( educationalLoan.getLoanPendingAmount() <= 0 ) {
+
+			res.setEducationalLoans(educationalLoan);
 				
-				List<EducationalLoan> lis = new ArrayList<>();
-				lis.add(educationalLoan);
-				res.setEducationalLoans(lis);
-				return res;
-			}
-			
-			else  {
-				
-				return null;
-			}
+			return res;
 			 
 		}
 		else  {
