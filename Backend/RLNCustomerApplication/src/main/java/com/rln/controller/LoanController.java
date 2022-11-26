@@ -24,6 +24,7 @@ import com.rln.model.HomeLoan;
 import com.rln.model.LoanInterestPayment;
 import com.rln.payload.response.ApiResponse;
 import com.rln.payload.response.LoansResponse;
+import com.rln.payload.response.SpecificLoanResponse;
 import com.rln.service.FilesStorageService;
 import com.rln.service.LoanService;
 
@@ -107,10 +108,34 @@ public class LoanController {
 		return res;
 	}
 	
+	@GetMapping("/specificloan/{loanid}")
+	@PreAuthorize("isAuthenticated()")
+	public ApiResponse<SpecificLoanResponse> __specificLoan(@PathVariable("loanid") String loanid){
+		
+		ApiResponse<SpecificLoanResponse> res = new ApiResponse<>();
+		res.setTimestamp(new Date());
+		SpecificLoanResponse check = loanService._specificLoan(loanid);
+		
+		if ( check != null ) {
+			
+			res.setData(check);
+			res.setMessage("Data found");
+			res.setStatusCode(200);
+			
+		}
+		else {
+			
+			res.setMessage("No Loans Founded...!!");
+			res.setStatusCode(204);
+		}
+		
+		return res;
+	}
+	
 	
 	@GetMapping("/closeloan/{loanid}")
 	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<String> __closeHomeLoan(
+	public ApiResponse<String> __closeLoan(
 			@PathVariable("loanid") String loanid ) {
 		
 		ApiResponse<String> res = new ApiResponse<>();

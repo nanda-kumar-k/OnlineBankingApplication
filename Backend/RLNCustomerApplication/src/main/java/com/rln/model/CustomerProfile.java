@@ -55,6 +55,7 @@ public class CustomerProfile {
 	private Date createdDate = new Date();
 	
 	
+	
 	@OneToOne(fetch = FetchType.LAZY)
 	@MapsId
 	@JoinColumn(name = "customer_id")

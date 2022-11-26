@@ -37,6 +37,9 @@ import SavingsCustomer from './Components/JoinWithUs/CustomerLogin/SavingsCustom
 import Navbar from './Components/Navbar/Navbar';
 import SpecificDeposit from './Components/Deposits/SpecificDeposit';
 import LoanDocumentUpload from './Components/Loans/LoanDocumentUpload';
+import LoanPayment from './Components/Loans/LoanPayment';
+import LoanPaymentsHistory from './Components/Loans/LoanPaymentsHistory';
+import SpecificLoan from './Components/Loans/SpecificLoan';
 function App() {
   return (
     <>
@@ -68,6 +71,9 @@ function App() {
           <Route path="alldeposits" element={<AllDeposits/>}/>
           <Route path="allloans" element={<AllLoans/>}/>
           <Route path="loandocuments" element={<LoanDocumentUpload/>}/>
+          <Route path="loanpayment" element={<LoanPayment/>}/>
+          <Route path="loanpaymentshistory" element={<LoanPaymentsHistory/>}/>
+          <Route path="specificloan/:id" element={<SpecificLoan/>}/>
           <Route path="specificdeposit/:id" element={<SpecificDeposit/>}/>
           <Route path="superadmindashboard" element={<SDashboard/>}/>
           <Route path="employeedashboard" element={<EDashboard/>}/>

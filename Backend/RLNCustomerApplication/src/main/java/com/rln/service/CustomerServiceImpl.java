@@ -224,6 +224,31 @@ public class CustomerServiceImpl implements CustomerService {
 		return check.get();
 	}
 
+	@Override
+	public CustomerProfile _getCustomerProfile(String token) {
+		
+		Customer customer = _checkCustomerBalance(token);
+		CustomerProfile cp;
+		if ( customer != null ) {
+			
+			cp = customerProfileRepository.findByCustomerId(customer.getCustomer_id());
+			
+			if ( cp != null ) {
+				
+				return cp;
+			}
+			else  {
+				
+				return null;
+			}
+			
+		}
+		else {
+			return null;
+		}
+		
+	}
+
 	
 
 	

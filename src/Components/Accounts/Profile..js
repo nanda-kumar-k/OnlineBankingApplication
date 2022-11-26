@@ -3,6 +3,10 @@ import background from "../CustomerHome/Images/background.png";
 import AllLinks from "../CustomerHome/AllLinks";
 import styled from "styled-components";
 import CustomerImage from "./Images/customer.jpg";
+import { useNavigate, useParams } from "react-router-dom";
+import React from "react";
+import RLNDataService from "../../services/rln.customer.service";
+
 const CHRightContainer = styled.div`
     padding: 1vh 1vw;
     width: 64vw;
@@ -65,6 +69,30 @@ const OneSpecificInfo = styled.div`
 `
 
 function Profile() {
+
+    const [cpData, setCPData] = React.useState('');
+    const parms = useParams();
+    const navigate = useNavigate();
+
+    React.useEffect(() => {
+        RLNDataService.getCustomerProfile ().then((response) => {
+            console.log(response);
+            if(response.statusCode === 200) {
+
+                if (response.data.customer !== undefined ) {
+                    setCPData(response.data);
+                }
+                
+            }
+            else if (response.statusCode === 204) {
+                // navigate('/login');
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    },[parms,navigate]);
+
     return (
         <>
         <CHContainer>
@@ -81,6 +109,8 @@ function Profile() {
                         <ProfileImg src={CustomerImage} alt="" />
                         <hr/>
                     </div>
+                    { cpData  ? <>
+                         
                     <OneSpecificInfo>
                         <TitleContainer>
                             <hr/>
@@ -90,13 +120,13 @@ function Profile() {
                             <hr style={{width:'10vw'}}/>
                             <p>Account Number</p>
                             <hr style={{width:'15vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.customer.accountNumber}</p>
                         </TitleContainer>
                         <TitleContainer>
                             <hr style={{width:'5vw'}}/>
                             <p>Account Type</p>
                             <hr style={{width:'10vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.customer.accountType}</p>
                         </TitleContainer>
                     </OneSpecificInfo>
                     <OneSpecificInfo>
@@ -108,37 +138,31 @@ function Profile() {
                         <hr style={{width:'17vw'}}/>
                             <p>First Name</p>
                             <hr style={{width:'5vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.customer.firstName}</p>
                         </TitleContainer>
                         <TitleContainer>
                             <hr style={{width:'10vw'}}/>
                             <p>Last Name</p>
                             <hr style={{width:'5vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.customer.lastName}</p>
                         </TitleContainer>
                         <TitleContainer>
                             <hr style={{width:'7vw'}}/>
                             <p>Date Of Birth</p>
                             <hr style={{width:'20vw'}}/>
-                            <p>Nanda Kumar K</p>
-                        </TitleContainer>
-                        <TitleContainer>
-                            <hr style={{width:'3vw'}}/>
-                            <p>Aadhaar UUID</p>
-                            <hr style={{width:'15vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.dob}</p>
                         </TitleContainer>
                         <TitleContainer>
                             <hr style={{width:'15vw'}}/>
                             <p>Gender</p>
                             <hr style={{width:'20vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.gender}</p>
                         </TitleContainer>
                         <TitleContainer>
                             <hr style={{width:'10vw'}}/>
                             <p>Marital Status</p>
                             <hr style={{width:'15vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            {cpData.maritalStatus ? <p>Married</p> : <p>Unmarried</p>}
                         </TitleContainer>
                     </OneSpecificInfo>
                     <OneSpecificInfo>
@@ -150,43 +174,19 @@ function Profile() {
                             <hr style={{width:'2vw'}}/>
                             <p>Email Id</p>
                             <hr style={{width:'15vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.customer.emailId}</p>
                         </TitleContainer>
                         <TitleContainer>
                             <hr style={{width:'5vw'}}/>
                             <p>Phone Number</p>
                             <hr style={{width:'25vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.customer.contactNumber}</p>
                         </TitleContainer>
                         <TitleContainer>
                             <hr style={{width:'8vw'}}/>
                             <p>Address</p>
                             <hr style={{width:'15vw'}}/>
-                            <p>Nanda Kumar K</p>
-                        </TitleContainer>
-                        <TitleContainer>
-                            <hr style={{width:'5vw'}}/>
-                            <p>City</p>
-                            <hr style={{width:'25vw'}}/>
-                            <p>Nanda Kumar K</p>
-                        </TitleContainer>
-                        <TitleContainer>
-                            <hr style={{width:'15vw'}}/>
-                            <p>State</p>
-                            <hr style={{width:'5vw'}}/>
-                            <p>Nanda Kumar K</p>
-                        </TitleContainer>
-                        <TitleContainer>
-                            <hr style={{width:'10vw'}}/>
-                            <p>Country</p>
-                            <hr style={{width:'25vw'}}/>
-                            <p>Nanda Kumar K</p>
-                        </TitleContainer>
-                        <TitleContainer>
-                            <hr style={{width:'3vw'}}/>
-                            <p>Pincode</p>
-                            <hr style={{width:'25vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.address}</p>
                         </TitleContainer>
                     </OneSpecificInfo>
                     <OneSpecificInfo>
@@ -198,19 +198,13 @@ function Profile() {
                             <hr style={{width:'15vw'}}/>
                             <p>Aadhaar UUID</p>
                             <hr style={{width:'22vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.aadhaarNumber}</p>
                         </TitleContainer>
                         <TitleContainer>
                             <hr style={{width:'8vw'}}/>
                             <p>Pan Id</p>
                             <hr style={{width:'20vw'}}/>
-                            <p>Nanda Kumar K</p>
-                        </TitleContainer>
-                        <TitleContainer>
-                            <hr style={{width:'4vw'}}/>
-                            <p>Voter Id</p>
-                            <hr style={{width:'8vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.panNumber}</p>
                         </TitleContainer>
                     </OneSpecificInfo>
                     <OneSpecificInfo>
@@ -219,46 +213,28 @@ function Profile() {
                             <h2>Professional Details</h2>
                         </TitleContainer>
                         <TitleContainer>
-                            <hr style={{width:'2vw'}}/>
-                            <p>Occupation Type</p>
-                            <hr style={{width:'25vw'}}/>
-                            <p>Nanda Kumar K</p>
-                        </TitleContainer>
-                        <TitleContainer>
                             <hr style={{width:'6vw'}}/>
-                            <p>Organisation Type</p>
+                            <p>Organisation Name</p>
                             <hr style={{width:'15vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.organisationName}</p>
                         </TitleContainer>
                         <TitleContainer>
                             <hr style={{width:'12vw'}}/>
                             <p>Designation</p>
                             <hr style={{width:'20vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.designation}</p>
                         </TitleContainer>
                         <TitleContainer>
                             <hr style={{width:'1vw'}}/>
                             <p>Nature of Employment</p>
                             <hr style={{width:'10vw'}}/>
-                            <p>Nanda Kumar K</p>
-                        </TitleContainer>
-                        <TitleContainer>
-                            <hr style={{width:'4vw'}}/>
-                            <p>Nature of Business</p>
-                            <hr style={{width:'20vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.natureOfEmployment}</p>
                         </TitleContainer>
                         <TitleContainer>
                             <hr style={{width:'20vw'}}/>
                             <p>Annual Income</p>
                             <hr style={{width:'15vw'}}/>
-                            <p>Nanda Kumar K</p>
-                        </TitleContainer>
-                        <TitleContainer>
-                            <hr style={{width:'8vw'}}/>
-                            <p>Net Worth</p>
-                            <hr style={{width:'21vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.annualIncome}</p>
                         </TitleContainer>
                     </OneSpecificInfo>
                     <OneSpecificInfo>
@@ -270,7 +246,7 @@ function Profile() {
                             <hr style={{width:'4vw'}}/>
                             <p>Qualification</p>
                             <hr style={{width:'25vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.qualification}</p>
                         </TitleContainer>
                     </OneSpecificInfo>
                     <OneSpecificInfo>
@@ -282,39 +258,28 @@ function Profile() {
                             <hr style={{width:'9vw'}}/>
                             <p>Father's Name</p>
                             <hr style={{width:'25vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.fatherName}</p>
                         </TitleContainer>
                         <TitleContainer>
                             <hr style={{width:'5vw'}}/>
                             <p>Father's DOB</p>
                             <hr style={{width:'10vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.fatherDob}</p>
                         </TitleContainer>
                         <TitleContainer>
                             <hr style={{width:'15vw'}}/>
                             <p>Mother's Name</p>
                             <hr style={{width:'16vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.motherName}</p>
                         </TitleContainer>
                         <TitleContainer>
                             <hr style={{width:'9vw'}}/>
                             <p>Mother's DOB</p>
                             <hr style={{width:'15vw'}}/>
-                            <p>Nanda Kumar K</p>
-                        </TitleContainer>
-                        <TitleContainer>
-                            <hr style={{width:'2vw'}}/>
-                            <p>Guardian Name</p>
-                            <hr style={{width:'18vw'}}/>
-                            <p>Nanda Kumar K</p>
-                        </TitleContainer>
-                        <TitleContainer>
-                            <hr style={{width:'17vw'}}/>
-                            <p>Guardian DOB</p>
-                            <hr style={{width:'20vw'}}/>
-                            <p>Nanda Kumar K</p>
+                            <p>{cpData.motherDob}</p>
                         </TitleContainer>
                     </OneSpecificInfo>
+                    </> : null}
                 </CHRightContainer>
             </CHRight>
         </CHContainer>

@@ -20,6 +20,7 @@ import com.rln.model.LoanInterestPayment;
 import com.rln.model.RLNBankDetails;
 import com.rln.payload.response.ApiResponse;
 import com.rln.payload.response.LoansResponse;
+import com.rln.payload.response.SpecificLoanResponse;
 import com.rln.repository.EducationalLoanRepository;
 import com.rln.repository.LoanInterestPaymentRepository;
 import com.rln.repository.HomeLoanRepository;
@@ -85,6 +86,10 @@ public class LoanServiceImpl implements LoanService {
 			BigInteger bigInteger = BigInteger.valueOf(Math.round(random.nextFloat() * Math.pow(10,8)));
 			String loanId = bigInteger.toString();
 			
+			if ( loanId.length() < 8 ) {
+				_openNewHomeLoan( homeLoan , token);
+			}
+			
 			homeLoan.setCustomer(customer);
 			homeLoan.setHomeLoanId(loanId);
 			homeLoan.setLoanPendingAmount(homeLoan.getLoanAmount());
@@ -145,6 +150,10 @@ public class LoanServiceImpl implements LoanService {
 			Random random = new Random();
 			BigInteger bigInteger = BigInteger.valueOf(Math.round(random.nextFloat() * Math.pow(10,8)));
 			String loanId = bigInteger.toString();
+			
+			if ( loanId.length() < 8 ) {
+				_openNewEducationaLoan( educationalLoan , token);
+			}
 			
 			educationalLoan.setCustomer(customer);
 			educationalLoan.setEducationalLoanId(loanId);
@@ -294,6 +303,34 @@ public class LoanServiceImpl implements LoanService {
 		return loansResponse;
 	}
 
+	@Override
+	public SpecificLoanResponse _specificLoan(String loanid) {
+		
+		HomeLoan homeLoan = homeLoanRepository.findByHomeLoanId(loanid);
+		EducationalLoan educationalLoan = educationalRepository.findByEducationalLoanId(loanid);
+		SpecificLoanResponse res = new SpecificLoanResponse();
+		
+		if ( homeLoan != null ) {
+				
+			res.setHomeloans(homeLoan);
+				
+			return res;
+			
+		}
+		else if ( educationalLoan != null ) {
+			
+
+			res.setEducationalLoans(educationalLoan);
+				
+			return res;
+			 
+		}
+		else  {
+			
+			return null;
+		}
+		
+	}
 	
 	@Override
 	public String _closeLoan(String loanid) {
@@ -359,6 +396,9 @@ public class LoanServiceImpl implements LoanService {
 				
 				if ( interestPayment.getAmountPaid() <= homeLoan.getLoanPendingAmount()  ) {
 					
+					homeLoan.setLoanPendingAmount(homeLoan.getLoanPendingAmount() - interestPayment.getAmountPaid());
+					homeLoanRepository.save(homeLoan);
+					
 					find = true;
 				}
 				else {
@@ -379,6 +419,9 @@ public class LoanServiceImpl implements LoanService {
 			if ( educationalLoan.isLoanVerification() ) {
 				
 				if( interestPayment.getAmountPaid() <= educationalLoan.getLoanPendingAmount()  ) {
+					
+					educationalLoan.setLoanPendingAmount(educationalLoan.getLoanPendingAmount() - interestPayment.getAmountPaid());
+					educationalRepository.save(educationalLoan);
 					
 					find = true;
 				}
@@ -433,5 +476,7 @@ public class LoanServiceImpl implements LoanService {
 		
 		return res;
 	}
+
+	
 
 }

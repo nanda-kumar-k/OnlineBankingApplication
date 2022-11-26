@@ -32,5 +32,7 @@ public interface CustomerService {
 	boolean _createOrUpdateCustomer(Customer customer);
 	
 	String _uploadCustomerPhoto(MultipartFile file, String username);
+	
+	CustomerProfile _getCustomerProfile(String token);
 
 }

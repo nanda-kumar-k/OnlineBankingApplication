@@ -4,7 +4,7 @@ import AllLinks from "../CustomerHome/AllLinks";
 import styled from "styled-components";
 import React from "react";
 import RLNDataService from "../../services/rln.customer.service";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams,NavLink } from "react-router-dom";
 
 export const CHRightContainer = styled.div`
     padding: 1vh 1vw;
@@ -12,6 +12,7 @@ export const CHRightContainer = styled.div`
     height: 80vh;
     background-color: white;
     border-radius: 10px;
+    overflow: scroll;
     h2 {
         padding: 1vh 1vw;
         box-shadow: 1px 1px whitesmoke;
@@ -48,7 +49,8 @@ const TranTable = styled.table`
 function AllLoans() {
 
     const [allData, setAllData] = React.useState('');
-    const [noData, setNoData] = React.useState(false);
+    // const [noHomeData, setNoHomeData] = React.useState(false);
+    //const [noEduData, setNoEduData] = React.useState(false);
     const parms = useParams();
     const navigate = useNavigate();
 
@@ -59,7 +61,7 @@ function AllLoans() {
                 setAllData(response.data);
             }
             else if (response.statusCode === 204) {
-                setNoData(true);
+                //setNoData(true);
                 // navigate('/login');
             }
         })
@@ -79,76 +81,78 @@ function AllLoans() {
             </CHLeft>
             <CHRight>
                 <CHRightContainer>
-                    <h2>All Fixed Deposits</h2>
+                    <h2>All Home Loans</h2>
                     <hr/>
                     <TranTable>
                         <tr>
                             <th>Loan ID</th>
                             <th>Loan Date</th>
-                            <th>Loan Type</th>
                             <th>Loan Amount</th>
                             <th>Loan Interest</th>
+                            <th>Home Address</th>
                             <th>Loan Duration</th>
                             <th>Nominee Name</th>
-                            <th>Nominee Account No</th>
+                            <th>Pending Amount</th>
                             <th>Loan Status</th>
+                            <th>Loan Verification</th>
+                            <th>More Info</th>
                         </tr>
+                        {allData && allData.homeloans.map((data) => (
+                            <tr key={data.homeLoanId}>
+                                <td>{data.homeLoanId}</td>
+                                <td>{data.loanDate}</td>
+                                <td>{data.loanAmount}</td>
+                                <td>{data.loanInterest}</td>
+                                <td>{data.homeAddress}</td>
+                                <td>{data.loanEndDate}</td>
+                                <td>{data.nomineeName}</td>
+                                <td>{data.loanPendingAmount}</td>
+                                {data.loanStatus ? <td style={{color: "green"}}>Active</td> : <td style={{color: "red"}}>Closed</td> }
+                                {data.loanVerification ? <td style={{color: "green"}}>Done</td> : <td style={{color: "red"}}>Pending</td> }
+                                <td><NavLink to={"/specificloan/" + data.homeLoanId}>View</NavLink></td>
+                            </tr>
+                        ))}
+                        { !allData.homeloans && <tr><td colSpan="9">No Data Found</td></tr>}
+                    </TranTable>
+
+                    <h2 style={{marginTop:"50px"}}>All Educational Loans</h2>
+                    <hr/>
+                    <TranTable>
                         <tr>
-                            <td>1</td>
-                            <td>2021-01-01</td>
-                            <td>Home</td>
-                            <td>10000</td>
-                            <td>10%</td>
-                            <td>1 Year</td>
-                            <td>John Doe</td>
-                            <td>123456789012</td>
-                            <td>Active</td>
+                            <th>Loan ID</th>
+                            <th>Loan Date</th>
+                            <th>Loan Amount</th>
+                            <th>Loan Interest</th>
+                            <th>Institution Name</th>
+                            <th>Degree</th>
+                            <th>Year Of Study</th>
+                            <th>Institution Address</th>
+                            <th>Loan Duration</th>
+                            <th>Nominee Name</th>
+                            <th>Pending Amount</th>
+                            <th>Loan Status</th>
+                            <th>loan Verification</th>
+                            <th>More Info</th>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2021-01-01</td>
-                            <td>Home</td>
-                            <td>10000</td>
-                            <td>10%</td>
-                            <td>1 Year</td>
-                            <td>John Doe</td>
-                            <td>123456789012</td>
-                            <td>Active</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2021-01-01</td>
-                            <td>Home</td>
-                            <td>10000</td>
-                            <td>10%</td>
-                            <td>1 Year</td>
-                            <td>John Doe</td>
-                            <td>123456789012</td>
-                            <td>Active</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2021-01-01</td>
-                            <td>Home</td>
-                            <td>10000</td>
-                            <td>10%</td>
-                            <td>1 Year</td>
-                            <td>John Doe</td>
-                            <td>123456789012</td>
-                            <td>Active</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2021-01-01</td>
-                            <td>Home</td>
-                            <td>10000</td>
-                            <td>10%</td>
-                            <td>1 Year</td>
-                            <td>John Doe</td>
-                            <td>123456789012</td>
-                            <td>Active</td>
-                        </tr>
-                        
+                        {allData && allData.educationalLoans.map((data) => (
+                            <tr key={data.educationalLoanId}>
+                                <td>{data.educationalLoanId}</td>
+                                <td>{data.loanDate}</td>
+                                <td>{data.loanAmount}</td>
+                                <td>{data.loanInterest}</td>
+                                <td>{data.institutionName}</td>
+                                <td>{data.degree}</td>
+                                <td>{data.yearOfStudy}</td>
+                                <td>{data.institutionAddress}</td>
+                                <td>{data.loanEndDate}</td>
+                                <td>{data.nomineeName}</td>
+                                <td>{data.loanPendingAmount}</td>
+                                {data.loanStatus ? <td style={{color: "green"}}>Active</td> : <td style={{color: "red"}}>Closed</td> }
+                                {data.loanVerification ? <td style={{color: "green"}}>Done</td> : <td style={{color: "red"}}>Pending</td> }
+                                <td><NavLink to={"/specificloan/" + data.educationalLoanId}>View</NavLink></td>
+                            </tr>
+                        ))}
+                        { !allData.educationalLoans && <tr><td colSpan="9">No Data Found</td></tr>}
                     </TranTable>
                 </CHRightContainer>
             </CHRight>

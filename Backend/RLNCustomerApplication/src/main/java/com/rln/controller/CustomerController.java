@@ -138,6 +138,33 @@ public class CustomerController {
 		return res;
 	}
 	
+	
+	@GetMapping("/customerprofile")
+	@PreAuthorize("isAuthenticated()")
+	public ApiResponse<CustomerProfile> getCustomerProfile(@RequestHeader("Authorization") String token) {
+		
+		ApiResponse<CustomerProfile> res = new ApiResponse<CustomerProfile>();
+		res.setTimestamp(new Date());
+		
+		CustomerProfile getCheck = customerService._getCustomerProfile(token);
+		
+		if ( getCheck != null ) {
+			
+			res.setData(getCheck);
+			res.setStatusCode(200);
+			res.setMessage("Data founded...!!");
+		}
+		else {
+			
+			res.setStatusCode(204);
+			res.setMessage("Profile Not Founded Contact near RLN Bank...!!");
+			
+		}
+		return res;
+		
+	}
+	
+	
 	 @GetMapping("/uploads/customerimages/{filename:.+}")
 	 public ResponseEntity<Resource> getFile(@PathVariable String filename) {
 		
