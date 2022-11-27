@@ -11,6 +11,9 @@ const API_DEPOSIT_URL = "http://localhost:2001/api/customer/deposit/";
 
 const API_LOANS_URL = "http://localhost:2001/api/customer/loans/";
 
+const API_PREDICT_URL = "https://nandu-insuranceprediction.herokuapp.com/apipredict/";
+
+const API_BUSINESS = "http://localhost:2001/api/customer/businessapi/";
 
 function checkUsernameAvailability (username) {
     return axios.get(API_URL + "checkuser", {
@@ -353,6 +356,73 @@ const getCustomerProfile = async () => {
     }
 };
 
+
+
+const predictInsurance = async (age,bmi,childrens,sex,smoke,region) => {
+    let checkHeader = authHeader();
+    if(checkHeader){
+        return await axios.get(API_PREDICT_URL + age+"/"+bmi+"/"+childrens+"/"+sex+"/"+smoke+"/"+region, {
+        })
+        .then((response) => {
+            console.log(response.data);
+            console.log("customer profile");
+            return response.data;
+        })
+        .catch((error) => {
+            console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            console.log(error);
+            return '';
+        })
+    }
+    else{
+        return '';
+    }
+};
+
+
+const requestApiKey = async () => {
+    let checkHeader = authHeader();
+    if ( checkHeader ) {
+        return await axios.get(API_BUSINESS + "createapikey", {
+            headers: checkHeader
+        })
+        .then((response) => {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch((error) => {
+            console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            console.log(error);
+            return '';
+        })
+    }
+    else{
+        return '';
+    }
+};
+
+
+const getApiKey = async () => {
+    let checkHeader = authHeader();
+    if ( checkHeader ) {
+        return await axios.get(API_BUSINESS + "getapikey", {
+            headers: checkHeader
+        })
+        .then((response) => {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch((error) => {
+            console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            console.log(error);
+            return '';
+        })
+    }
+    else{
+        return '';
+    }
+}
+
 const testconnection = () => {
     return http.get(`http://localhost:2001/api/customer/test1`);
 }
@@ -375,7 +445,10 @@ const RLNDataService = {
     allLoanPayments,
     specificLoan,
     closeLoan,
-    getCustomerProfile
+    getCustomerProfile,
+    predictInsurance,
+    requestApiKey,
+    getApiKey
 };
 
 

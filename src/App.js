@@ -40,6 +40,10 @@ import LoanDocumentUpload from './Components/Loans/LoanDocumentUpload';
 import LoanPayment from './Components/Loans/LoanPayment';
 import LoanPaymentsHistory from './Components/Loans/LoanPaymentsHistory';
 import SpecificLoan from './Components/Loans/SpecificLoan';
+import LifeInsurance from './Components/Insurance/LifeInsurance';
+import ApiKeyGeneration from './Components/BusinessApi/ApiKeyGeneration.js';
+
+
 function App() {
   return (
     <>
@@ -84,9 +88,13 @@ function App() {
           <Route path="customerdeposit" element={<CustomerDeposit/>}/>
           <Route path="customertransaction" element={<CustomerTransaction/>}/>
           <Route path="customerloan" element={<CustomerLoan/>}/>
+          <Route path="lifeinsurance" element={<LifeInsurance/>}/>
           
           <Route path="bussinesslogin" element={<BusinessCustomer/>}/>
           <Route path="savingslogin" element={<SavingsCustomer/>}/>
+
+
+          <Route path="apikey" element={<ApiKeyGeneration/>}/>
 
           <Route path="testing" element={<ConnectionTest/>}/>
         </Routes>

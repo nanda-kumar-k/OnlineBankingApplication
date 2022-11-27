@@ -21,11 +21,10 @@ function AllLinks() {
             <NavLink to="/loanpaymentshistory"><p>Loan Payments History</p></NavLink>
             <hr/>
             <h3>Insurances</h3>
-            <NavLink to="/"><p>Open New Life Insurance</p></NavLink>
-            <NavLink to="/"><p>All Insurances</p></NavLink>
+            <NavLink to="/lifeinsurance"><p>Life Insurance</p></NavLink>
             <hr/>
             <h3>Business API</h3>
-            <NavLink to="/"><p>API Key</p></NavLink>
+            <NavLink to="/apikey"><p>API Key</p></NavLink>
             <NavLink to="/"><p>API Documentation</p></NavLink>
             <NavLink to="/"><p>Transaction History</p></NavLink>
         </>
