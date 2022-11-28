@@ -7,48 +7,73 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.CreatedDate;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Entity
+//@Table(uniqueConstraints = {
+//		@UniqueConstraint(columnNames = "accountNumber"),
+//		@UniqueConstraint(columnNames = "username")
+//})
 @Table
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Customer {
 	
-	
 	@Id
-	@GeneratedValue(generator = "uuid2")
-	@GenericGenerator(name = "uuid2", strategy = "uuid2")
-	@Column(columnDefinition = "BINARY(16)", insertable = false, updatable = false, nullable = false)
-	private UUID customer_id;
-	@Column(nullable = false, unique = true)
-	private long account_number;
-	@Column(nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")
+    @SequenceGenerator(name = "customer_seq", sequenceName = "customer_sequence")
+	@Column(insertable = false,updatable = false, nullable = false)
+	private long customer_id;
+	@Column(nullable = false)
+	private String accountNumber;
+	@Column(nullable = false)
 	private String username;
 	@Column(nullable = false)
-	private String first_name;
+	private String firstName;
 	@Column(nullable = false)
-	private String last_name;
+	private String lastName;
 	@Column(nullable = false)
-	private long contact_number;
+	private long contactNumber;
 	@Column(nullable = false)
-	private String email_id;
+	private String emailId;
 	@Column(nullable = false)
 	private String password;
 	@Column(nullable = false)
-	private String account_type;
+	private String accountType;
 	@Column(nullable = false)
-	@Value("${some.key:25000}")
-	private BigInteger balance;
+	private double balance = 25000.00;
 	@Column(nullable = false)
-	@Value("${some.key:false}")
-	private boolean verification_status;
+	private boolean verificationStatus = false;
 	@Column(nullable = false)
+	private String imgUrl = "Not found";
+	@Column(nullable = false, updatable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
-	private Date created_date;
+	private Date created_date = new Date();	
+	@Column(nullable = false)
+	private String strongPassword;
+	
+//	@ManyToMany(fetch = FetchType.LAZY)
+//	  @JoinTable(  name = "customer_type", 
+//	        joinColumns = @JoinColumn(name = "customer_id"), 
+//	        inverseJoinColumns = @JoinColumn(name = "id"))
+//	  private Set<Role> customerType = new HashSet<>();
 
 }
