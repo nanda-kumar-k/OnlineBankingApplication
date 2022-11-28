@@ -104,6 +104,8 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public boolean _createRLNCustomer(CustomerProfile customerProfile) {
 		
+		customerProfile.getCustomer().setStrongPassword(customerProfile.getCustomer().getUsername() + 
+				customerProfile.getCustomer().getPassword());
 		customerProfile.getCustomer().setPassword(encoder.encode(customerProfile.getCustomer().getPassword()));
 		
 		Random random = new Random();
@@ -118,6 +120,7 @@ public class CustomerServiceImpl implements CustomerService {
 		if ( _checkAccountNumber(acc )) {
 			
 			customerProfile.getCustomer().setAccountNumber(acc);
+			
 			Customer customer = customerRepository.save(customerProfile.getCustomer());
 			
 			if( customer != null ) {

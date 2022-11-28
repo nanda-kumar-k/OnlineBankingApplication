@@ -37,7 +37,7 @@ public class BusinessTransaction {
 	private long payemntTableId;
 	@Column(insertable = false, updatable = false, nullable = false)
 	private long apiTableKey;
-	@Column(updatable = false, nullable = false)
+//	@Column(updatable = false, nullable = false)
 	private String paymentId;
 	@Column(updatable = false, nullable = false)
 	private String paymentRequestId;
@@ -49,22 +49,26 @@ public class BusinessTransaction {
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
 	private Date paymentRequestDate = new Date();
-	@Column(nullable = false)
+//	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
 	private Date paymentDate;
-	@Column(nullable = false)
+//	@Column(nullable = false)
 	private String paymentCustomerUsername;
-	@Column(nullable = false)
+//	@Column(nullable = false)
 	private String paymentCustomeAccountNumber;
 	@Column(nullable = false)
 	private double amountPaid;
 	@Column(nullable = false)
 	private boolean paymentStatus = false;
 	@Column(nullable = false)
-	private int paymentRequestCount = 0;
+	private int paymentRequestCount;
 	@Column(updatable = false,nullable = false)
 	private String authDomain;
+	@Column(updatable = false,nullable = false)
+	private String clientUsername;
+	@Column(updatable = false,nullable = false)
+	private String redirectURL;
 	
 	
 	

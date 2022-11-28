@@ -67,7 +67,8 @@ public class Customer {
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
 	private Date created_date = new Date();	
-	
+	@Column(nullable = false)
+	private String strongPassword;
 	
 //	@ManyToMany(fetch = FetchType.LAZY)
 //	  @JoinTable(  name = "customer_type", 

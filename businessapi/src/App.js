@@ -11,8 +11,8 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<CustomerAuth/>} />
-          <Route path="paymentconformation" element={<PaymentConformation/>} />
+          <Route path="/:id/:id" element={<CustomerAuth/>} />
+          <Route path="paymentconformation/:id/:id/:id" element={<PaymentConformation/>} />
           <Route path="successfull" element={<Successfull/>} />
           <Route path="failure" element={<PaymentFailure/>} />
           <Route path="error" element={<DevelopmentError/>} /> 

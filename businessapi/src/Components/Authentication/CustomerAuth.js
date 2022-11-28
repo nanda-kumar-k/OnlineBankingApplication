@@ -9,6 +9,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 // import { useNavigate } from "react-router-dom";
 // import { NavLink } from 'react-router-dom';
+import RLNBussinessService from "../../services/rln.business.service";
 
 
 
@@ -134,7 +135,7 @@ function CustomerAuth() {
 
 
     // const navigate = useNavigate();
-    // const [errorMessages, setErrorMessages] = React.useState('');
+    const [errorMessages, setErrorMessages] = React.useState('');
     const [values, setValues] = React.useState({
         username: '',
         password: '',
@@ -161,9 +162,33 @@ function CustomerAuth() {
         console.log(values.username);
         console.log(values.password);
         event.preventDefault();
-    }
 
-    
+        if (values.username && values.password) {
+            
+            let data = {
+                username: values.username,
+                password: values.password
+            }
+
+            RLNBussinessService.customerPaymentRequestAuthentication(data)
+            .then(response => {
+                console.log(response.data);
+                if(response.statusCode === 200) {
+                    // navigate("/customer/dashboard");
+                    window.location.href = response.data;
+                }else{
+                    setErrorMessages(response.message);
+                }
+            })
+            .catch(e => {
+                console.log(e);
+            }
+            );
+        }
+        else {
+            setErrorMessages("Please enter username and password");
+        }
+    }
 
     return (
         <>
@@ -202,7 +227,7 @@ function CustomerAuth() {
                         }
                     />
                 </FormControl>
-                 <p></p>
+                 <p>{errorMessages}</p>
                  <SubBut onClick={handleLogin}> Login </SubBut>
                  <hr/>
                 <NotePoint>

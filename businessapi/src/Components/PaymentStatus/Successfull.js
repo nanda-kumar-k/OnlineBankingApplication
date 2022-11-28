@@ -90,6 +90,12 @@ const PaySuccessImg = styled.img`
 `;
 
 function Successfull() { 
+
+    const onContinue = () => {
+        let redirecturl = localStorage.getItem("redirecturl");
+        window.location.href = redirecturl;
+    }
+
     return (
         <>
             <TextScroll behavior="scroll" direction="left" scrollamount="10" >
@@ -103,7 +109,7 @@ function Successfull() {
                   
                     <PaySuccessImg src={paymentsuccess} alt="" />    
                     
-                    <SubBut > Continue </SubBut>
+                    <SubBut onClick={onContinue} > Continue </SubBut>
                     <hr/>
                 </ConformationContainer>
             </PaymentContainer>
