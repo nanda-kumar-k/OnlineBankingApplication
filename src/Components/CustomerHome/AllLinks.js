@@ -26,7 +26,7 @@ function AllLinks() {
             <h3>Business API</h3>
             <NavLink to="/apikey"><p>API Key</p></NavLink>
             <NavLink to="/"><p>API Documentation</p></NavLink>
-            <NavLink to="/"><p>Transaction History</p></NavLink>
+            <NavLink to="/businesstransactionhistory"><p>Transaction History</p></NavLink>
         </>
     )
 }
