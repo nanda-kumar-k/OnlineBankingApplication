@@ -1,6 +1,7 @@
 package com.rln.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rln.model.BusinessAPI;
+import com.rln.model.BusinessTransaction;
 import com.rln.payload.response.ApiResponse;
 import com.rln.service.BusinessService;
 
@@ -73,5 +75,31 @@ public class BusinessApiController {
 		return res;
 		
 	}
+	
+	
+	@GetMapping("/gettransactionhistory")
+	public ApiResponse<List<BusinessTransaction>> __getAllBusinessTractionsHistory(@RequestHeader("Authorization") String token) {
+		
+		ApiResponse<List<BusinessTransaction>> res = new ApiResponse<>();
+		res.setTimestamp(new Date());
+		
+		List<BusinessTransaction> getCheck = businessService._getAllBusinessTractions(token);
+		
+		if  ( getCheck.isEmpty() ) {
+			
+			res.setStatusCode(400);
+			res.setMessage("No Transactions Found...!!");
+			
+		}
+		else {
+			
+			res.setData(getCheck);
+			res.setStatusCode(200);
+			res.setMessage("Data Found...!!");
+		}
+		
+		return res;
+	}
 
+	
 }

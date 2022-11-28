@@ -423,6 +423,28 @@ const getApiKey = async () => {
     }
 }
 
+const getAllBusinessTractionsHistory = async () => {
+    let checkHeader = authHeader();
+    if ( checkHeader ) {
+        return await axios.get(API_BUSINESS + "gettransactionhistory", {
+            headers: checkHeader
+        })
+        .then((response) => {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch((error) => {
+            console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            console.log(error);
+            return '';
+        })
+    }
+    else{
+        return '';
+    }
+}
+
+
 const testconnection = () => {
     return http.get(`http://localhost:2001/api/customer/test1`);
 }
@@ -448,7 +470,8 @@ const RLNDataService = {
     getCustomerProfile,
     predictInsurance,
     requestApiKey,
-    getApiKey
+    getApiKey,
+    getAllBusinessTractionsHistory
 };
 
 

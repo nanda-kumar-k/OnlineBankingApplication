@@ -42,6 +42,7 @@ import LoanPaymentsHistory from './Components/Loans/LoanPaymentsHistory';
 import SpecificLoan from './Components/Loans/SpecificLoan';
 import LifeInsurance from './Components/Insurance/LifeInsurance';
 import ApiKeyGeneration from './Components/BusinessApi/ApiKeyGeneration.js';
+import BusinessTransactionHistory from './Components/BusinessApi/BusinessTranactionHistory';
 
 
 function App() {
@@ -95,6 +96,7 @@ function App() {
 
 
           <Route path="apikey" element={<ApiKeyGeneration/>}/>
+          <Route path="businesstransactionhistory" element={<BusinessTransactionHistory/>}/>
 
           <Route path="testing" element={<ConnectionTest/>}/>
         </Routes>
