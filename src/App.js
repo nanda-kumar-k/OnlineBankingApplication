@@ -43,6 +43,9 @@ import SpecificLoan from './Components/Loans/SpecificLoan';
 import LifeInsurance from './Components/Insurance/LifeInsurance';
 import ApiKeyGeneration from './Components/BusinessApi/ApiKeyGeneration.js';
 import BusinessTransactionHistory from './Components/BusinessApi/BusinessTranactionHistory';
+import ApiDocumentation from './Components/BusinessApi/ApiDocumentation';
+import SpringBootDocumentation from './Components/BusinessApi/SpringBootDocumentation';
+import PythonDocumentation from './Components/BusinessApi/PythonDocumentation';
 
 
 function App() {
@@ -97,6 +100,9 @@ function App() {
 
           <Route path="apikey" element={<ApiKeyGeneration/>}/>
           <Route path="businesstransactionhistory" element={<BusinessTransactionHistory/>}/>
+          <Route path="apidocmentation" element={<ApiDocumentation/>}/>
+          <Route path="springbootdocmentation" element={<SpringBootDocumentation/>}/>
+          <Route path="pythondoc" element={<PythonDocumentation/>}/>
 
           <Route path="testing" element={<ConnectionTest/>}/>
         </Routes>
