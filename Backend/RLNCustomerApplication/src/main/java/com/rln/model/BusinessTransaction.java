@@ -31,37 +31,44 @@ import lombok.Setter;
 public class BusinessTransaction {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")
-    @SequenceGenerator(name = "customer_seq", sequenceName = "customer_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "businesstrans_seq")
+    @SequenceGenerator(name = "businesstrans_seq", sequenceName = "businesstrans_sequence")
 	@Column(insertable = false,updatable = false, nullable = false)
 	private long payemntTableId;
 	@Column(insertable = false, updatable = false, nullable = false)
 	private long apiTableKey;
-	@Column(updatable = false, nullable = false)
+//	@Column(updatable = false, nullable = false)
 	private String paymentId;
 	@Column(updatable = false, nullable = false)
 	private String paymentRequestId;
+	@Column(nullable = false)
 	private String purpose;
 	@Column(nullable = false)
-	private String redirectRequestUrl;
+	private String redirectGetURL;
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
 	private Date paymentRequestDate = new Date();
-	@Column(nullable = false)
+//	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
 	private Date paymentDate;
-	@Column(nullable = false)
+//	@Column(nullable = false)
 	private String paymentCustomerUsername;
-	@Column(nullable = false)
+//	@Column(nullable = false)
 	private String paymentCustomeAccountNumber;
 	@Column(nullable = false)
 	private double amountPaid;
 	@Column(nullable = false)
-	private boolean paymentStatus;
+	private boolean paymentStatus = false;
 	@Column(nullable = false)
-	private int paymentRequestCount = 0;
+	private int paymentRequestCount;
+	@Column(updatable = false,nullable = false)
+	private String authDomain;
+	@Column(updatable = false,nullable = false)
+	private String clientUsername;
+	@Column(updatable = false,nullable = false)
+	private String redirectURL;
 	
 	
 	

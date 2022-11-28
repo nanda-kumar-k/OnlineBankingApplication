@@ -12,5 +12,7 @@ public class BusinessApiPaymentRequest {
 	private double amount;
 	private String redirectGetURL;
 	private String purpose;
+	private String clientUsername;
+	private String redirectURL;
 
 }

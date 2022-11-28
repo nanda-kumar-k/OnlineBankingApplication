@@ -8,7 +8,7 @@ import com.rln.model.Customer;
 @Repository
 public interface CustomerRepository  extends CrudRepository<Customer, Long> {
 	
-	Customer findByUsernameAndPassword(String username, String password);
+	Customer findByUsernameAndStrongPassword(String username, String password);
 	
 	Customer findByUsername(String username);
 
