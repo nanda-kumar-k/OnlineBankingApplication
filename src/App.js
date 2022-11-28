@@ -70,9 +70,15 @@ function App() {
           <Route path="educational" element={<EducationalRegister/>}/>
           <Route path="family" element={<FamilyRegister/>}/>
           <Route path="setpassword" element={<PasswordRegister/>}/>
+
+
+          
           <Route path="managerdashboard" element={<MDashboard/>}/>
           <Route path="mallcustomers" element={<MAllCustomers/>}/>
           <Route path="macountrequest" element={<MAccountRequest/>}/>
+
+
+
           <Route path="newdeposit" element={<NewDeposit/>}/>
           <Route path="newhomeloan" element={<NewHomeLoan/>}/>
           <Route path="neweducationloan" element={<NewEducationalLoan/>}/>
@@ -83,6 +89,8 @@ function App() {
           <Route path="loanpaymentshistory" element={<LoanPaymentsHistory/>}/>
           <Route path="specificloan/:id" element={<SpecificLoan/>}/>
           <Route path="specificdeposit/:id" element={<SpecificDeposit/>}/>
+
+
           <Route path="superadmindashboard" element={<SDashboard/>}/>
           <Route path="employeedashboard" element={<EDashboard/>}/>
           <Route path="employeeallcustomers" element={<EAllCustomers/>}/>
@@ -92,8 +100,10 @@ function App() {
           <Route path="customerdeposit" element={<CustomerDeposit/>}/>
           <Route path="customertransaction" element={<CustomerTransaction/>}/>
           <Route path="customerloan" element={<CustomerLoan/>}/>
+
+
+
           <Route path="lifeinsurance" element={<LifeInsurance/>}/>
-          
           <Route path="bussinesslogin" element={<BusinessCustomer/>}/>
           <Route path="savingslogin" element={<SavingsCustomer/>}/>
 
