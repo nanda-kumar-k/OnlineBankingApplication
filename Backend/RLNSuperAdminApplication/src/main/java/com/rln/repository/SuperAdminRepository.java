@@ -11,6 +11,6 @@ import com.rln.model.SuperAdmin;
 @Repository
 public interface SuperAdminRepository extends CrudRepository<SuperAdmin, Long> {
 	
-	Optional<Customer>findByUsername(String user);
+	Optional<SuperAdmin>findByUsername(String user);
 
 }

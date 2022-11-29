@@ -2,20 +2,17 @@ package com.rln.security.services;
 
 import java.util.Collection;
 import java.util.Objects;
-import java.util.UUID;
-
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rln.model.Customer;
+import com.rln.model.SuperAdmin;
 
 public class UserDetailsImpl implements UserDetails {
   private static final long serialVersionUID = 1L;
   
-  private long customer_id;
+  private long superAdminTableId;
   
   private String username;
 
@@ -33,7 +30,7 @@ public class UserDetailsImpl implements UserDetails {
   }
   
 
-  public static UserDetailsImpl build(Customer user) {
+  public static UserDetailsImpl build(SuperAdmin user) {
 //    List<GrantedAuthority> authorities = user.getCustomerType().stream()
 //        .map(role -> new SimpleGrantedAuthority(role.getName().name()))
 //        .collect(Collectors.toList());
@@ -85,14 +82,15 @@ public class UserDetailsImpl implements UserDetails {
   }
 
 
-public long getCustomer_id() {
-	return customer_id;
+public long getSuperAdminTableId() {
+	return superAdminTableId;
 }
 
 
-public void setCustomer_id(long customer_id) {
-	this.customer_id = customer_id;
+public void setSuperAdminTableId(long superAdminTableId) {
+	this.superAdminTableId = superAdminTableId;
 }
+
 
   @Override
   public boolean equals(Object o) {
@@ -101,7 +99,7 @@ public void setCustomer_id(long customer_id) {
     if (o == null || getClass() != o.getClass())
      return false;
     UserDetailsImpl user = (UserDetailsImpl) o;
-    return Objects.equals(customer_id, user.customer_id);
+    return Objects.equals(superAdminTableId, user.superAdminTableId);
   }
 
 }

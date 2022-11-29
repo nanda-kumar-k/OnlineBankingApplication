@@ -18,61 +18,60 @@ import com.rln.model.Deposit;
 import com.rln.payload.response.ApiResponse;
 import com.rln.service.DepositService;
 
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:3010", maxAge = 3600)
 @RestController
-@RequestMapping("/api/customer/deposit")
+@RequestMapping("/api/superadmin/deposit")
 public class DepositController {
 	
 	@Autowired
 	public DepositService depositService;
 	
 	
-	@PostMapping("/opennewdeposit")
+	@GetMapping("/getallcustomersdeposits")
 	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<String> __openNewDeposit( 
-			@RequestBody Deposit deposit , @RequestHeader("Authorization") String token) {
-		
-		ApiResponse<String> res = new ApiResponse<>();
-		res.setTimestamp(new Date());
-		
-		String status = depositService._openNewCUstomerDeposit(deposit, token);
-		
-		if( status.equals("created") ) {
-			
-			res.setStatusCode(200);
-			res.setMessage("new deposite created...!!");
-			
-		}
-		else {
-			
-			res.setMessage(status);
-			res.setStatusCode(401);
-		}
-		
-		return res;
-	}
-	
-	
-	@GetMapping("/getalldeposits")
-	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<List<Deposit>> __getAllDeposits(@RequestHeader("Authorization") String token) {
+	public ApiResponse<List<Deposit>> __getAllCustomersDeposits() {
 		
 		ApiResponse<List<Deposit>> res = new ApiResponse<>();
 		res.setTimestamp(new Date());
 		
-		List<Deposit> datares = depositService._getAllDeposits(token);
+		List<Deposit> getCheck = depositService._getAllCustomersDeposits();
 		
-		if(datares.size() >0) {
+		if ( getCheck != null ) {
 			
-			res.setData(datares);
-			res.setMessage("Data Found...!!");
+			res.setData(getCheck);
 			res.setStatusCode(200);
 		}
 		
 		else {
 			
-			res.setMessage("No Deposits Found.!!!");
-			res.setStatusCode(204);
+			res.setStatusCode(400);
+			res.setMessage("Deposits Not Found...!!");
+		}
+		
+		
+		return res;
+		
+	}
+ 	
+	@GetMapping("/customerdeposits/{username}")
+	@PreAuthorize("isAuthenticated()")
+	public ApiResponse<List<Deposit>> __customerDeposite(@PathVariable("username") String username) {
+		
+		ApiResponse<List<Deposit>> res = new ApiResponse<>();
+		res.setTimestamp(new Date());
+		
+		List<Deposit> getCheck = depositService._customerDeposits(username);
+		
+		if ( getCheck != null ) {
+			
+			res.setData(getCheck);
+			res.setStatusCode(200);
+		}
+		
+		else {
+			
+			res.setStatusCode(400);
+			res.setMessage("Deposits Not Found...!!");
 		}
 		
 		return res;
@@ -82,12 +81,12 @@ public class DepositController {
 	@GetMapping("/specificdeposit/{depsoitid}")
 	@PreAuthorize("isAuthenticated()")
 	public ApiResponse<Deposit> __specificDeposit(
-			@RequestHeader("Authorization") String token , @PathVariable("depsoitid") String depsoitid ) {
+			@PathVariable("depsoitid") String depsoitid ) {
 		
 		ApiResponse<Deposit> res = new ApiResponse<>();
 		res.setTimestamp(new Date());
 		
-		Deposit check = depositService._specificDeposit(depsoitid, token);
+		Deposit check = depositService._specificDeposit(depsoitid);
 		
 		if ( check != null ) {
 			
@@ -104,34 +103,5 @@ public class DepositController {
 		return res;
 		
 	}
-	
-	
-	@GetMapping("/closedeposit/{depsoitid}")
-	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<String> __closeDeposit ( 
-			@RequestHeader("Authorization") String token , @PathVariable("depsoitid") String depsoitid ) {
-		
-		ApiResponse<String> res = new ApiResponse<>();
-		res.setTimestamp(new Date());
-		
-		if( depositService._closeDeposit(depsoitid, token) ) {
-			
-			res.setStatusCode(200);
-			res.setMessage("deposit closed successfully...!!");
-			
-		}
-		else {
-			
-			res.setStatusCode(400);
-			res.setMessage("we can't close your deposit, please contract nearest rln bank...!!");
-		}
-		
-		return res;
-		
-	}
-	
-	
-	
-	
 
 }

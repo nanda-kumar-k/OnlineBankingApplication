@@ -13,11 +13,8 @@ import com.rln.payload.response.SpecificLoanResponse;
 
 public interface LoanService {
 	
-	ApiResponse<String> _openNewHomeLoan(HomeLoan homeLoan, String token);
 	
-	ApiResponse<String> _openNewEducationaLoan(EducationalLoan educationalLoan, String token);
-	
-	LoansResponse _getAllLoans(String token);
+	LoansResponse _getCustomerLoans(String username);
 	
 	String _closeLoan(String loanid);
 	
@@ -25,7 +22,6 @@ public interface LoanService {
 	
 	List<LoanInterestPayment> _allLoanPayemnts(String token);
 	
-	String _uploadLoanDocuments(MultipartFile file, String loanid);
 	
     SpecificLoanResponse _specificLoan(String loanid);
 

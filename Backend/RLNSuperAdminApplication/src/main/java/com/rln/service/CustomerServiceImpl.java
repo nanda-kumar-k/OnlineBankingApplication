@@ -1,6 +1,7 @@
 package com.rln.service;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -252,15 +253,5 @@ public class CustomerServiceImpl implements CustomerService {
 		
 	}
 
-	
-
-	
-
-
-
-	
-
-
-	
 
 }

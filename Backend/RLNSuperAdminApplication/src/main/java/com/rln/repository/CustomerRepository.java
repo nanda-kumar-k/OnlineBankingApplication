@@ -21,6 +21,6 @@ public interface CustomerRepository extends CrudRepository<Customer, Long> {
 	Optional<Customer>findByUsername(String user);
 	Optional<Customer>findByAccountNumber(String acc);
 	
-
+	List<Customer>findByVerificationStatusFalse();
 	
 }

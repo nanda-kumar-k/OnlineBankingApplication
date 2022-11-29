@@ -6,11 +6,9 @@ import com.rln.model.Deposit;
 
 public interface DepositService {
 	
-	String _openNewCUstomerDeposit( Deposit deposit , String token );
+	Deposit _specificDeposit(String depositid);
 	
-	List<Deposit> _getAllDeposits( String token );
+	List<Deposit> _getAllCustomersDeposits();
 	
-	boolean _closeDeposit( String depositid , String token);
-	
-	Deposit _specificDeposit(String depositid, String token);
+	List<Deposit> _customerDeposits(String username);
 }
