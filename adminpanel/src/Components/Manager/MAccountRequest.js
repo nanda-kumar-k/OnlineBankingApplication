@@ -2,7 +2,7 @@ import {MLeftMenu} from './MDashboard';
 import ManagerMenu from './ManagerMenu';
 import styled from 'styled-components';
 import background from './Images/background.png';
-import MAllCustomerData from './MAllCustomerData';
+// import MAllCustomerData from './MAllCustomerData';
 const SliderContainer = styled.div`
     background-image: url(${background});
     background-size: 100% 100%;
@@ -32,7 +32,7 @@ function MAccountRequest() {
             <ManagerMenu/>
         </MLeftMenu>
         <MRightMenu>
-            <MAllCustomerData/>
+            
         </MRightMenu>
       </SliderContainer>
     </>

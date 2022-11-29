@@ -58,7 +58,7 @@ public class Customer {
 	@Column(nullable = false)
 	private String accountType;
 	@Column(nullable = false)
-	private double balance = 25000.00;
+	private double balance;
 	@Column(nullable = false)
 	private boolean verificationStatus = false;
 	@Column(nullable = false)

@@ -39,8 +39,8 @@ public class TransactionServiceImpl implements TransactionService {
 		Customer customer =  customerService._checkCustomerBalance(token);
 		
 		transaction.setCustomer(customer);
-//		transaction.setSenderAccountNumber(customer.getAccountNumber());
-//		transaction.setSenderName(customer.getFirstName() + customer.getLastName());
+		transaction.setSenderAccountNumber(customer.getAccountNumber());
+		transaction.setSenderName(customer.getFirstName() + customer.getLastName());
 		transaction.setTransactionId(UUID.randomUUID().toString());
 		transactionRepository.save(transaction);  
 		

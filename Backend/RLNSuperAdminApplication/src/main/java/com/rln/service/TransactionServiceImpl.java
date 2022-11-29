@@ -74,8 +74,9 @@ public class TransactionServiceImpl implements TransactionService {
 
 	
 	@Override
-	public List<Transaction> _customerTransactionsDetails(String token) {
-		Customer customer =  customerService._checkCustomerBalance(token);
+	public List<Transaction> _customerTransactionsDetails(String username) {
+		
+		Customer customer =  customerRepository.findByUsername(username).get();
 
 		List<Transaction> li = (List<Transaction>) transactionRepository.findAll();
 		
@@ -94,6 +95,15 @@ public class TransactionServiceImpl implements TransactionService {
 		}
 		
 		return res;
+	}
+
+
+	@Override
+	public List<Transaction> _getAllTransactionsDetails() {
+		
+		List<Transaction> li = (List<Transaction>) transactionRepository.findAll();
+		
+		return li;
 	}
 
 }

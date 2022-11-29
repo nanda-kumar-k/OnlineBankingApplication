@@ -8,6 +8,8 @@ public interface TransactionService {
 	
 	String _customerAmountTransfer(Transaction transaction, String token);
 	
-	List<Transaction> _customerTransactionsDetails(String token);
+	List<Transaction> _customerTransactionsDetails(String username);
+	
+	List<Transaction> _getAllTransactionsDetails();
 
 }

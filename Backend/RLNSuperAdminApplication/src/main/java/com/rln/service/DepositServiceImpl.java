@@ -47,147 +47,9 @@ public class DepositServiceImpl implements DepositService {
         
         return cinterest;
 	}
-	
-	@Override
-	public String _openNewCUstomerDeposit(Deposit deposit, String token) {
-		
-		Customer customer =  customerService._checkCustomerBalance(token);
-		
-		if ( deposit.getDepositAmount() <= 500 ) {
-			
-			return "Minimum amount to fix is 500...!! please enter valid amount...!!";
-			
-		}
-		
-		if ( customer.getBalance() - deposit.getDepositAmount() <= 100 ) {
-			
-			return "Insufficient Bank Balance To open new Fix Deposit...!!";
-			
-		}
-
-		LocalDate open = LocalDate.now();
-		Period ti = Period.between(open ,new java.sql.Date(deposit.getDepositEndDate().getTime()).toLocalDate());
-		
-		int years = ti.getYears();
-		int months = ti.getMonths();
-		int numberOfMonthsBetweenDates =  months+years*12;
-		System.out.println(years);
-		System.out.println(months);
-		System.out.println(numberOfMonthsBetweenDates);
-		if( years < 1 && numberOfMonthsBetweenDates < 1  ) {
-			
-//			Period ti = Period.between(null, null);
-			
-			return "minimum 1 month should be fix the amount...!! Try again...!!";
-		}
-		
-		else {
-			
-			RLNBankDetails bankDetails = bankDetailsService._getRLNBankInfo();
-			
-			
-			if ( bankDetails != null ) {
-				
-				bankDetailsService._updateBalance((long)deposit.getDepositAmount(), true);
-				
-				customer.setBalance( customer.getBalance() - deposit.getDepositAmount() );
-				customerRepository.save(customer);
-				
-				deposit.setDepositId(UUID.randomUUID().toString());
-				deposit.setDepositInterest(bankDetails.getDepositInterest());
-				deposit.setCustomer(customer);
-				deposit.setDepositeCurrentAmount(deposit.getDepositAmount());
-				depositRepository.save(deposit);
-				
-				return "created";
-				
-			}
-			else {
-				
-				return " Internal Server Error...!! try again after some time..!! ";
-			}
-				
-		}
-		
-	}
-
 
 	@Override
-	public List<Deposit> _getAllDeposits(String token) {
-		
-		
-		Customer customer =  customerService._checkCustomerBalance(token);
-
-		List<Deposit> li = (List<Deposit>) depositRepository.findAll();
-		
-		List<Deposit> res = new ArrayList<>();
-		
-		for( int i = 0; i < li.size(); i++) {
-			
-			if( li.get(i).getCustomerrefid() == (customer.getCustomer_id()) ) {
-				
-				Deposit filter = li.get(i);
-				filter.setCustomer(null);
-	
-				res.add(filter);
-			}
-		}
-		
-		return res;
-	}
-
-
-	@Override
-	public boolean _closeDeposit(String depositid, String token) {
-		
-		Deposit deposit = depositRepository.findByDepositId(depositid);
-		Customer customer =  customerService._checkCustomerBalance(token);
-		
-		if ( deposit != null ) {
-			
-//			LocalDate start = LocalDate.parse((CharSequence) deposit.getDepositDate());
-			LocalDate end = LocalDate.now();
-			Period ti = Period.between(new java.sql.Date(deposit.getDepositEndDate().getTime()).toLocalDate(), end);
-//			System.out.println(end);
-//			System.out.println(new java.sql.Date(deposit.getDepositEndDate().getTime()).toLocalDate());
-//			System.out.println(ti.getMonths());
-			int years = ti.getYears();
-			int months = ti.getMonths();
-			int numberOfMonthsBetweenDates =  months+years*12;
-			double t;
-			if(numberOfMonthsBetweenDates <= 12) {
-				t = (Double.valueOf(numberOfMonthsBetweenDates)) / 12.00 ;
-			}
-			else {
-				t = (Double.valueOf(years)) ;
-			}
-			double r = Double.valueOf(deposit.getDepositInterest()) / 100.0;
-			
-//			System.out.println(years);
-//			System.out.println(months);
-//			System.out.println(numberOfMonthsBetweenDates);
-//			System.out.println(t);
-//			System.out.println(r);
-			double amount = calculateCompoundAmount(deposit.getDepositAmount(), t, r, 3);
-			System.out.println(amount);
-			
-			deposit.setDepositeCurrentAmount(amount);
-			deposit.setDepositeActiveStatus(false);
-			depositRepository.save(deposit);
-			
-			customer.setBalance((customer.getBalance() + amount));
-			
-			customerRepository.save(customer);
-			
-			return true;
-			
-		}
-		
-		return false;
-	}
-
-	@Override
-	public Deposit _specificDeposit(String depositid, String token) {
+	public Deposit _specificDeposit(String depositid) {
 		
 		Deposit deposit = depositRepository.findByDepositId(depositid);
 		
@@ -222,4 +84,40 @@ public class DepositServiceImpl implements DepositService {
 		}
 		
 	}
+	
+	
+	@Override
+	public List<Deposit> _customerDeposits(String username) {
+		
+		Customer customer = customerRepository.findByUsername(username).get();
+		
+		if ( customer != null ) {
+			
+			List<Deposit> res = new ArrayList<>();
+			List<Deposit> deposits = (List<Deposit>) depositRepository.findAll();
+			
+			for ( int i = 0; i < deposits.size(); i++ ) {
+				
+				if ( deposits.get(i).getCustomerrefid() == customer.getCustomer_id() ) {
+					
+					res.add(deposits.get(i));
+				}
+			}
+			
+			return res;
+			
+		}
+		
+		return null;
+	}
+
+	@Override
+	public List<Deposit> _getAllCustomersDeposits() {
+		
+		List<Deposit> deposits = (List<Deposit>) depositRepository.findAll();
+		
+		return deposits;
+	}
+	
+	
 }

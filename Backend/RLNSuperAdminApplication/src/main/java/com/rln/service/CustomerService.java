@@ -2,6 +2,7 @@ package com.rln.service;
 
 
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
@@ -34,5 +35,7 @@ public interface CustomerService {
 	String _uploadCustomerPhoto(MultipartFile file, String username);
 	
 	CustomerProfile _getCustomerProfile(String token);
+	
+	
 
 }

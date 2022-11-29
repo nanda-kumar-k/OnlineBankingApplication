@@ -28,9 +28,9 @@ import com.rln.payload.response.SpecificLoanResponse;
 import com.rln.service.FilesStorageService;
 import com.rln.service.LoanService;
 
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:3010", maxAge = 3600)
 @RestController
-@RequestMapping("/api/customer/loans")
+@RequestMapping("/api/superadmin/loans")
 public class LoanController {
 	
 	@Autowired
@@ -39,59 +39,15 @@ public class LoanController {
 	@Autowired
 	public FilesStorageService storageService;
 	
-	@PostMapping("/opennewhomeloan")
+	
+	
+	@GetMapping("/customerloans/{username}")
 	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<String> __openNewHomeLoan(
-			@RequestBody HomeLoan homeLoan, @RequestHeader("Authorization") String token) {
-		
-		return loanService._openNewHomeLoan(homeLoan, token);
-		
-	}
-	
-	@PostMapping("/openeducationalloan")
-	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<String> __openEdicationalLoan(
-			@RequestBody EducationalLoan educationalLoan, @RequestHeader("Authorization") String token ) {
-		
-		return loanService._openNewEducationaLoan(educationalLoan, token);
-		
-	}
-	
-	
-	@PostMapping("/uploadloansdocument/{loanid}")
-	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<String> __uploadLoanDocuments(
-			@RequestParam("file") MultipartFile file , @PathVariable("loanid") String loanid) {
-		
-		ApiResponse<String> res = new ApiResponse<>();
-		res.setTimestamp(new Date());
-		System.out.println(file);
-		System.out.println("111111111111111");
-		String checkRes =  loanService._uploadLoanDocuments(file, loanid);
-		System.out.println("22222222222222222");
-		if(checkRes.equals("uploaded")) {
-			
-			res.setMessage("Document  uploaded successfully");
-			res.setStatusCode(200);
-			
-		}
-		else {
-			
-			res.setMessage(checkRes);
-			res.setStatusCode(400);
-		}
-		
-		return res;
-	}
-	
-	
-	@GetMapping("/getallloans")
-	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<LoansResponse> __getAllLoans(@RequestHeader("Authorization") String token) {
+	public ApiResponse<LoansResponse> __getAllLoans(@PathVariable("username") String username) {
 		ApiResponse<LoansResponse> res = new ApiResponse<>();
 		res.setTimestamp(new Date());
 		
-		LoansResponse checkRes = loanService._getAllLoans(token);
+		LoansResponse checkRes = loanService._getCustomerLoans(username);
 		
 		if( checkRes.getEducationalLoans() != null || checkRes.getHomeloans() != null ) {
 			
@@ -132,29 +88,6 @@ public class LoanController {
 		return res;
 	}
 	
-	
-	@GetMapping("/closeloan/{loanid}")
-	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<String> __closeLoan(
-			@PathVariable("loanid") String loanid ) {
-		
-		ApiResponse<String> res = new ApiResponse<>();
-		res.setTimestamp(new Date());
-		String checkRes = loanService._closeLoan(loanid);
-		
-		if ( checkRes.equals("closed") ) {
-			
-			res.setMessage("Loan Closed successfully...!!");
-			res.setStatusCode(200);
-		}
-		else {
-			
-			res.setMessage(checkRes);
-			res.setStatusCode(400);
-		}
-		
-		return res;
-	}
 	
 	
 	@PostMapping("/loanpayment")
@@ -204,17 +137,6 @@ public class LoanController {
 		}
 		
 		return res;
-	}
-	
-	
-	@GetMapping("/uploads/loandocuments/{filename:.+}")
-	public ResponseEntity<Resource> getFile(@PathVariable String filename) {
-		
-	    Resource file = storageService.load(filename);
-	    
-	    return ResponseEntity.ok()
-	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
-	  
 	}
 	
 

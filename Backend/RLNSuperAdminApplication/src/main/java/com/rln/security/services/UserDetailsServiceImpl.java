@@ -7,9 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import com.rln.model.Customer;
-import com.rln.repository.CustomerRepository;
+import com.rln.model.SuperAdmin;
 import com.rln.repository.SuperAdminRepository;
 
 @Service
@@ -21,7 +19,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   @Override
   @Transactional
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Customer user = adminRepository.findByUsername(username)
+    SuperAdmin user = adminRepository.findByUsername(username)
         .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
 
     return UserDetailsImpl.build(user);

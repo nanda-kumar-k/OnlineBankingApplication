@@ -1,7 +1,7 @@
 import background from './Images/background.png';
 import banner from './Images/banner.png';
 import banner2 from './Images/banner2.png';
-import SuperAdminMenu from './SuperAdminMenu';
+import Menubar from '../Navbar/Menubar'
 import styled from 'styled-components';
 import { Swiper as MMSwiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -56,7 +56,7 @@ function SDashboard() {
     <>
       <SliderContainer>
         <MLeftMenu>
-            <SuperAdminMenu/>
+            <Menubar/>
         </MLeftMenu>
         <MRightMenu>
             <SliderContainer>

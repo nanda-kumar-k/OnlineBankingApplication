@@ -37,9 +37,9 @@ public class SuperAdmin {
 	private String username;
 	@Column(nullable = false)
 	private String password;
-	@Column(nullable = false)
+//	@Column(nullable = false)
 	private String firstName;
-	@Column(nullable = false)
+//	@Column(nullable = false)
 	private String lastName;
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
