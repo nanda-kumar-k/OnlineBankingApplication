@@ -341,6 +341,333 @@ const getSpecificLoan = async (loanId) =>  {
 };
 
 
+const getSpecificLoanPayments = async (loanId) =>  {
+
+    const adminType = adminTypeCheck();
+    if (adminType !== null) {
+
+        let checkHeader = authHeader(adminType);
+        if (checkHeader) {
+            return await axios.get(API_URL + adminType + "/loans/specificloanpayments/" + loanId, { headers: checkHeader })
+                .then((response) => {
+                    console.log(response);
+                    return response.data;
+                })
+                .catch((error) => {
+                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+                    console.log(error);
+                    return ''
+                })
+
+        }
+        else {
+            return ''
+        }
+    }
+    else {
+        return ''
+    }
+};
+
+
+const getAllHomeLoans = async () =>  {
+
+    const adminType = adminTypeCheck();
+    if (adminType !== null) {
+
+        let checkHeader = authHeader(adminType);
+        if (checkHeader) {
+
+            return await axios.get(API_URL + adminType + "/loans/allhomeloans", { headers: checkHeader })
+                .then((response) => {
+                    console.log(response);
+                    return response.data;
+                })
+                .catch((error) => {
+                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+                    console.log(error);
+                    return ''
+                })
+
+        }
+        else {
+            return ''
+        }
+    }
+    else {
+        return ''
+    }
+};
+
+
+const getAllEducationalLoans = async () =>  {
+
+    const adminType = adminTypeCheck();
+    if (adminType !== null) {
+
+        let checkHeader = authHeader(adminType);
+        if (checkHeader) {
+
+            return await axios.get(API_URL + adminType + "/loans/alleducationalloans", { headers: checkHeader })
+                .then((response) => {
+                    console.log(response);
+                    return response.data;
+                })
+                .catch((error) => {
+                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+                    console.log(error);
+                    return ''
+                })
+
+        }
+        else {
+            return ''
+        }
+    }
+    else {
+        return ''
+    }
+};
+
+
+const getAllLoanPayments = async () =>  {
+
+    const adminType = adminTypeCheck();
+    if (adminType !== null) {
+
+        let checkHeader = authHeader(adminType);
+        if (checkHeader) {
+
+            return await axios.get(API_URL + adminType + "/loans/allloanpayments", { headers: checkHeader })
+                .then((response) => {
+                    console.log(response);
+                    return response.data;
+                })
+                .catch((error) => {
+                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+                    console.log(error);
+                    return ''
+                })
+
+        }
+        else {
+            return ''
+        }
+    }
+    else {
+        return ''
+    }
+};
+
+
+const LoansRequest = async () =>  {
+
+    const adminType = adminTypeCheck();
+    if (adminType !== null) {
+
+        let checkHeader = authHeader(adminType);
+        if (checkHeader) {
+            
+            return await axios.get(API_URL + adminType + "/loans/loansrequest", { headers: checkHeader })
+                .then((response) => {
+                    console.log(response);
+                    return response.data;
+                })
+                .catch((error) => {
+                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+                    console.log(error);
+                    return ''
+                })
+
+        }
+        else {
+            return ''
+        }
+    }   
+    else {
+        return ''
+    }
+};
+
+
+const loanVerification = async (loanId) =>  {
+
+    const adminType = adminTypeCheck();
+    if (adminType !== null) {
+
+        let checkHeader = authHeader(adminType);
+        if (checkHeader) {
+            return await axios.get(API_URL + adminType + "/loans/loanverification/" + loanId, { headers: checkHeader })
+                .then((response) => {
+                    console.log(response);
+                    return response.data;
+                })
+                .catch((error) => {
+                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+                    console.log(error);
+                    return ''
+                })
+
+        }
+        else {
+            return ''
+        }
+    }
+    else {
+        return ''
+    }
+};
+
+
+const getAllBusinessApiCustomers = async () =>  {
+
+    const adminType = adminTypeCheck();
+    if (adminType !== null) {
+
+        let checkHeader = authHeader(adminType);
+        if (checkHeader) {
+
+            return await axios.get(API_URL + adminType + "/businessapi/getallbusinessapicustomers", { headers: checkHeader })
+                .then((response) => {
+                    console.log(response);
+                    return response.data;
+                })
+                .catch((error) => {
+                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+                    console.log(error);
+                    return ''
+                })
+
+        }
+        else {
+            return ''
+        }
+    }
+    else {
+        return ''
+    }
+};
+
+const getAllBusinessApiTransactions = async () =>  {
+
+    const adminType = adminTypeCheck();
+    if (adminType !== null) {
+
+        let checkHeader = authHeader(adminType);
+        if (checkHeader) {
+
+            return await axios.get(API_URL + adminType + "/businessapi/getallbusinessapitransactions", { headers: checkHeader })
+                .then((response) => {
+                    console.log(response);
+                    return response.data;
+                })
+                .catch((error) => {
+                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+                    console.log(error);
+                    return ''
+                })
+
+        }
+        else {
+            return ''
+        }
+    }
+    else {
+        return ''
+    }
+};
+
+
+const getCustomerBusinessApiTransactions = async (username) =>  {
+
+    const adminType = adminTypeCheck();
+    if (adminType !== null) {
+
+        let checkHeader = authHeader(adminType);
+        if (checkHeader) {
+
+            return await axios.get(API_URL + adminType + "/businessapi/getbusinessapicustomertransactions/" + username, { headers: checkHeader })
+                .then((response) => {
+                    console.log(response);
+                    return response.data;
+                })
+                .catch((error) => {
+                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+                    console.log(error);
+                    return ''
+                })
+
+        }
+        else {
+            return ''
+        }
+    }
+    else {
+        return ''
+    }
+};
+
+
+const addEmployee = async (employee) =>  {
+
+    const adminType = adminTypeCheck();
+    if (adminType !== null) {
+
+        let checkHeader = authHeader(adminType);
+        if (checkHeader) {
+
+            return await axios.post(API_URL + adminType + "/addemployee", employee, { headers: checkHeader })
+                .then((response) => {
+                    console.log(response);
+                    return response.data;
+                })
+                .catch((error) => {
+                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+                    console.log(error);
+                    return ''
+                })
+
+        }
+        else {
+            return ''
+        }
+    }
+    else {
+        return ''
+    }
+};
+
+
+const getAllEmployees = async () =>  {
+
+    const adminType = adminTypeCheck();
+    if (adminType !== null) {
+
+        let checkHeader = authHeader(adminType);
+        if (checkHeader) {
+
+            return await axios.get(API_URL + adminType + "/getallemployee", { headers: checkHeader })
+                .then((response) => {
+                    console.log(response);
+                    return response.data;
+                })
+                .catch((error) => {
+                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+                    console.log(error);
+                    return ''
+                })
+
+        }
+        else {
+            return ''
+        }
+    }
+    else {
+        return ''
+    }
+};
+
+
 const RLNAllAdminDataService = {
     allAccountRequest,
     customerProfile,
@@ -352,7 +679,18 @@ const RLNAllAdminDataService = {
     getCustomerTransactions,
     getAllTransactions,
     getCustomerLoans,
-    getSpecificLoan
+    getSpecificLoan,
+    getSpecificLoanPayments,
+    getAllHomeLoans,
+    getAllEducationalLoans,
+    getAllLoanPayments,
+    LoansRequest,
+    loanVerification,
+    getAllBusinessApiCustomers,
+    getAllBusinessApiTransactions,
+    getCustomerBusinessApiTransactions,
+    addEmployee,
+    getAllEmployees
 };
 
 export default RLNAllAdminDataService;

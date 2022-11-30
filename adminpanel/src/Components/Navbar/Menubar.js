@@ -103,17 +103,70 @@ function Menubar (){
             </MenusList>
         </NavLink>
 
-        <NavLink to="/loanrequest" style={{textDecoration : 'none'}}>
+        <NavLink to="/allhomeloans" style={{textDecoration : 'none'}}>
+            <MenusList style={{marginTop:'15px'}}>
+                <CreditScoreIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
+                <p>All Home Loans</p>
+            </MenusList>
+        </NavLink>
+
+        <NavLink to="/alleducationalloans" style={{textDecoration : 'none'}}>
+            <MenusList style={{marginTop:'15px'}}>
+                <CreditScoreIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
+                <p>All Educational Loans</p>
+            </MenusList>
+        </NavLink>
+
+        <NavLink to="/loansrequest" style={{textDecoration : 'none'}}>
             <MenusList style={{marginTop:'15px'}}>
                 <CreditScoreIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
                 <p>Loan Request</p>
             </MenusList>
         </NavLink>
 
-        <NavLink to="/macountrequest" style={{textDecoration : 'none'}}>
+        <NavLink to="/allloanpayments" style={{textDecoration : 'none'}}>
+            <MenusList style={{marginTop:'15px'}}>
+                <CreditScoreIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
+                <p>All Loan Payments</p>
+            </MenusList>
+        </NavLink>
+
+        <NavLink to="/allbusinessapicustomers" style={{textDecoration : 'none'}}>
             <MenusList style={{marginTop:'15px'}}>
                 <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
-                <p>Insurance Request</p>
+                <p>All Business Api Customers</p>
+            </MenusList>
+        </NavLink>
+
+        <NavLink to="/allbusinessapitransactions" style={{textDecoration : 'none'}}>
+            <MenusList style={{marginTop:'15px'}}>
+                <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
+                <p>All Business Api Transactions</p>
+            </MenusList>
+        </NavLink>
+
+        <NavLink to="/addmanager" style={{textDecoration : 'none'}}>
+            <MenusList style={{marginTop:'15px'}}>
+                <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
+                <p>Add Manager</p>
+            </MenusList>
+        </NavLink>
+        <NavLink to="/allmanagers" style={{textDecoration : 'none'}}>
+            <MenusList style={{marginTop:'15px'}}>
+                <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
+                <p>All Managers</p>
+            </MenusList>
+        </NavLink>
+        <NavLink to="/addemployee" style={{textDecoration : 'none'}}>
+            <MenusList style={{marginTop:'15px'}}>
+                <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
+                <p>Add Employee</p>
+            </MenusList>
+        </NavLink>
+        <NavLink to="/allemloyees" style={{textDecoration : 'none'}}>
+            <MenusList style={{marginTop:'15px'}}>
+                <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
+                <p>All Employee</p>
             </MenusList>
         </NavLink>
 

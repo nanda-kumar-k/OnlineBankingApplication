@@ -47,7 +47,7 @@ const TranTable = styled.table`
 `
 
 
-function CustomerLoans() {
+function LoansRequest() {
 
     const [allData, setAllData] = React.useState('');
     // const [noHomeData, setNoHomeData] = React.useState(false);
@@ -56,9 +56,7 @@ function CustomerLoans() {
     const navigate = useNavigate();
 
     React.useEffect(() => {
-        let urlElements = window.location.href.split('/');
-        let username = urlElements[urlElements.length - 1];
-        RLNAllAdminDataService.getCustomerLoans(username).then((response) => {
+        RLNAllAdminDataService.LoansRequest().then((response) => {
             console.log(response);
             if(response.statusCode === 200) {
                 setAllData(response.data);
@@ -81,7 +79,7 @@ function CustomerLoans() {
         </MLeftMenu>
         <MRightMenu>
             <EAllContainer>
-                <h2>All Home Loans</h2>
+                <h2>All Home Loans Request</h2>
                 <hr/>
                 <TranTable>
                         <tr>
@@ -117,7 +115,7 @@ function CustomerLoans() {
                         { !allData.homeloans && <tr><td colSpan="9">No Data Found</td></tr>}
                     </TranTable>
 
-                    <h2 style={{marginTop:"50px"}}>All Educational Loans</h2>
+                    <h2 style={{marginTop:"50px"}}>All Educational Loans Request </h2>
                     <hr/>
                     <TranTable>
                         <tr>
@@ -163,4 +161,4 @@ function CustomerLoans() {
     )
 }
 
-export default CustomerLoans;
+export default LoansRequest;
