@@ -129,7 +129,7 @@ function PaymentConformation() {
                 setPayData(response.data);
             }
             else if (response.statusCode === 100) {
-                setInfoData(response.data);
+                // setInfoData(response.data);
                 setPayData(response.data);
                 // navigate('/login');
             }

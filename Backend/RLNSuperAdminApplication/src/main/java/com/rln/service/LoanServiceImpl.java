@@ -263,24 +263,111 @@ public class LoanServiceImpl implements LoanService {
 	}
 
 	@Override
-	public List<LoanInterestPayment> _allLoanPayemnts(String token) {
+	public List<LoanInterestPayment> _allLoanPayemnts() {
 		
-		Customer customer = customerService._checkCustomerBalance(token);
-		List<LoanInterestPayment> interestPayments = (List<LoanInterestPayment>)
+		List<LoanInterestPayment> res = (List<LoanInterestPayment>)
 				loanInterestPaymentRepository.findAll();
+		
+		return res;
+	}
+
+	@Override
+	public List<LoanInterestPayment> _specificLoanPayments(String loanid) {
+		
 		
 		List<LoanInterestPayment> res = new ArrayList<>();
 		
-		for ( int i = 0; i < interestPayments.size(); i++ ) {
+		List<LoanInterestPayment> getAll = (List<LoanInterestPayment>) loanInterestPaymentRepository.findAll();
+		
+		for ( int i = 0; i < getAll.size(); i++ ) {
 			
-			if ( customer.getCustomer_id() == interestPayments.get(i).getCustomerrefid() ) {
+			if ( getAll.get(i).getLoanId().equals(loanid) ) {
 				
-				res.add(interestPayments.get(i));
+				res.add(getAll.get(i));
+				
 			}
 		}
 		
 		
 		return res;
+	}
+
+	@Override
+	public List<EducationalLoan> _AllEducationalLoans() {
+		
+		List<EducationalLoan> res = (List<EducationalLoan>) educationalRepository.findAll();
+		
+		return res;
+	}
+
+	@Override
+	public List<HomeLoan> _AllHomeLoans() {
+		
+		List<HomeLoan> res = (List<HomeLoan>) homeLoanRepository.findAll();
+		
+		return res;
+	}
+
+	@Override
+	public LoansResponse _loansRequest() {
+		
+		List<HomeLoan> homeLoans = (List<HomeLoan>) homeLoanRepository.findByLoanVerificationFalse();
+		List<EducationalLoan> educationalLoans = (List<EducationalLoan>) educationalRepository.findByLoanVerificationFalse();
+		
+		LoansResponse res = new LoansResponse();
+		res.setEducationalLoans(educationalLoans);
+		res.setHomeloans(homeLoans);
+		
+		return res;
+	}
+
+	@Override
+	public boolean _loanVerification(String loanid) {
+		
+		HomeLoan homeLoan = homeLoanRepository.findByHomeLoanId(loanid);
+		
+		EducationalLoan educationalLoan = educationalRepository.findByEducationalLoanId(loanid);
+			
+		if  ( homeLoan != null ) {
+			
+			Customer customer = customerRepository.findByUsername(homeLoan.getCustomer().getUsername()).get();
+			
+			if ( customer != null ) {
+				
+				bankDetailsService._updateBalance(homeLoan.getLoanAmount(), false);
+				
+				customer.setBalance(customer.getBalance() + homeLoan.getLoanAmount());
+				customerRepository.save(customer);
+				
+				homeLoan.setLoanVerification(true);
+				homeLoanRepository.save(homeLoan);
+				
+				return true;
+			}
+			
+		}
+		
+		else if ( educationalLoan != null ) {
+			
+			Customer customer = customerRepository.findByUsername(educationalLoan.getCustomer().getUsername()).get();
+			
+			if ( customer != null ) {
+				
+				bankDetailsService._updateBalance(educationalLoan.getLoanAmount(), false);
+				
+				customer.setBalance(customer.getBalance() + educationalLoan.getLoanAmount());
+				customerRepository.save(customer);
+				
+				educationalLoan.setLoanVerification(true);
+				educationalRepository.save(educationalLoan);
+				
+				return true;
+			}
+			
+		}
+		
+		
+		return false;
 	}
 
 	

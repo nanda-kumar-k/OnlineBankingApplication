@@ -20,9 +20,20 @@ public interface LoanService {
 	
 	String _loanPayment(LoanInterestPayment interestPayment, String token);
 	
-	List<LoanInterestPayment> _allLoanPayemnts(String token);
+	List<LoanInterestPayment> _allLoanPayemnts();
 	
+	List<EducationalLoan> _AllEducationalLoans();
+	
+	List<HomeLoan> _AllHomeLoans();
 	
     SpecificLoanResponse _specificLoan(String loanid);
+    
+    List<LoanInterestPayment> _specificLoanPayments(String loanid);
+    
+    LoansResponse _loansRequest();
+    
+    boolean _loanVerification(String loanid);
+    
+    
 
 }
