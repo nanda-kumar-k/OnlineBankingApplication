@@ -6,11 +6,11 @@ import com.rln.model.BusinessAPI;
 import com.rln.model.BusinessTransaction;
 
 public interface BusinessService {
+		
+	List<BusinessTransaction> _getCustomerBusinessApiTractions(String username);
 	
-	boolean _apiKeyCreation(String token);
+	List<BusinessAPI> _getAllBusinessApiCustomers();
 	
-	BusinessAPI _apiKeyRequest(String token);
-	
-	List<BusinessTransaction> _getAllBusinessTractions(String token);
+	List<BusinessTransaction> getAllBusinessApiTransactions();
 
 }

@@ -12,6 +12,7 @@ import com.rln.model.BusinessTransaction;
 import com.rln.model.Customer;
 import com.rln.repository.BusinessAPIRepository;
 import com.rln.repository.BusinessTransactionRespository;
+import com.rln.repository.CustomerRepository;
 
 @Service
 public class BusinessServiceImpl implements BusinessService {
@@ -23,66 +24,29 @@ public class BusinessServiceImpl implements BusinessService {
 	private BusinessTransactionRespository businessTransactionRespository;
 	
 	@Autowired
-	private CustomerService customerService;
+	private CustomerRepository customerRepository;
+
 
 	@Override
-	public boolean _apiKeyCreation(String token) {
+	public List<BusinessAPI> _getAllBusinessApiCustomers() {
 		
-		Customer customer = customerService._checkCustomerBalance(token);
+		List<BusinessAPI> res = (List<BusinessAPI>) apiRepository.findAll();
 		
-		if ( customer != null ) {
-			
-			if  ( customer.getAccountType().equals("business") ) {
-				
-				BusinessAPI api = new BusinessAPI();
-				
-				api.setCustomer(customer);
-				api.setApiKey(UUID.randomUUID().toString());
-				api.setCustomerAccountNumber(customer.getAccountNumber());
-				
-				String authDomain = UUID.randomUUID().toString() + "." + customer.getUsername();
-				api.setAuthDomain(authDomain);
-				
-				apiRepository.save(api);
-				
-				return true;
-			}
-		}
-		
-		return false;
+		return res;
 	}
 
 	@Override
-	public BusinessAPI _apiKeyRequest(String token) {
+	public List<BusinessTransaction> getAllBusinessApiTransactions() {
 		
-		Customer customer = customerService._checkCustomerBalance(token);
-		BusinessAPI api;
+		List<BusinessTransaction> res = (List<BusinessTransaction>) businessTransactionRespository.findAll();
 		
-		if ( customer != null ) {
-			
-			api = apiRepository.findByCustomerAccountNumber(customer.getAccountNumber());
-			
-			if ( api != null ) {
-				
-				api.setApiTableId(0);
-				api.setCreatedDate(null);
-				api.setCustomer(null);
-				api.setCustomerrefid(0);
-				
-				return api;
-			}
-			
-			
-			
-		}
-		
-		return null;
+		return res;
 	}
-
+	
 	@Override
-	public List<BusinessTransaction> _getAllBusinessTractions(String token) {
+	public List<BusinessTransaction> _getCustomerBusinessApiTractions(String username) {
 		
-		Customer customer = customerService._checkCustomerBalance(token);
+		Customer customer = customerRepository.findByUsername(username).get();
 		
 		List<BusinessTransaction> businessTransaction = 
 				(List<BusinessTransaction>) businessTransactionRespository.findAll();

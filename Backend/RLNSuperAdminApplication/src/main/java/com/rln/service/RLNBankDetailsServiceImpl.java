@@ -30,14 +30,17 @@ public class RLNBankDetailsServiceImpl implements RLNBankDetailsService {
 		if(incOrdes) {
 			
 			bankDetails.setBalance(bankDetails.getBalance() + balance);
+			bankDetailsRepository.save(bankDetails);
 			return true;
 		}
 		else  {
 			
 			bankDetails.setBalance(bankDetails.getBalance() - balance);
-			
+			bankDetailsRepository.save(bankDetails);
 			return true;
 		}
+		
+		
 	}
 
 }

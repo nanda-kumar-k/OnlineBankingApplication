@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,74 +17,71 @@ import com.rln.model.BusinessTransaction;
 import com.rln.payload.response.ApiResponse;
 import com.rln.service.BusinessService;
 
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:3010", maxAge = 3600)
 @RestController
-@RequestMapping("/api/customer/businessapi")
+@RequestMapping("/api/superadmin/businessapi")
 public class BusinessApiController {
 	
 	@Autowired
 	private BusinessService  businessService;
 	
-	@GetMapping("/createapikey") 
+	@GetMapping("/getallbusinessapicustomers")
 	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<String> __apiKeyCreation(@RequestHeader("Authorization") String token) {
-		
-		ApiResponse<String> res = new ApiResponse<>();
+	public ApiResponse<List<BusinessAPI>> __getAllBusinessApiCustomers() {
+		ApiResponse<List<BusinessAPI>> res = new ApiResponse<>();
 		res.setTimestamp(new Date());
 		
-		if  ( businessService._apiKeyCreation(token) ) {
+		List<BusinessAPI> getCheck = businessService._getAllBusinessApiCustomers();
+		
+		if ( getCheck != null ) {
 			
+			res.setData(getCheck);
 			res.setStatusCode(200);
-			res.setMessage("Busniess Api Key created...!!");
-		
-		}
-		else  {
-			
-			res.setStatusCode(401);
-			res.setMessage("You are not authorize to create business api...!! please contact near RLN Bank...!!");
-			
 		}
 		
-		return res;
-		
-	}
-	
-	
-	@GetMapping("/getapikey") 
-	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<BusinessAPI> __apiKeyRequest(@RequestHeader("Authorization") String token) {
-		
-		ApiResponse<BusinessAPI> res = new ApiResponse<>();
-		res.setTimestamp(new Date());
-		
-		BusinessAPI chekGet = businessService._apiKeyRequest(token);
-		
-		if ( chekGet != null ) {
-			
-			res.setData(chekGet);
-			res.setMessage("Data found...!!");
-			res.setStatusCode(200);
-			
-		}
 		else {
 			
-			res.setStatusCode(403);
-			res.setMessage("Not Founded the business api key...!!");
-			
+			res.setStatusCode(400);
+			res.setMessage("Data not found...!!");
 		}
 		
 		return res;
-		
 	}
 	
 	
-	@GetMapping("/gettransactionhistory")
-	public ApiResponse<List<BusinessTransaction>> __getAllBusinessTractionsHistory(@RequestHeader("Authorization") String token) {
+	@GetMapping("/getallbusinessapitransactions")
+	@PreAuthorize("isAuthenticated()")
+	public ApiResponse<List<BusinessTransaction>> __getAllBusinessApiTransactions() {
+		ApiResponse<List<BusinessTransaction>> res = new ApiResponse<>();
+		res.setTimestamp(new Date());
+		
+		List<BusinessTransaction> getCheck = businessService.getAllBusinessApiTransactions();
+		
+		if ( getCheck != null ) {
+			
+			res.setData(getCheck);
+			res.setStatusCode(200);
+		}
+		
+		else {
+			
+			res.setStatusCode(400);
+			res.setMessage("Data not found...!!");
+		}
+		
+		return res;
+	}
+	
+	
+	
+	@GetMapping("/getbusinessapicustomertransactions/{username}")
+	@PreAuthorize("isAuthenticated()")
+	public ApiResponse<List<BusinessTransaction>> __getCustomerBusinessApiTractions(@PathVariable("username") String username) {
 		
 		ApiResponse<List<BusinessTransaction>> res = new ApiResponse<>();
 		res.setTimestamp(new Date());
 		
-		List<BusinessTransaction> getCheck = businessService._getAllBusinessTractions(token);
+		List<BusinessTransaction> getCheck = businessService._getCustomerBusinessApiTractions(username);
 		
 		if  ( getCheck.isEmpty() ) {
 			
@@ -100,6 +98,4 @@ public class BusinessApiController {
 		
 		return res;
 	}
-
-	
 }

@@ -48,7 +48,6 @@ public class BusinessAPI {
 
 	
 	
-	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "customerrefid", referencedColumnName = "customer_id")
 	private Customer customer;

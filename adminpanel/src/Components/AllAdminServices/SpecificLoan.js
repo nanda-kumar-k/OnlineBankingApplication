@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Menubar from '../Navbar/Menubar';
 import React from 'react';
 import RLNAllAdminDataService from '../services/AllAdminServices/rln.alladmin.service'
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, NavLink } from "react-router-dom";
 
 const EAllContainer = styled.div`
     width: 81vw;
@@ -56,7 +56,44 @@ const EachInfo = styled.div`
     }
 `;
 
+const EachButton = styled.div`
+    width: 54vw;
+    height: 3vh;
+    /* margin-top: 100px; */
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
 
+    #close {
+        background-color: #FF0000;
+        margin-right: 150px;
+        margin-left: 100px;
+        &:hover {
+        background-color: #fa3030;
+    }
+    }
+    a {
+        text-decoration: none;
+        color: white;
+    }
+`;
+
+const SButton = styled.div`
+    width: 10vw;
+    height: 5vh;
+    background-color: #4CAF50;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    
+    &:hover {
+        background-color: #3e8e41;
+    }
+`;
 
 function SpcificLoan() {
 
@@ -65,6 +102,7 @@ function SpcificLoan() {
     const [noData, setNoData] = React.useState(false);
     const parms = useParams();
     const navigate = useNavigate();
+    const [errormessage, setErrormessage] = React.useState('');
 
     React.useEffect(() => {
         let urlElements = window.location.href.split('/');
@@ -90,6 +128,23 @@ function SpcificLoan() {
         })
     },[parms,navigate]);
 
+    const AccpectLoanHandle = () => {
+        let urlElements = window.location.href.split('/');
+        let loanId = urlElements[urlElements.length - 1];
+        console.log(loanId);
+        RLNAllAdminDataService.loanVerification(loanId).then((response) => {
+            console.log(response);
+            if(response.statusCode === 200) {
+                setErrormessage(response.message);
+                // navigate('/customerhome/loans');
+            }
+            else {
+                setErrormessage(response.message);
+                // setNoData(true);
+                // navigate('/login');
+            }
+        })
+    }
 
   return (
     <>
@@ -233,6 +288,31 @@ function SpcificLoan() {
                         </>
                     )}
                     </>
+                    <EachRow>
+                        <p >{errormessage}</p>
+                    </EachRow>
+                    <EachRow>
+                        <EachButton>
+                            <>{
+                                loansData ?
+                                <>
+                                    {loansData.loanVerification ? <></> :
+                                        <><SButton id="close" onClick={AccpectLoanHandle} > Accpect Loan </SButton>
+                                        <NavLink to="/loansrequest"><SButton> Reject Loan </SButton></NavLink> </>
+                                    }
+                                </>
+                                :
+                                <>
+                                    {eduData.loanVerification ? <></> :
+                                        <><SButton id="close" onClick={AccpectLoanHandle} > Accpect Loan </SButton>
+                                        <NavLink to="/loansrequest"><SButton> Reject Loan </SButton></NavLink> </>
+                                         
+                                    }
+                                </>
+                            }</>
+                             
+                        </EachButton>
+                    </EachRow>
                 </SpecificDepositContainer>
             </EAllContainer>
         </MRightMenu>

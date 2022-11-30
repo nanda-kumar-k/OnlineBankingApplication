@@ -89,40 +89,86 @@ public class LoanController {
 	}
 	
 	
-	
-	@PostMapping("/loanpayment")
+	@GetMapping("/specificloanpayments/{loanid}")
 	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<String> __loanPayment(
-			@RequestBody LoanInterestPayment interestPayment, @RequestHeader("Authorization") String token) {
-		
-		ApiResponse<String> res = new ApiResponse<>();
+	public ApiResponse<List<LoanInterestPayment>> __specificLoanPayments( @PathVariable("loanid") String loanid ) {
+		ApiResponse<List<LoanInterestPayment>> res = new ApiResponse<>();
 		res.setTimestamp(new Date());
 		
-		String checkRes = loanService._loanPayment(interestPayment, token);
+		List<LoanInterestPayment> getCheck = loanService._specificLoanPayments(loanid);
 		
-		if ( checkRes.equals("paid") ) {
+		if ( getCheck.isEmpty() ) {
 			
-			res.setMessage("Loan Payment successfully...!!");
-			res.setStatusCode(200);
+			res.setMessage("No Loan Payments Found...!!");
+			res.setStatusCode(400);
+			
 		}
 		else {
 			
-			res.setMessage(checkRes);
-			res.setStatusCode(400);
+			res.setData(getCheck);
+			res.setStatusCode(200);
+			
 		}
 		
 		return res;
-		
 	}
 	
+	@GetMapping("/alleducationalloans")
+	@PreAuthorize("isAuthenticated()")
+	public ApiResponse<List<EducationalLoan>> __allEducationalLoans() {
+		
+		ApiResponse<List<EducationalLoan>> res = new ApiResponse<>();
+		res.setTimestamp(new Date());
+		
+		List<EducationalLoan> checkRes = loanService._AllEducationalLoans();
+		
+		if ( checkRes.isEmpty() ) {
+			
+			res.setMessage("No loan payments Found.!!!");
+			res.setStatusCode(400);
+		}
+		else {
+			
+			res.setData(checkRes);
+			res.setMessage("Data Found...!!");
+			res.setStatusCode(200);
+		}
+		
+		return res;
+	}
+	
+	@GetMapping("/allhomeloans")
+	@PreAuthorize("isAuthenticated()")
+	public ApiResponse<List<HomeLoan>> __allHomeLoans() {
+		
+		ApiResponse<List<HomeLoan>> res = new ApiResponse<>();
+		res.setTimestamp(new Date());
+		
+		List<HomeLoan> checkRes = loanService._AllHomeLoans();
+		
+		if ( checkRes.isEmpty() ) {
+			
+			res.setMessage("No loan payments Found.!!!");
+			res.setStatusCode(400);
+		}
+		else {
+			
+			res.setData(checkRes);
+			res.setMessage("Data Found...!!");
+			res.setStatusCode(200);
+		}
+		
+		return res;
+	}
+		
 	@GetMapping("/allloanpayments")
 	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<List<LoanInterestPayment>> __allLoanPayments(@RequestHeader("Authorization") String token) {
+	public ApiResponse<List<LoanInterestPayment>> __allLoanPayments() {
 		
 		ApiResponse<List<LoanInterestPayment>> res = new ApiResponse<>();
 		res.setTimestamp(new Date());
 		
-		List<LoanInterestPayment> checkRes = loanService._allLoanPayemnts(token);
+		List<LoanInterestPayment> checkRes = loanService._allLoanPayemnts();
 		
 		if ( checkRes.isEmpty() ) {
 			
@@ -137,6 +183,53 @@ public class LoanController {
 		}
 		
 		return res;
+	}
+	
+	
+	@GetMapping("/loansrequest")
+	@PreAuthorize("isAuthenticated()")
+	public ApiResponse<LoansResponse> __loanRequest() {
+		ApiResponse<LoansResponse> res = new ApiResponse<>();
+		res.setTimestamp(new Date());
+		
+		LoansResponse checkRes = loanService._loansRequest();
+		
+		if( checkRes.getEducationalLoans() != null || checkRes.getHomeloans() != null ) {
+			
+			res.setData(checkRes);
+			res.setMessage("Loan Founded...!!");
+			res.setStatusCode(200);
+		}
+		else {
+			
+			res.setMessage("No Loans Founded...!!");
+			res.setStatusCode(204);
+		}
+		
+		return res;
+	}
+	
+	@GetMapping("/loanverification/{loanid}")
+	@PreAuthorize("isAuthenticated()")
+	public ApiResponse<String> _loanVerification(@PathVariable("loanid") String loanid) {
+		
+		ApiResponse<String> res = new ApiResponse<>();
+		res.setTimestamp(new Date());
+		
+		if ( loanService._loanVerification(loanid) ) {
+			
+			res.setStatusCode(200);
+			res.setMessage("Loan Verification Successfull...!");
+			
+		}
+		else {
+			
+			res.setStatusCode(400);
+			res.setMessage("Loan Verification failed...!!");
+		}
+		
+		return res;
+		
 	}
 	
 
