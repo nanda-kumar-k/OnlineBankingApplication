@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:2001/api/customer/";
+const API_URL = "http://localhost:2022/api/customer/";
 
 const createRLNCustomer = () => {
     let data = JSON.parse(localStorage.getItem("customerRegister"));

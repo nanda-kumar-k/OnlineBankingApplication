@@ -4,45 +4,69 @@ import java.math.BigInteger;
 import java.util.Date;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.data.annotation.CreatedDate;
+
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Entity
 @Table
+@Setter
+@Getter
 public class CustomerProfile {
 	
 	@Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customerpprofile_seq")
+    @SequenceGenerator(name = "customerprofile_seq", sequenceName = "customerprofile_sequence")
 	@Column(insertable = false, updatable = false, nullable = false)
-	private UUID customer_id;
+	private long customerId;
 	private String gender;
 	private Date dob;
 	private String address;
-	private boolean marital_status;
-	private BigInteger aadhaar_number;
-	private String pan_number;
-	private String organisation_name;
+	private boolean maritalStatus;
+	private BigInteger aadhaarNumber;
+	private String panNumber;
+	private String organisationName;
 	private String designation;
-	private String nature_of_employment;
-	private long annual_income;
+	private String natureOfEmployment;
+	private long annualIncome;
 	private String qualification;
-	private String father_name;
-	private Date father_dob;
-	private String mother_name;
-	private Date mother_dob;
+	private String fatherName;
+	private Date fatherDob;
+	private String motherName;
+	private Date motherDob;
+	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
-	private Date created_date;
+	private Date createdDate = new Date();
 	
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
-	private Customer customer_ref;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@MapsId
+	@JoinColumn(name = "customer_id")
+	private Customer customer;
+	
+	
+	
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@Type(type="uuid-char")
+//	@Column(name="id", columnDefinition = "VARCHAR(255)", insertable = false, updatable = false, nullable = false)
+//	private String id;
 	
 }

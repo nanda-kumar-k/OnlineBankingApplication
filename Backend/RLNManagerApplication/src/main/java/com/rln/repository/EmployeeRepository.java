@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.rln.model.Employee;
 
 @Repository
-public interface EmployeeRepository extends CrudRepository<Employee, UUID>{
+public interface EmployeeRepository extends CrudRepository<Employee, Long>{
+	
+	Employee findByUsername(String username);
 
 }

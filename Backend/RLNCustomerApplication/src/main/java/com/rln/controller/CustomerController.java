@@ -29,7 +29,7 @@ import com.rln.service.CustomerService;
 import com.rln.service.FilesStorageService;
 
 
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/api/customer")
 public class CustomerController {

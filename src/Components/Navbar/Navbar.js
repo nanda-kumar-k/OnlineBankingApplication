@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import rlnlogo from './Images/newlogo.png';
-import navimg from './Images/navimg.jpg';
+import navimg from './Images/finnav.png';
 import { NavLink } from 'react-router-dom';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
@@ -11,9 +11,11 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 const NavContainer = styled.div`
     height: 11vh;
     width: 100vh;
-    position: relative;
-    position: sticky;
+    /* position: relative; */
+    position: fixed;
     top: 0;
+    left: 0;
+    z-index: 1;
     z-index: 100;
     
 `;
