@@ -9,6 +9,6 @@ import com.rln.model.RLNBankDetails;
 
 
 @Repository
-public interface RLNBankDetailsRepository extends CrudRepository<RLNBankDetails, UUID>{
+public interface RLNBankDetailsRepository extends CrudRepository<RLNBankDetails, Long>{
 
 }

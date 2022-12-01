@@ -3,7 +3,7 @@ import axios from "axios";
 import authHeader from "./auth-header";
 
 
-const API_URL = "http://localhost:2001/api/customer/";
+const API_URL = "http://localhost:2022/api/customer/";
 
 const API_TRANSACTION_URL = "http://localhost:2001/api/customer/transactions/";
 

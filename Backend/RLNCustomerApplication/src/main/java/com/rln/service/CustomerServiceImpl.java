@@ -189,17 +189,33 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public JwtResponse _authenticateCustomer(Customer customer) {
 		
-		Authentication authentication = authenticationManager.authenticate(
-		        new UsernamePasswordAuthenticationToken(customer.getUsername(), customer.getPassword()));
+		Customer cus = customerRepository.findByUsername(customer.getUsername()).get();
+		
+		if ( cus != null ) {
+			
+			if ( cus.isVerificationStatus() ) {
+				Authentication authentication = authenticationManager.authenticate(
+				        new UsernamePasswordAuthenticationToken(customer.getUsername(), customer.getPassword()));
 
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		String jwt = jwtUtils.generateJwtToken(authentication);
-		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-		    
-		return new JwtResponse(jwt, 
-		                         userDetails.getUsername(),
-		                         userDetails.getAccountType()
-		                         );
+				SecurityContextHolder.getContext().setAuthentication(authentication);
+				String jwt = jwtUtils.generateJwtToken(authentication);
+				UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+				    
+				return new JwtResponse(200,jwt, 
+				                         userDetails.getUsername(),
+				                         userDetails.getAccountType()
+				                         );
+			}
+			else {
+				
+				return new JwtResponse(100,null,null,null);
+			}
+		}
+		else {
+			return new JwtResponse(400,null,null,null);
+		}
+		
+		
 	}
 
 

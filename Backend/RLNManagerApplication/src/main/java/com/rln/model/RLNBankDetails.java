@@ -6,36 +6,50 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+ 
 @Entity
 @Table
-
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class RLNBankDetails {
 	
 	@Id
-	@GeneratedValue(generator = "uuid2")
-	@GenericGenerator(name = "uuid2", strategy = "uuid2")
-	@Column(columnDefinition = "BINARY(16)", insertable = false, updatable = false, nullable = false)
-	private UUID rln_id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rlndetails_seq")
+    @SequenceGenerator(name = "rlndetails_seq", sequenceName = "rlndetails_sequence")
+	@Column(insertable = false,  updatable = false, nullable = false)
+	private long rlnId;
 	@Column(nullable = false)
 	private long balance; 
 	@Column(nullable = false)
-	private float home_loan_interest;
+	private float homeLoanInterest;
 	@Column(nullable = false)
-	private float education_loan_interest;
+	private float educationLoanInterest;
 	@Column(nullable = false)
-	private float deposit_interest;
+	private float depositInterest;
 	@Column(nullable = false)
-	private long insurance_montly_payment;
+	private long insuranceMontlyPayment;
 	@Column(nullable = false)
-	private long insurance_yearly_payment;
+	private long insuranceYearlyPayment;
 	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
 	private Date date;
 
+	
 }

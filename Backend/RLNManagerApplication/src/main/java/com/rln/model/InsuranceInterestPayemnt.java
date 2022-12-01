@@ -16,6 +16,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.CreatedDate;
 
+
 @Entity
 @Table
 

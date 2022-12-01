@@ -220,24 +220,24 @@ const TranTable = styled.table`
 
 `
 
-const ApiKeyButton = styled.button`
-    width: 20vw;
-    height: 50px;
-    margin-left: 20vw;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.2em;
-    font-family: "Roboto Condensed", "Open Sans", sans-serif;
-    line-height: normal;
-    cursor: pointer;
-    margin-top: 20px;
-    margin-bottom: 50px;
-    &:hover {
-        background-color: #2980b9;
-    }
-`;
+// const ApiKeyButton = styled.button`
+//     width: 20vw;
+//     height: 50px;
+//     margin-left: 20vw;
+//     background-color: #3498db;
+//     color: white;
+//     border: none;
+//     border-radius: 5px;
+//     font-size: 1.2em;
+//     font-family: "Roboto Condensed", "Open Sans", sans-serif;
+//     line-height: normal;
+//     cursor: pointer;
+//     margin-top: 20px;
+//     margin-bottom: 50px;
+//     &:hover {
+//         background-color: #2980b9;
+//     }
+// `;
 
 
 function ApiDocumentation() {
