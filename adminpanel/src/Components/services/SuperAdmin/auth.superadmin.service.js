@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:2004/api/superadmin/";
+const API_URL = "http://localhost:2022/api/superadmin/";
 
 
 const authenticateRLNSuperAdmin = async (username, password) =>  {

@@ -238,12 +238,15 @@ function NewHomeLoan() {
                     </LoanContainer>
                     <DepositNote>
                         <h3>Note:</h3>
-                        <p>1. Please Enter Valid Details.</p>
-                        <p>2. Please Enter Valid Amount.</p>
-                        <p>3. Please Enter Valid Account No.</p>
-                        <p>4. Please Enter Valid IFSC Code.</p>
-
-
+                        <p>1. Loan Amount must be greater than or equal to 10000.</p>
+                        <p>2. Loan Amount must be a number.</p>
+                        <p>3. Please fill all the fields.</p>
+                        <p>4. Please Give Correct address, if you provide wrong address, your loan will not accpect</p>
+                        <p>5. Address should be complete, it contains street, city, state, zip, etc.</p>
+                        <p>6. Duration of the loan should be more than 3 months.</p>
+                        <p>7. By clicking on the submit button, you agree to the terms and conditions of the bank.</p>
+                        <p>8. The bank will not be responsible for any loss or damage caused by the use of this website.</p>
+                        <p>9. The bank reserves the right to change the terms and conditions of the website at any time.</p>
                     </DepositNote>
                 </CHRightContainer>
             </CHRight>

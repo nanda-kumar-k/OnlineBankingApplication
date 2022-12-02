@@ -1,12 +1,20 @@
 import styled from 'styled-components';
 import rlnlogo from './Images/newlogo.png';
-import navimg from './Images/navimg.jpg';
+import navimg from './Images/finnav.png';
+import { useParams } from 'react-router-dom';
+import React from 'react';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import PeopleIcon from '@mui/icons-material/People';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import { useNavigate } from 'react-router-dom';
 const NavContainer = styled.div`
     height: 11vh;
     width: 100vh;
     position: relative;
-    position: sticky;
+    /* position: fixed; */
     top: 0;
+    left: 0;
+    z-index: 1;
     z-index: 100;
     
 `;
@@ -113,6 +121,18 @@ const NavBottom = styled.div`
 `;
 
 function Navbar() {
+    const navigate = useNavigate();
+    const [admin , setAdmin] = React.useState(false);
+    const parms = useParams();
+    React.useEffect(() => {
+        const superadmin = JSON.parse(localStorage.getItem("superadmin"));
+        const manager = JSON.parse(localStorage.getItem("manager"));
+        const employee = JSON.parse(localStorage.getItem("employee"));
+        if(superadmin || manager || employee){
+            setAdmin(true);
+        }
+    }, [admin, parms]);
+
     return(
         <>
             <NavContainer>
@@ -124,7 +144,12 @@ function Navbar() {
                         <img src={navimg} alt='navimg'/>
                     </div>
                     <div className='NavRight'>
-                        
+                        <div className='RouteLink'  style={{width:'12vw', marginLeft:"10vw"}} ><PeopleIcon/><p style={{marginLeft:'5px'}} onClick={()=>{navigate('/employeelogin')}}>Employee Login</p></div>
+                        <div className='RouteLink'  style={{width:'12vw'}} ><PeopleIcon/><p style={{marginLeft:'5px'}} onClick={()=>{navigate('/managerlogin')}}>Manager Login</p></div>
+                        <div className='RouteLink'  style={{width:'14vw'}} ><AccountCircleIcon/><p style={{marginLeft:'5px'}} onClick={()=>{navigate('/superadminlogin')}} >Super Admin Login</p></div>
+                        {admin ? 
+                        <><div className='RouteLink'  style={{width:'7vw', border: '1px solid #3498db' }} ><AdminPanelSettingsIcon/><p style={{marginLeft:'5px'}}>Logout</p></div></>
+                        : <></>}
                     </div>
                 </NavMiddle>
                 <NavBottom/>

@@ -260,7 +260,7 @@ function CustomerLogin() {
                 <NotePoint>
                         <h3>Note</h3>
                         <ul>
-                            <li><p>Your should be minimum 8 letters  </p></li>
+                            <li><p>Your password should be minimum 8 letters  </p></li>
                         </ul>
                 </NotePoint>
             </LoginLeft>

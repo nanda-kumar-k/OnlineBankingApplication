@@ -18,9 +18,16 @@ import "swiper/css/bundle";
 import "../../AdminAuthentication/LSlider.css";
 import { Autoplay} from "swiper";
 import SuperAdminAuthService from '../../services/SuperAdmin/auth.superadmin.service';
-
+import banner1 from '../Images/admin1.jpg';
+import banner2 from '../Images/admin2.png';
+import banner3 from '../Images/admin3.jpg';
+import banner4 from '../Images/admin4.jpg';
+import banner5 from '../Images/admin5.jpg';
+import banner6 from '../Images/admin6.jpg';
+import banner7 from '../Images/admin7.png';
 
 const LoginContainer = styled.div`
+    margin-top: 11vh;
     height: 85vh;
     width: 80vw;
     /* background-color: #3498db; */
@@ -31,10 +38,10 @@ const LoginContainer = styled.div`
 `;
 
 const LoginLeft = styled.div`
-    height: 50vh;
+    height: 70vh;
     width: 36vw;
     /* background-color: rgb(213, 231, 247); */
-    padding: 18vh 2vw 0 2vw;
+    padding: 14vh 2vw 0 2vw;
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
@@ -54,7 +61,7 @@ const LoginLeft = styled.div`
     }
     hr {
         width: 100%;
-        margin-top: 2vh;
+        /* margin-top: 2vh; */
 
     }
 `;
@@ -71,7 +78,7 @@ const SubBut = styled.button`
     font-weight: 600;
     cursor: pointer;
     margin-top: 2vh;
-    margin-bottom: 5vh;
+    margin-bottom: 2vh;
     &:hover{
         background-color: #3498db;
     }
@@ -95,6 +102,9 @@ const NotePoint = styled.div`
     li {
         margin-left: 1vw;
     }
+
+
+
 `;
 
 const LoginRight = styled.div`
@@ -136,9 +146,6 @@ function SuperAdminLogin() {
     };
 
     const handleLogin = (event) => {
-        console.log("Login button clicked");
-        console.log(values.username);
-        console.log(values.password);
         event.preventDefault();
         if(values.username && values.password ){
             console.log("ffffffffffffffffffffffffffffffff")
@@ -149,7 +156,7 @@ function SuperAdminLogin() {
                     if(response.token){
                         console.log("Login Success");
                         localStorage.setItem("adminType", "superadmin");
-                        navigate('/superadmindashboard');
+                        navigate('/dashboard');
                     }
                     else {
                         setErrorMessages(response);
@@ -208,7 +215,7 @@ function SuperAdminLogin() {
                 <NotePoint>
                         <h3>Note</h3>
                         <ul>
-                            <li><p>Your password combination of paaword + your mobile number </p></li>
+                            <li><p>Your password should be minimum 8 letters  </p></li>
                         </ul>
                 </NotePoint>
             </LoginLeft>
@@ -225,14 +232,14 @@ function SuperAdminLogin() {
                     className="mySwiper"
                 >
                     <SwiperSlide><img src={loginimg} alt="" /></SwiperSlide>
-                    <SwiperSlide><img src={loginimg} alt="S" /></SwiperSlide>
-                    <SwiperSlide>Slide 3</SwiperSlide>
-                    <SwiperSlide>Slide 4</SwiperSlide>
-                    <SwiperSlide>Slide 5</SwiperSlide>
-                    <SwiperSlide>Slide 6</SwiperSlide>
-                    <SwiperSlide>Slide 7</SwiperSlide>
-                    <SwiperSlide>Slide 8</SwiperSlide>
-                    <SwiperSlide>Slide 9</SwiperSlide>
+                    <SwiperSlide><img src={banner1} alt="" /></SwiperSlide>
+                    <SwiperSlide><img src={banner7} alt="" /></SwiperSlide>
+                    <SwiperSlide><img src={banner2} alt="" /></SwiperSlide>
+                    <SwiperSlide><img src={banner3} alt="" /></SwiperSlide>
+                    <SwiperSlide><img src={banner4} alt="" /></SwiperSlide>
+                    <SwiperSlide><img src={banner5} alt="" /></SwiperSlide>
+                    <SwiperSlide><img src={banner6} alt="" /></SwiperSlide>
+                    
                 </Swiper>
             </LoginRight>
         </LoginContainer>
