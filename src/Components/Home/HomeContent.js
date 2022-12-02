@@ -7,7 +7,7 @@ import PaidIcon from '@mui/icons-material/Paid';
 import ApiIcon from '@mui/icons-material/Api';
 import businessimg from "./Images/businessimg.jpg";
 import rlnobt from "./Images/rlnobt.png";
-import logo from "./Images/logo.png";
+// import logo from "./Images/logo.png";
 const HomeContainer = styled.div`
     margin-top: 100vh;
     width: 90vw;
@@ -250,38 +250,38 @@ const ObjectivesContentTop = styled.div`
     }
 `;
 
-const FinalBottom = styled.div`
-    width: 90vw;
-    height: 30vh;
-    /* background-color: #000; */
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    h1 {
-        font-size: 3rem;
-        color: #000;
-        font-weight: 1000;
-        font-family: 'Lato', sans-serif;
-        /* margin-bottom: 20px; */
-    }
-    h2 {
-        font-size: 2rem;
-        color: #000;
-        font-weight: 600;
-        font-family: 'Lato', sans-serif;
-    }
-    hr {
-        width: 50vw;
-    }
-`;
+// const FinalBottom = styled.div`
+//     width: 90vw;
+//     height: 30vh;
+//     /* background-color: #000; */
+//     text-align: center;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+//     h1 {
+//         font-size: 3rem;
+//         color: #000;
+//         font-weight: 1000;
+//         font-family: 'Lato', sans-serif;
+//         /* margin-bottom: 20px; */
+//     }
+//     h2 {
+//         font-size: 2rem;
+//         color: #000;
+//         font-weight: 600;
+//         font-family: 'Lato', sans-serif;
+//     }
+//     hr {
+//         width: 50vw;
+//     }
+// `;
 
-const FinalBottomImg = styled.img`
-    margin-top: 20vh;
-    width: 15vw;
-    height: 30vh;
-`;
+// const FinalBottomImg = styled.img`
+//     margin-top: 20vh;
+//     width: 15vw;
+//     height: 30vh;
+// `;
 
 function HomeContent() {
     return(
@@ -385,12 +385,7 @@ function HomeContent() {
                         <p>18.Provide safe custody of insurance policies</p>
                         </ObjectivesContentTop>
                 </ObjectivesContainer>
-                <FinalBottom>
-                    <FinalBottomImg src={logo} alt="Final Bottom" />
-                    <h1>RLN BANK</h1>
-                    <h2>Everything you need, Everything is here.</h2>
-                    <hr/>
-                </FinalBottom>
+                
             </AboutRLN>
            
         </HomeContainer>
@@ -399,3 +394,11 @@ function HomeContent() {
 }
 
 export default HomeContent;
+
+
+// <FinalBottom>
+//                     <FinalBottomImg src={logo} alt="Final Bottom" />
+//                     <h1>RLN BANK</h1>
+//                     <h2>Everything you need, Everything is here.</h2>
+//                     <hr/>
+//                 </FinalBottom>
