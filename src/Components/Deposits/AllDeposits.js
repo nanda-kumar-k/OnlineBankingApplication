@@ -5,6 +5,7 @@ import styled from "styled-components";
 import React from "react";
 import { useNavigate, useParams, NavLink } from "react-router-dom";
 import RLNDataService from "../../services/rln.customer.service";
+import Footer from "../Footer/Footer";
 
 
 export const CHRightContainer = styled.div`
@@ -61,6 +62,11 @@ function AllDeposits() {
     //     navigate('/login');
     // }
     React.useEffect(() => {
+        window.scrollTo(0, 0);
+        const currentuser = JSON.parse(localStorage.getItem('customerLogin'));
+        if ( !currentuser) {
+            navigate('/logintype');
+        }
         RLNDataService.getAllDeposits().then((response) => {
             console.log(response);
             if(response.statusCode === 200) {
@@ -112,12 +118,15 @@ function AllDeposits() {
                             )
                         })}
 
-                        {noData && <tr><td colSpan="7" style={{textAlign: "center"}}>No Data Found</td></tr>}
+                        {noData && <tr><td colSpan="8" style={{textAlign: "center"}}>No Deposit Found</td></tr>}
                         
                     </TranTable>
                 </CHRightContainer>
             </CHRight>
         </CHContainer>
+        <div style={{marginTop:"10vh"}}>
+        <Footer/>
+        </div>
         </>
     )
 }

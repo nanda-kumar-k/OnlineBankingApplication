@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 import rlnlogo from './Images/newlogo.png';
 import navimg from './Images/finnav.png';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import CreditScoreIcon from '@mui/icons-material/CreditScore';
 import BabyChangingStationIcon from '@mui/icons-material/BabyChangingStation';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import React from 'react';
 const NavContainer = styled.div`
     height: 11vh;
     width: 100vh;
@@ -122,6 +123,58 @@ const NavBottom = styled.div`
 `;
 
 function Navbar() {
+
+    const navigate = useNavigate();
+    const [user , setUser] = React.useState(false);
+    const parms = useParams();
+    React.useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('customerLogin'));
+        if(user){
+            setUser(true);
+        }
+    }, [user, parms]);
+
+    const handleLoginLogout = (auth) => {
+        const user = JSON.parse(localStorage.getItem('customerLogin'));
+        if(user){
+            localStorage.removeItem('customerLogin');
+            navigate('/logintype');
+            setUser(false);
+        }
+        else{
+            navigate('/logintype');
+        }
+    }
+
+    const handleInsurance = () => {
+        const user = JSON.parse(localStorage.getItem('customerLogin'));
+        if(user){
+            navigate('/lifeinsurance');
+        }
+        else{
+            navigate('/logintype');
+        }
+    }
+
+    const handleAll = () => {
+        const user = JSON.parse(localStorage.getItem('customerLogin'));
+        if(user){
+            navigate('/customerhome');
+        }
+        else{
+            navigate('/logintype');
+        }
+    }
+
+    const handleBussinessApi = () => {
+        const user = JSON.parse(localStorage.getItem('customerLogin'));
+        if(user){
+            navigate('/apidocmentation');
+        }
+        else{
+            navigate('/logintype');
+        }
+    }
     return(
         <>
             <NavContainer>
@@ -133,31 +186,23 @@ function Navbar() {
                         <img src={navimg} alt='navimg'/>
                     </div>
                     <div className='NavRight'>
-                        <NavLink to='/'>
-                            <div className='RouteLink' style={{width:'8vw'}} ><AccountBalanceIcon/><p style={{marginLeft:'5px'}}>Home</p></div>
-                        </NavLink>
-                        <NavLink to='/customerhome'>
-                            <div className='RouteLink' style={{width:'8vw'}}><LocalAtmIcon/><p style={{marginLeft:'5px'}}>Deposits</p></div>
-                        </NavLink>
-                        <NavLink to='/'>
-                            <div className='RouteLink'  style={{width:'8vw'}}><CreditScoreIcon/><p style={{marginLeft:'5px'}}>Loans</p></div>
-                        </NavLink>
-                        <NavLink to='/'>
-                            <div className='RouteLink'  style={{width:'9vw'}}><BabyChangingStationIcon/><p style={{marginLeft:'5px'}}>Insurances</p></div>
-                        </NavLink>
-                        <NavLink to='/'>
-                            <div className='RouteLink'  style={{width:'11vw'}}><AssessmentIcon/><p style={{marginLeft:'5px'}}>Business API</p></div>
-                        </NavLink>
-                        <NavLink to='/home'>
-                            <div className='RouteLink'  style={{width:'6vw', border: '1px solid #3498db' }}><AdminPanelSettingsIcon/><p style={{marginLeft:'5px'}}>Login</p></div>
-                        </NavLink>
+                        <div className='RouteLink' style={{width:'8vw'}} onClick={() => {user ? navigate('/customerhome') : navigate(''); }} ><AccountBalanceIcon/><p style={{marginLeft:'5px'}}>Home</p></div>
+                        <div className='RouteLink' style={{width:'8vw'}} onClick={handleAll}><LocalAtmIcon/><p style={{marginLeft:'5px'}}>Deposits</p></div>
+                        <div className='RouteLink'  style={{width:'8vw'}} onClick={handleAll}><CreditScoreIcon/><p style={{marginLeft:'5px'}}>Loans</p></div>
+                        <div className='RouteLink'  style={{width:'9vw'}} onClick={handleInsurance}><BabyChangingStationIcon/><p style={{marginLeft:'5px'}}>Insurances</p></div>
+                        <div className='RouteLink'  style={{width:'11vw'}} onClick={handleBussinessApi}><AssessmentIcon/><p style={{marginLeft:'5px'}}>Business API</p></div>
+                        <div className='RouteLink'  style={{width:'6vw', border: '1px solid #3498db' }} onClick={handleLoginLogout}><AdminPanelSettingsIcon/><p style={{marginLeft:'5px'}}>
+                        { user ? <>Logout</> : <>Login</> } 
+                        </p></div>
                     </div>
                 </NavMiddle>
                 <NavBottom/>
-                <NavLogoContainer>
-                    <img src={rlnlogo} alt='logo'/>
-                    <h2>RLN ONLINE BANK</h2>
-                </NavLogoContainer>
+                <NavLink to="/">
+                    <NavLogoContainer>
+                        <img src={rlnlogo} alt='logo'/>
+                        <h2>RLN ONLINE BANK</h2>
+                    </NavLogoContainer>
+                </NavLink>
             </NavContainer>
         </>
     )

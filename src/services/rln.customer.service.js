@@ -2,7 +2,6 @@ import http from "../http-common";
 import axios from "axios";
 import authHeader from "./auth-header";
 
-
 const API_URL = "http://localhost:2022/api/customer/";
 
 const API_TRANSACTION_URL = "http://localhost:2022/api/customer/transactions/";
@@ -32,8 +31,8 @@ const checkCustomerBalance = async() => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
 
     }
@@ -52,8 +51,8 @@ const customerAmountTransfer = async (data) => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
 
     }
@@ -72,8 +71,8 @@ const customerTransactionsDetails = async () => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
     }
     else{
@@ -90,8 +89,8 @@ const openNewDeposit = async (data) => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
     }
     else{
@@ -109,8 +108,8 @@ const getAllDeposits = async () => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
     }
     else{
@@ -130,8 +129,8 @@ const specificDeposit = async (depositId) => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
     }
     else{
@@ -152,8 +151,8 @@ const closeDeposit = async (depositId) => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
     }
     else{
@@ -172,8 +171,8 @@ const openEdicationalLoan = async (data) => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
     }
     else{
@@ -203,8 +202,8 @@ const uploadLoanDocument = async (loanid, file) => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
     }
     else{
@@ -224,8 +223,8 @@ const openNewHomeLoan = async (data) => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
     }
     else{
@@ -243,8 +242,8 @@ const getAllLoans = async () => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
     }
     else{
@@ -263,8 +262,8 @@ const loanPayment = async (data) => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
     }
     else{
@@ -281,8 +280,8 @@ const allLoanPayments = async () => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
     }
     else{
@@ -302,8 +301,8 @@ const specificLoan = async (loanId) => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
     }
     else{
@@ -324,8 +323,8 @@ const closeLoan = async (loanId) => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
     }
     else{
@@ -347,8 +346,8 @@ const getCustomerProfile = async () => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
     }
     else{
@@ -370,8 +369,8 @@ const predictInsurance = async (age,bmi,childrens,sex,smoke,region) => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
     }
     else{
@@ -392,8 +391,8 @@ const requestApiKey = async () => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
     }
     else{
@@ -414,8 +413,8 @@ const getApiKey = async () => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
     }
     else{
@@ -435,8 +434,8 @@ const getAllBusinessTractionsHistory = async () => {
         })
         .catch((error) => {
             console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            console.log(error);
-            return '';
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
         })
     }
     else{

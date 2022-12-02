@@ -14,6 +14,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import RLNDataService from "../../services/rln.customer.service";
+import { useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2'
+import Footer from "../Footer/Footer";
 
 const CHRightContainer = styled.div`
     padding: 1vh 1vw;
@@ -100,6 +103,16 @@ const DepositNote = styled.div``;
 
 function NewEducationalLoan() {
 
+    const navigate = useNavigate();
+    const params = useParams();
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+        const currentuser = JSON.parse(localStorage.getItem('customerLogin'));
+        if ( !currentuser) {
+            navigate('/logintype');
+        }
+    }, [navigate,params]);
+
     const [loanEndDate, setLoanEndDate] = React.useState(new Date());
     const [errorMessages, setErrorMessages] = React.useState('');
     const [values, setValues] = React.useState({
@@ -143,10 +156,26 @@ function NewEducationalLoan() {
                             console.log(res.data);
                             if ( res.statusCode === 200 ) {
                                 localStorage.setItem('loanId', res.data);
-                                setErrorMessages(res.message);
+                                Swal.fire({
+                                    title: 'Success',
+                                    text: 'Loan Applied Successfully',
+                                    icon: 'success',
+                                    confirmButtonText: 'Ok'
+                                }).then( () => {
+                                    navigate('/allloans');
+                                });
                             }
                             else {
-                                setErrorMessages(res.message);
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: res.message,
+                                    icon: 'error',
+                                    confirmButtonText: 'Ok'
+                                }).then( (res) => {
+                                    if ( res.isConfirmed ) {
+                                        setErrorMessages(res.message);
+                                    }
+                                });
                             }
                         }).catch( err => {
                             console.log(err);
@@ -317,6 +346,9 @@ function NewEducationalLoan() {
                 </CHRightContainer>
             </CHRight>
         </CHContainer>
+        <div style={{marginTop:"10vh"}}>
+            <Footer/>
+        </div>
         </>
     )
 }

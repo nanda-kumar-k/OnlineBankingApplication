@@ -5,6 +5,7 @@ import styled from "styled-components";
 import React from "react";
 import { useNavigate, useParams, NavLink } from "react-router-dom";
 import RLNDataService from "../../services/rln.customer.service";
+import Footer from "../Footer/Footer";
 
 export const CHRightContainer = styled.div`
     padding: 1vh 1vw;
@@ -103,9 +104,14 @@ function SpecificLoan() {
     const navigate = useNavigate();
 
     React.useEffect(() => {
+        window.scrollTo(0, 0);
+        const currentuser = JSON.parse(localStorage.getItem('customerLogin'));
+        if ( !currentuser) {
+            navigate('/logintype');
+        }
         let urlElements = window.location.href.split('/');
         let loanId = urlElements[urlElements.length - 1];
-        console.log(loanId);
+
         RLNDataService.specificLoan(loanId).then((response) => {
             console.log(response);
             if(response.statusCode === 200) {
@@ -318,6 +324,9 @@ function SpecificLoan() {
             </CHRightContainer>
         </CHRight>
     </CHContainer>
+    <div style={{marginTop:"10vh"}}>
+        <Footer/>
+    </div>
         </>
     )
 }

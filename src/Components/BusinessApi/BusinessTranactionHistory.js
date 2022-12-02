@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import React from "react";
 import RLNDataService from "../../services/rln.customer.service";
+import Footer from "../Footer/Footer";
 
 export const CHRightContainer = styled.div`
     padding: 1vh 1vw;
@@ -63,6 +64,11 @@ function BusinessTransactionHistory() {
     const navigate = useNavigate();
 
     React.useEffect(() => {
+        window.scrollTo(0, 0);
+        const currentuser = JSON.parse(localStorage.getItem('customerLogin'));
+        if ( !currentuser) {
+            navigate('/logintype');
+        }
         RLNDataService.getAllBusinessTractionsHistory().then((response) => {
             console.log(response);
             if(response.statusCode === 200) {
@@ -125,6 +131,9 @@ function BusinessTransactionHistory() {
                 </CHRight>
               
             </CHContainer>
+            <div style={{marginTop:"20vh"}}> 
+            <Footer/>
+            </div>
         </>
     )
 };

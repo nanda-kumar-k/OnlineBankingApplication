@@ -10,7 +10,9 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import * as React from 'react';
 import RLNDataService from "../../services/rln.customer.service";
-
+import { useNavigate, useParams } from 'react-router-dom';
+import Footer from "../Footer/Footer";
+import Swal from 'sweetalert2'
 
 const CHRightContainer = styled.div`
     padding: 1vh 1vw;
@@ -68,6 +70,15 @@ const TransferForm = styled.div`
 `;
 
 function Transfer() {
+    const navigate = useNavigate();
+    const params = useParams();
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+        const currentuser = JSON.parse(localStorage.getItem('customerLogin'));
+        if ( !currentuser) {
+            navigate('/logintype');
+        }
+    }, [navigate,params]);
 
     const [errorMessages, setErrorMessages] = React.useState('');
 
@@ -103,10 +114,28 @@ function Transfer() {
                            await RLNDataService.customerAmountTransfer(data).then(response => {
                                 console.log(response);
                                 if (response.statusCode === 200) {
-                                    setErrorMessages(response.message);
+                                    Swal.fire({
+                                        title: 'Success!',
+                                        text: response.message,
+                                        icon: 'success',
+                                        confirmButtonText: 'Ok'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            navigate('/transaction');
+                                        }
+                                    })   
                                 }
                                 else if (response.statusCode === 401) {
-                                    setErrorMessages(response.message);
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: response.message,
+                                        icon: 'error',
+                                        confirmButtonText: 'Ok'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            setErrorMessages(response.message);
+                                        }
+                                    })
                                 }
                             })
                             .catch(err => {
@@ -209,6 +238,9 @@ function Transfer() {
                 </CHRightContainer>
             </CHRight>
         </CHContainer>
+        <div style={{marginTop:"10vh"}}>
+            <Footer/>
+        </div>
         </>
     )
 }

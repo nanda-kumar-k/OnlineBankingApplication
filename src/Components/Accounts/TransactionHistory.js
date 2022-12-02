@@ -5,12 +5,15 @@ import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import React from "react";
 import RLNDataService from "../../services/rln.customer.service";
+import Footer from "../Footer/Footer";
 
 export const CHRightContainer = styled.div`
     padding: 1vh 1vw;
+    overflow: scroll;
     width: 64vw;
     height: 80vh;
     background-color: white;
+    z-index: -1;
     border-radius: 10px;
     h2 {
         padding: 1vh 1vw;
@@ -20,8 +23,10 @@ export const CHRightContainer = styled.div`
 `;
 
 const TranTable = styled.table`
+    overflow: scroll;
     width: 64vw;
     height: auto;
+    z-index: -1;
     border-collapse: collapse;
     th {
         border: 1px solid #dddddd;
@@ -61,6 +66,11 @@ function TransactionHistroy() {
     const navigate = useNavigate();
 
     React.useEffect(() => {
+        window.scrollTo(0, 0);
+        const currentuser = JSON.parse(localStorage.getItem('customerLogin'));
+        if ( !currentuser) {
+            navigate('/logintype');
+        }
         RLNDataService.customerTransactionsDetails().then((response) => {
             console.log(response);
             if(response.statusCode === 200) {
@@ -123,6 +133,9 @@ function TransactionHistroy() {
                 </CHRight>
               
             </CHContainer>
+            <div style={{marginTop:"10vh"}}>
+                <Footer/>
+            </div>
         </>
     )
 }
