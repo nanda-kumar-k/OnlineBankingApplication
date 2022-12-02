@@ -1,12 +1,12 @@
 import AllLinks from "../CustomerHome/AllLinks";
 import styled from 'styled-components';
 import background from './Images/background.png';
-import banner from './Images/insurance1.jpg';
-import banner2 from './Images/insurance2.jpg';
-import banner10 from './Images/insurance10.jpg';
-import banner11 from './Images/insurance11.jpg';
-import banner12 from './Images/insurance12.jpg';
-import banner3 from './Images/insurance3.jpg';
+import banner1 from './Images/bus1.png';
+import banner2 from './Images/bus2.jpeg';
+import banner3 from './Images/bus3.jpg';
+import banner4 from './Images/bus4.jpg';
+import banner5 from './Images/bus5.png';
+import banner6 from './Images/bus6.jpg';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -209,12 +209,12 @@ function ApiKeyGeneration() {
                             modules={[Autoplay, Pagination, Navigation]}
                             className="mySwiper"
                         >
-                            <SwiperSlide><img src={banner} alt="" /></SwiperSlide>
-                            <SwiperSlide><img src={banner2} alt="S" /></SwiperSlide>
-                            <SwiperSlide><img src={banner3} alt="S" /></SwiperSlide>
-                            <SwiperSlide><img src={banner10} alt="S" /></SwiperSlide>
-                            <SwiperSlide><img src={banner11} alt="S" /></SwiperSlide>
-                            <SwiperSlide><img src={banner12} alt="S" /></SwiperSlide>
+                        <SwiperSlide><img src={banner1} alt="S" /></SwiperSlide>
+                        <SwiperSlide><img src={banner2} alt="S" /></SwiperSlide>
+                        <SwiperSlide><img src={banner3} alt="S" /></SwiperSlide>
+                        <SwiperSlide><img src={banner4} alt="S" /></SwiperSlide>
+                        <SwiperSlide><img src={banner5} alt="S" /></SwiperSlide>
+                        <SwiperSlide><img src={banner6} alt="S" /></SwiperSlide>
                         </Swiper>
                         <ApiKeyContainer>
                             <h1>Business Api</h1>

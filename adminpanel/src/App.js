@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import MDashboard from './Components/Manager/MDashboard';
 import MAccountRequest from './Components/Manager/MAccountRequest';
 import EDashboard from './Components/Employee/EDashboard';
-import SDashboard from './Components/SuperAdmin/SDashboard';
 import EAllCustomers from './Components/Employee/EAllCustomers';
 // import AccountRequest from './Components/Employee/AccountRequest';
 import LoansRequest from './Components/AllAdminServices/LoansRequest';
@@ -30,6 +29,10 @@ import AddManager from './Components/SuperAdmin/AddManager';
 import AddEmployee from './Components/SuperAdmin/AddEmployee';
 import AllManagers from './Components/SuperAdmin/AllManager';
 import AllEmployees from './Components/SuperAdmin/AllEmployees';
+import Home from './Components/Home/Home';
+import ManagerLogin from './Components/AdminAuthentication/Manager/ManagerLogin';
+import EmployeeLogin from './Components/AdminAuthentication/Employee/EmployeeLogin';
+import Dashboard from './Components/AllAdminServices/Dashboard';
 
 function App() {
   return (
@@ -37,7 +40,13 @@ function App() {
         <Navbar />
         <Routes>
 
-          <Route path="/" element = {<SuperAdminLogin />} />
+          <Route path="/" element={<Home />} />
+          
+          <Route path="/superadminlogin" element = {<SuperAdminLogin />} />
+          <Route path="/managerlogin" element = {<ManagerLogin/>} />
+          <Route path="/employeelogin" element = {<EmployeeLogin/>} />
+
+          <Route path="/dashboard" element={<Dashboard />} />
 
 
           <Route path="allaccountrequest" element = {<AccountRequest />} />
@@ -69,7 +78,7 @@ function App() {
           <Route path="managerdashboard" element={<MDashboard/>}/>
           <Route path="macountrequest" element={<MAccountRequest/>}/>
 
-          <Route path="superadmindashboard" element={<SDashboard/>}/>
+          
           
           <Route path="employeedashboard" element={<EDashboard/>}/>
           <Route path="employeeallcustomers" element={<EAllCustomers/>}/>

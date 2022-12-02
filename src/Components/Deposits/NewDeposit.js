@@ -261,7 +261,9 @@ function NewDeposit() {
                         <p>2. Maximum amount to fix is Rs. 100000/-</p>
                         <p>3. Interest rate is 5% per annum</p>
                         <p>4. Interest will be credited to your account on the closing date of the fixed deposit</p>
-
+                        <p>5. By clicking on the submit button, you agree to the terms and conditions of the bank.</p>
+                        <p>6. The bank will not be responsible for any loss or damage caused by the use of this website.</p>
+                        <p>7. The bank reserves the right to change the terms and conditions of the website at any time.</p>          
                     </DepositNote>
                 </CHRightContainer>
             </CHRight>

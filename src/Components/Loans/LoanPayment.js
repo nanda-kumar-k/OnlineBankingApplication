@@ -203,10 +203,11 @@ function LoanPayment() {
                     </LoanContainer>
                     <DepositNote>
                         <h3>Note:</h3>
-                        <p>1. Please Enter Valid Details.</p>
-                        <p>2. Please Enter Valid Amount.</p>
-                        <p>3. Please Enter Valid Account No.</p>
-                        <p>4. Please Enter Valid IFSC Code.</p>
+                        <p>1. Loan Id should be 8 digit number.</p>
+                        <p>2. Amount should be number and greater than 0.</p>
+                        <p>3. By clicking on the submit button, you agree to the terms and conditions of the bank.</p>
+                        <p>4. The bank will not be responsible for any loss or damage caused by the use of this website.</p>
+                        <p>5. The bank reserves the right to change the terms and conditions of the website at any time.</p>
                     </DepositNote>
                 </CHRightContainer>
             </CHRight>
