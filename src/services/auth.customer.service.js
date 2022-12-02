@@ -13,7 +13,7 @@ const authenticateRLNCustomer = async (username, password) =>  {
             password,
         })
         .then((response) => {
-            if (response.data.token) {
+            if (response.data.statusCode === 200) {
                 localStorage.setItem("customerLogin", JSON.stringify(response.data));
             }
             return response.data;

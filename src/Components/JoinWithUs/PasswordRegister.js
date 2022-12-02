@@ -11,8 +11,12 @@ import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
 // import Swal from 'sweetalert2'
 import authCustomerService from '../../services/auth.customer.service';
+import Footer from '../Footer/Footer';
+import Swal from 'sweetalert2'
+
 
 const SliderContainer = styled.div`
+    margin-top: 11vh;
     background-image: url(${background});
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -167,7 +171,17 @@ function PasswordRegister() {
                     await authCustomerService.createRLNCustomer().then((res) => {
                         console.log(res);
                         if (res.data.statusCode === 201) {
-                            navigate('/contractregister');
+                            localStorage.removeItem("accountType");
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'Your account has been created successfully!',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    navigate('/login');
+                                }
+                            })
                         }
                         else{
                             navigate('/setpassword');
@@ -288,15 +302,18 @@ function PasswordRegister() {
                         <NotePointContainer>
                             <p style={{fontSize:'1.3rem'}}><b>Please Note</b></p>
                             <ul>
-                                <li><p>The Customer ID is mentioned in the welcome letter and cheque book.</p></li>
-                                <li><p>You can also SMS "CustID" for savings account or CustIDCC XXXX(last 4 digits of credit card number) for credit card only customers to 5676782 from your registered mobile number to know your Customer ID.</p></li>
-                                <li><p>If you have not received your welcome letter, please contact your branch.</p></li>
-                                <li><p>Please ensure that your mobile number is registered with Axis Bank. You may visit the nearest Axis Bank ATM and click on "Registration-Mobile Number Update" to register. You may also visit your nearest branch.</p></li>
+                                <li><p>Set a strong password with a combination of letters, numbers and special characters.</p></li>
+                                <li><p>Do not use your name, date of birth, phone number or any other personal information in your password.</p></li>
+                                <li><p>Do not share your password with anyone.</p></li>
+                                <li><p>Password should Contain minimum 8 letters</p></li>
                             </ul>                          
                         </NotePointContainer>
                     </AllInputContainer>
                 </OuterContainer>
             </SliderContainer>
+            <div style={{marginTop:"30vh"}}>
+                <Footer/>
+            </div>
         </>
     )
 }

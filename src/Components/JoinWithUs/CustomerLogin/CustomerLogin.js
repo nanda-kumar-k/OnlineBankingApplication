@@ -18,7 +18,7 @@ import "swiper/css/bundle";
 import "./LSlider.css";
 import { Autoplay} from "swiper";
 import CustomerAuthService from '../../../services/auth.customer.service';
-
+import Swal from 'sweetalert2'
 // import login1 from './Images/login1.jpg'
 import login2 from './Images/login2.png'
 import login3 from './Images/login3.jpg'
@@ -160,11 +160,41 @@ function CustomerLogin() {
                 CustomerAuthService.authenticateRLNCustomer(values.username, values.password)
                 .then((response) => {
                     console.log(response);
-                    if(response.token){
+                    if(response.statusCode === 200){
                         console.log("Login Success");
                         navigate('/customer/dashboard');
                     }
-                    else {
+                    else if (response.statusCode === 100){
+                        Swal
+                        .fire({
+                            title: 'warning',
+                            text: 'Accont is pending for approval, please contact the near RLN bank',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                navigate('/');
+                            }
+                        })
+                    }
+                    else if (response.statusCode === 400) {
+                        Swal
+                        .fire({
+                            title: 'error',
+                            text: 'Invalid username or password',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        })
+                        setErrorMessages("Invalid username or password");
+                    }
+                    else  {
+                        Swal
+                        .fire({
+                            title: 'error',
+                            text: 'Invalid username or password',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        })
                         setErrorMessages(response);
                     }
                 })

@@ -7,6 +7,8 @@ import PaidIcon from '@mui/icons-material/Paid';
 import ApiIcon from '@mui/icons-material/Api';
 import businessimg from "./Images/businessimg.jpg";
 import rlnobt from "./Images/rlnobt.png";
+import insuranceimg from "./Images/insurance.png";
+import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
 // import logo from "./Images/logo.png";
 const HomeContainer = styled.div`
     margin-top: 100vh;
@@ -214,7 +216,7 @@ const BusinessContentBottom = styled.div`
 `;
 
 const ObjectivesContainer = styled.div`
-    margin-top: 25vh;
+    margin-top: 10vh;
     width: 90vw;
     height: 100vh;
     background-image: url(${rlnobt});
@@ -248,6 +250,50 @@ const ObjectivesContentTop = styled.div`
         color: #000;
         margin-bottom: 30px;
     }
+`;
+
+
+const InsuranceContainer = styled.div`
+    margin-top: 10vh;
+    width: 90vw;
+    height: 100vh;
+    background-image: url(${insuranceimg});
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+`;
+
+const InsuranceContentTop = styled.div`
+    padding: 15vh 5vw 5vh 5vw;
+    width: 80vw;
+    height: 30vh; 
+    
+    #tit {
+        /* font-size: 2rem; */
+        color: #707070 !important;
+        color: #000;
+        font-family: 'Lato', sans-serif;
+        margin-bottom: 20px;
+    }
+    #maintit {
+        font-family: 'Lato', sans-serif;
+        /* 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+        font-size: 3.5rem;
+        color: #000;
+
+    }
+`;
+
+const InsuranceContentBottom = styled.div`
+    width: 80vw;
+    height: 60vh;
+    /* background-color: #f5f5f5; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5vh 5vw;
 `;
 
 // const FinalBottom = styled.div`
@@ -361,6 +407,22 @@ function HomeContent() {
                             </EachServiceCard>
                     </BusinessContentBottom>
                 </BusinessContainer>
+                <InsuranceContainer>
+                    <InsuranceContentTop>
+                    <h2 id="tit">"Life Insurance"</h2>
+                    <p id="maintit">Ensure financial protection </p>
+                    <p id="maintit">and independence for your family​</p>
+                    <p>This Service will be provided by RLN Bank Soon</p>
+                    </InsuranceContentTop>
+                    <InsuranceContentBottom>
+                        <EachServiceCard>
+                            <SettingsAccessibilityIcon style={{ fontSize: 50 }} />
+                            <p>Life Insurance</p>
+                            <p id="abt">When you have insurance you know that you are secured against any unforeseen events in life, and this gives you complete peace of mind.  </p>
+                            <ApplyNowBtn>Predict Insurance</ApplyNowBtn>
+                        </EachServiceCard>
+                    </InsuranceContentBottom>
+                </InsuranceContainer>
                 <ObjectivesContainer>
                     <ObjectivesContentTop>
                         <h2 id="tit">"Objectives of RLN Bank"</h2>
