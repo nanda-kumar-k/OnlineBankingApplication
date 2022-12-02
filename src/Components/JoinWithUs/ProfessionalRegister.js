@@ -9,10 +9,12 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../Footer/Footer';
 
 
 
 const SliderContainer = styled.div`
+    margin-top: 11vh;
     background-image: url(${background});
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -322,6 +324,9 @@ function ProfessionalRegister() {
                     </AllInputContainer>
                 </OuterContainer>
             </SliderContainer>
+            <div style={{marginTop:"15vh"}}>
+                <Footer/>
+            </div>
         </>
     )
 }

@@ -5,8 +5,11 @@ import business from './Images/business.png';
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import { NavLink } from 'react-router-dom';
+import Footer from '../Footer/Footer';
+// import { NavLink } from 'react-router-dom';
+
 const SliderContainer = styled.div`
+    margin-top: 11vh;
     background-image: url(${background});
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -135,6 +138,16 @@ function LoginHome() {
         window.location.href = "/contractregister";
     };
 
+    const LoginBusinessRedirect = () => {
+        localStorage.setItem('accountType', 'Business');
+        window.location.href = "/customerlogin";
+    };
+
+    const LoginSavingsRedirect = () => {
+        localStorage.setItem('accountType', 'Savings');
+        window.location.href = "/customerlogin";
+    };
+
     return (
         <>
             <SliderContainer>
@@ -151,14 +164,15 @@ function LoginHome() {
                             <h3 style={{color:'#3498db'}}>Personal Online Banking</h3>
                             <div className='LoginCon'>
                                 <Stack spacing={2} direction="row">
-                                    <NavLink to="/contractregister">
-                                        <Button variant="outlined" style={{width:'100px'}}>Login</Button>
-                                    </NavLink>
+                                    
+                                        <Button variant="outlined" style={{width:'100px'}} onClick={LoginSavingsRedirect}>Login</Button>
+                                    
                                     <Button variant="outlined" style={{width:'100px'}} onClick={SavingsRedirect} >Register</Button>
                                 </Stack>
                             </div>
                             <div className='inform'>
-                                <p>SBI's internet banking portal provides personal banking services that gives you complete control over all your banking demands online.</p>
+                                <p style={{textAlign:'center'}}>Personal Online Banking is a convenient and secure way to manage your finances.your can Easy access accounts, deposits,loans and insurance.</p>
+                         
                             </div>
                         </JoinLeftContainer>
                         <JoinLeftContainer style={{marginLeft:'1vw'}}> 
@@ -168,24 +182,29 @@ function LoginHome() {
                             <h3 style={{color:'#3498db'}}>Online Business Banking</h3>
                             <div className='LoginCon'>
                                 <Stack spacing={2} direction="row">
-                                    <NavLink to="/contractregister">
-                                        <Button variant="outlined" style={{width:'100px'}}>Login</Button>
-                                    </NavLink>
+                                    
+                                        <Button variant="outlined" style={{width:'100px'}} onClick={LoginBusinessRedirect}>Login</Button>
+                                    
                                     <Button variant="outlined" style={{width:'100px'}} onClick={BusinessRedirect} >Register</Button>
                                 </Stack>
                             </div>
                             <div className='inform'>
-                                <p>Corporate Banking application to administer and manage non personal accounts online.</p>
+                                <p style={{textAlign:'center'}}>Online Business Banking is a convenient and secure way to manage your finances.your can Easy access Business Api and do payment in your application. </p>
+                                
                             </div>
                         </JoinLeftContainer>
                     </JoinContainer>
                     <BottomInfoContainer>
                         <TextScroll  direction = "left" loop="" >
-                            <p>Mandatory Profile password change after 365 days introduced for added security.   |   Customers who have installed “SBI Secure OTP App” on their mobile and completed registration process will now receive Login OTP for OnlineSBI.com on the app instead of SMS OTP   |   Call us toll free on 1800 1234 and 1800 2100 and get a wide range of services through SBI Contact Centre   |   For added security, new functionality to maintain per day and per transaction limit for general merchant payment transactions has been implemented. Please visit Define Limit under profile section.SBI never asks for your Card/PIN/OTP/CVV details on phone, message or email. Please do not click on links received on your email or mobile asking your Bank/Card details. </p>
+                            <p>Mandatory Profile password change after 365 days introduced for added security.   |  
+                              | Call us toll free on 1800 1234 and 1800 2100 and get a wide range of services through RLN Contact Centre   |   For added security, new functionality to maintain per day and per transaction limit for general merchant payment transactions has been implemented. Please visit Define Limit under profile section.  RLN BANK never asks for your PIN details on phone, message or email. Please do not click on links received on your email or mobile asking your Bank/Card details. </p>
                         </TextScroll>
                     </BottomInfoContainer>
                 </OuterContainer>
             </SliderContainer>
+            <div style={{marginTop:"15vh"}}>
+                <Footer/>
+            </div>
         </>
     )
 }

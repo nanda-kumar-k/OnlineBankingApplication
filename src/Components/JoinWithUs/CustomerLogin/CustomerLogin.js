@@ -19,8 +19,16 @@ import "./LSlider.css";
 import { Autoplay} from "swiper";
 import CustomerAuthService from '../../../services/auth.customer.service';
 
+// import login1 from './Images/login1.jpg'
+import login2 from './Images/login2.png'
+import login3 from './Images/login3.jpg'
+import login7 from './Images/login7.jpg'
+import login5 from './Images/login5.jpg'
+import login6 from './Images/login6.jpg'
+import Footer from '../../Footer/Footer';
 
 const LoginContainer = styled.div`
+    margin-top: 11vh;
     height: 85vh;
     width: 80vw;
     /* background-color: #3498db; */
@@ -54,7 +62,7 @@ const LoginLeft = styled.div`
     }
     hr {
         width: 100%;
-        margin-top: 2vh;
+        /* margin-top: 2vh; */
 
     }
 `;
@@ -111,8 +119,14 @@ const LoginRight = styled.div`
     align-items: center;
 `;
 
-function SavingsCustomer() {
-   
+function CustomerLogin() {
+    const [user , setUser] = React.useState('');
+    React.useEffect(() => {
+        let user = localStorage.getItem('accountType');
+        setUser(user);
+        localStorage.removeItem('accountType');
+    }, []);
+
     const navigate = useNavigate();
     const [errorMessages, setErrorMessages] = React.useState('');
     const [values, setValues] = React.useState({
@@ -174,7 +188,7 @@ function SavingsCustomer() {
         <LoginContainer>
             <LoginLeft>
                 <h2>Login With RLN Online Banking</h2>
-                <h2 style={{marginBottom:'30px'}}>Savings Account</h2>
+                <h2 style={{marginBottom:'30px'}}>{user} Account</h2>
                 <FormControl sx={{ m: 1, width: '40ch', marginBottom:'3ch' }} variant="standard" >
                     <InputLabel htmlFor="standard-adornment-password">Enter User Name</InputLabel>
                     <Input
@@ -203,15 +217,15 @@ function SavingsCustomer() {
                         }
                     />
                 </FormControl>
-                 <p>Forgot Password ?. <NavLink to = "#" >Reset Here</NavLink ></p>
-                 <p style={{marginBottom:"20px"}}>Don't Have account ?. <NavLink to = "#">Register Here</NavLink ></p>
+                 
+                 <p style={{marginBottom:"10px"}}>Don't Have account ?. <NavLink to = "/contractregister">Register Here</NavLink ></p>
                  <p>{errorMessages}</p>
                  <SubBut onClick={handleLogin}> Login </SubBut>
                  <hr/>
                 <NotePoint>
                         <h3>Note</h3>
                         <ul>
-                            <li><p>Your password combination of paaword + your mobile number </p></li>
+                            <li><p>Your should be minimum 8 letters  </p></li>
                         </ul>
                 </NotePoint>
             </LoginLeft>
@@ -228,20 +242,19 @@ function SavingsCustomer() {
                     className="mySwiper"
                 >
                     <SwiperSlide><img src={loginimg} alt="" /></SwiperSlide>
-                    <SwiperSlide><img src={loginimg} alt="S" /></SwiperSlide>
-                    <SwiperSlide>Slide 3</SwiperSlide>
-                    <SwiperSlide>Slide 4</SwiperSlide>
-                    <SwiperSlide>Slide 5</SwiperSlide>
-                    <SwiperSlide>Slide 6</SwiperSlide>
-                    <SwiperSlide>Slide 7</SwiperSlide>
-                    <SwiperSlide>Slide 8</SwiperSlide>
-                    <SwiperSlide>Slide 9</SwiperSlide>
+                    <SwiperSlide><img src={login2} alt="" /></SwiperSlide>
+                    <SwiperSlide><img src={login3} alt="" /></SwiperSlide>
+                    <SwiperSlide><img src={login7} alt="" /></SwiperSlide>
+                    <SwiperSlide><img src={login5} alt="" /></SwiperSlide>
+                    <SwiperSlide><img src={login6} alt="" /></SwiperSlide>
                 </Swiper>
             </LoginRight>
         </LoginContainer>
-        
+        <div>
+            <Footer/>
+        </div>
         </>
     )
 }
 
-export default SavingsCustomer;
+export default CustomerLogin;

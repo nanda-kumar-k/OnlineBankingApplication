@@ -31,8 +31,6 @@ import CustomerDeposit from './Components/Employee/CustomerDeposit';
 import CustomerTransaction from './Components/Employee/CustomerTransaction';
 import CustomerLoan from './Components/Employee/CustomerLoan';
 import ConnectionTest from './Components/APITesting/ConnectionTest';
-import BusinessCustomer from './Components/JoinWithUs/CustomerLogin/BusinessCustomer';
-import SavingsCustomer from './Components/JoinWithUs/CustomerLogin/SavingsCustomer';
 import Navbar from './Components/Navbar/Navbar';
 import SpecificDeposit from './Components/Deposits/SpecificDeposit';
 import LoanDocumentUpload from './Components/Loans/LoanDocumentUpload';
@@ -45,6 +43,7 @@ import BusinessTransactionHistory from './Components/BusinessApi/BusinessTranact
 import ApiDocumentation from './Components/BusinessApi/ApiDocumentation';
 import SpringBootDocumentation from './Components/BusinessApi/SpringBootDocumentation';
 import PythonDocumentation from './Components/BusinessApi/PythonDocumentation';
+import CustomerLogin from './Components/JoinWithUs/CustomerLogin/CustomerLogin';
 
 
 function App() {
@@ -102,8 +101,7 @@ function App() {
 
 
           <Route path="lifeinsurance" element={<LifeInsurance/>}/>
-          <Route path="bussinesslogin" element={<BusinessCustomer/>}/>
-          <Route path="savingslogin" element={<SavingsCustomer/>}/>
+          <Route path="customerlogin" element={<CustomerLogin/>}/>
 
 
           <Route path="apikey" element={<ApiKeyGeneration/>}/>
