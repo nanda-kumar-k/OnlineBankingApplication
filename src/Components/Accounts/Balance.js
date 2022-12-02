@@ -6,6 +6,7 @@ import BalanaceImg from "./Images/balance.jpg";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import React from "react";
 import RLNDataService from "../../services/rln.customer.service";
+import Footer from "../Footer/Footer";
 
 export const CHRightContainer = styled.div`
     padding: 1vh 1vw;
@@ -71,6 +72,11 @@ function Balance() {
     //     navigate('/login');
     // }
     React.useEffect(() => {
+        window.scrollTo(0, 0);
+        const currentuser = JSON.parse(localStorage.getItem('customerLogin'));
+        if ( !currentuser) {
+            navigate('/logintype');
+        }
         RLNDataService.checkCustomerBalance().then((response) => {
             console.log(response);
             if(response){
@@ -112,6 +118,9 @@ function Balance() {
         </CHRight>
       
     </CHContainer>
+        <div style={{marginTop:"10vh"}}> 
+        <Footer/>
+        </div>
         </>
     )
 }

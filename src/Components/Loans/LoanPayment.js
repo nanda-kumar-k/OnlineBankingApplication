@@ -10,6 +10,9 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import * as React from 'react';
 import RLNDataService from "../../services/rln.customer.service";
+import { useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2'
+import Footer from "../Footer/Footer";
 
 export const CHRightContainer = styled.div`
     padding: 1vh 1vw;
@@ -55,6 +58,16 @@ const TransferImg = styled.img`
 
 function LoanPayment() {
 
+    const navigate = useNavigate();
+    const params = useParams();
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+        const currentuser = JSON.parse(localStorage.getItem('customerLogin'));
+        if ( !currentuser) {
+            navigate('/logintype');
+        }
+    }, [navigate,params]);
+
     const [errorMessages, setErrorMessages] = React.useState('');
     const [values, setValues] = React.useState({
         loanId: '',
@@ -85,10 +98,28 @@ function LoanPayment() {
                         RLNDataService.loanPayment(data).then( res => {
                             console.log(res.data);
                             if ( res.statusCode === 200 ) {
-                                setErrorMessages(res.message);
+                                Swal.fire({
+                                    title: 'Success',
+                                    text: res.message,
+                                    icon: 'success',
+                                    confirmButtonText: 'Ok'
+                                }).then( () => {
+                                    navigate('/loanpaymentshistory');
+                                });
+                            
                             }
                             else {
-                                setErrorMessages(res.message);
+                                Swal.fire({
+                                    title: 'Loan Payment Status',
+                                    text: res.message,
+                                    icon: 'info',
+                                    confirmButtonText: 'Ok'
+                                }).then( (res) => {
+                                    if ( res.isConfirmed ) {
+                                        setErrorMessages(res.message);
+                                    }
+                                });
+
                             }
                         }).catch( err => {
                             console.log(err);
@@ -176,12 +207,13 @@ function LoanPayment() {
                         <p>2. Please Enter Valid Amount.</p>
                         <p>3. Please Enter Valid Account No.</p>
                         <p>4. Please Enter Valid IFSC Code.</p>
-
-
                     </DepositNote>
                 </CHRightContainer>
             </CHRight>
         </CHContainer>
+        <div style={{marginTop:"10vh"}} >
+            <Footer/>
+        </div>
         </>
     )
 

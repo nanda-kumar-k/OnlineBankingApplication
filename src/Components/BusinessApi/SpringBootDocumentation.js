@@ -16,90 +16,9 @@ import * as React from 'react';
 import { Autoplay, Pagination, Navigation } from "swiper";
 import Footer from '../Footer/Footer';
 import { NavLink } from "react-router-dom";
+import {CHContainer, CHRight, CHNavbar, BackImg, CHLeft} from "../CustomerHome/CustomerHome";
+import { useNavigate, useParams } from 'react-router-dom';
 
-export const CHContainer = styled.div`
-    width: 90vw;
-    height: 84vh;
-    display: flex;
-    padding: 5vh 5vw 0vh 5vw;
-    position: relative;
-    overflow: hidden;
-
-`;
-
-export const BackImg = styled.img`
-    width: 200%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-`;
-
-export const CHLeft = styled.div`
-    width: 18vw;
-    height: 82vh;
-    /* background-color: blue; */
-    position: sticky;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    padding: 1vh 1vw;
-
-`;
-
-export const CHNavbar = styled.div`
-    width: 16vw;
-    height: 78vh;
-    /* background-color: red; */
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    padding: 1vh 1vw;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
-    box-shadow: 1px 1px whitesmoke;
-    border-bottom: 1px solid #E6E6E6;
-    -webkit-box-shadow: 6px 3px 6px #0000001f;
-    /* box-shadow: 6px 3px 6px #0000001f; */
-    a {
-        text-decoration: none;
-        color: black;
-    }
-    h3 {
-        margin: 2px;
-        padding: 2px;
-    }
-    p {
-        margin-left: 2px;
-        padding: 2px;
-
-        &:hover {
-            /* background-color: #3498db; */
-            color: #3498db;
-        }
-    }
-    hr {
-        margin-top: 10px;
-    }
-`;
-
-export const CHRight = styled.div`
-    width: 76vw;
-    height: 82vh;
-    //margin-left: 20vw;
-    /* background-color: green; */
-    position: relative;
-    overflow-y: scroll;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;
-    padding: 1vh 2vw; 
-
-    &::-webkit-scrollbar {
-        display: none;
-    }
-`;
 
 const CHRightContainer = styled.div`
     padding: 1vh 1vw;
@@ -221,7 +140,15 @@ const CodeClass = styled.div`
 `;
 
 function SpringBootDocumentation() {
-
+    const navigate = useNavigate();
+    const params = useParams();
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+        const currentuser = JSON.parse(localStorage.getItem('customerLogin'));
+        if ( !currentuser) {
+            navigate('/logintype');
+        }
+    }, [navigate,params]);
     return (
         <>
         <CHContainer>
@@ -444,7 +371,9 @@ function SpringBootDocumentation() {
                     
                 </CHRight>
             </CHContainer>
+            <div style={{marginTop:"20vh"}}>
             <Footer/>
+            </div>
         </>
     )
 }

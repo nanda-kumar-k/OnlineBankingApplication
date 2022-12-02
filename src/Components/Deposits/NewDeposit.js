@@ -14,8 +14,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import RLNDataService from "../../services/rln.customer.service";
-
-
+import Swal from 'sweetalert2'
+import { useNavigate, useParams } from 'react-router-dom';
+import Footer from "../Footer/Footer";
 const CHRightContainer = styled.div`
     padding: 1vh 1vw;
     width: 64vw;
@@ -86,6 +87,17 @@ const DepositNote = styled.div`
 `;
 
 function NewDeposit() {
+
+    const navigate = useNavigate();
+    const params = useParams();
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+        const currentuser = JSON.parse(localStorage.getItem('customerLogin'));
+        if ( !currentuser) {
+            navigate('/logintype');
+        }
+    }, [navigate,params]);
+
     const [errorMessages, setErrorMessages] = React.useState('');
     const [depositEndDate, setDepositEndDate] = React.useState(new Date());
     const [values, setValues] = React.useState({
@@ -116,13 +128,42 @@ function NewDeposit() {
                 RLNDataService.openNewDeposit(data).then((response) => {
                     console.log(response);
                     if(response.statusCode === 200){
-                        setErrorMessages(response.message);
+                        
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Deposit opened successfully',
+                            icon: 'success',
+                            confirmButtonText: 'Ok'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    navigate('/alldeposits');
+                                }
+                            })
+                        
                     }
                     else if (response.statusCode === 401){
-                        setErrorMessages(response.message);
+                        Swal.fire({
+                            title: 'info!',
+                            text: response.message,
+                            icon: 'info',
+                            confirmButtonText: 'Ok'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    setErrorMessages(response.message);
+                                }
+                            })
                     }
                     else {
-                        setErrorMessages(response.message);
+                        Swal.fire({
+                            title: 'Error!',
+                            text: response.message,
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    setErrorMessages(response.message);
+                                }
+                            })
                     }
                 }).catch((error) => {
                     console.log(error);
@@ -225,6 +266,9 @@ function NewDeposit() {
                 </CHRightContainer>
             </CHRight>
         </CHContainer>
+        <div style={{marginTop:"10vh"}}>
+        <Footer/>
+        </div>
         </>
     )
 }

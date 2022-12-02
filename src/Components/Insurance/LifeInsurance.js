@@ -1,3 +1,4 @@
+import {CHContainer, CHRight, CHNavbar, BackImg, CHLeft} from "../CustomerHome/CustomerHome";
 import AllLinks from "../CustomerHome/AllLinks";
 import styled from 'styled-components';
 import background from './Images/background.png';
@@ -28,91 +29,8 @@ import { Autoplay, Pagination, Navigation } from "swiper";
 import Swal from 'sweetalert2'
 import Footer from '../Footer/Footer';
 import RLNDataService from "../../services/rln.customer.service";
+import { useNavigate, useParams } from 'react-router-dom';
 
-
-export const CHContainer = styled.div`
-    width: 90vw;
-    height: 84vh;
-    display: flex;
-    padding: 5vh 5vw 0vh 5vw;
-    position: relative;
-    overflow: hidden;
-
-`;
-
-export const BackImg = styled.img`
-    width: 200%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-`;
-
-export const CHLeft = styled.div`
-    width: 18vw;
-    height: 82vh;
-    /* background-color: blue; */
-    position: sticky;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    padding: 1vh 1vw;
-
-`;
-
-export const CHNavbar = styled.div`
-    width: 16vw;
-    height: 78vh;
-    /* background-color: red; */
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    padding: 1vh 1vw;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
-    box-shadow: 1px 1px whitesmoke;
-    border-bottom: 1px solid #E6E6E6;
-    -webkit-box-shadow: 6px 3px 6px #0000001f;
-    /* box-shadow: 6px 3px 6px #0000001f; */
-    a {
-        text-decoration: none;
-        color: black;
-    }
-    h3 {
-        margin: 2px;
-        padding: 2px;
-    }
-    p {
-        margin-left: 2px;
-        padding: 2px;
-
-        &:hover {
-            /* background-color: #3498db; */
-            color: #3498db;
-        }
-    }
-    hr {
-        margin-top: 10px;
-    }
-`;
-
-export const CHRight = styled.div`
-    width: 76vw;
-    height: 82vh;
-    //margin-left: 20vw;
-    /* background-color: green; */
-    position: relative;
-    overflow-y: scroll;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;
-    padding: 1vh 2vw; 
-
-    &::-webkit-scrollbar {
-        display: none;
-    }
-`;
 
 const CHRightContainer = styled.div`
     padding: 1vh 1vw;
@@ -225,6 +143,16 @@ const ImgCon = styled.div`
 
 function LifeInsurance() {
 
+    const navigate = useNavigate();
+    const params = useParams();
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+        const currentuser = JSON.parse(localStorage.getItem('customerLogin'));
+        if ( !currentuser) {
+            navigate('/logintype');
+        }
+    }, [navigate,params]);
+
     const [errorMessages, setErrorMessages] = React.useState('');
     const [values, setValues] = React.useState({
         bmi: '',
@@ -320,7 +248,7 @@ function LifeInsurance() {
                             fontWeight: 800}}>Life Insurance - Meaning</p>
                             <p style={{color: "#444",
                                 fontSize: "1.2em",
-                                }}>Life Insurance can be defined as a contract between an insurance policy holder and an insurance company, where the insurer promises to pay a sum of money in exchange for a premium, upon the death of an insured person or after a set period. Here, at ICICI Prudential Life Insurance, you pay premiums for a specific term and in return, we provide you with a Life Cover. This Life Cover secures your loved ones’ future by paying a lump sum amount in case of an unfortunate event. In some policies, you are paid an amount called Maturity Benefit at the end of the policy term.</p>
+                                }}>Life Insurance can be defined as a contract between an insurance policy holder and an insurance company, where the insurer promises to pay a sum of money in exchange for a premium, upon the death of an insured person or after a set period. Here, at RLN BANK Prudential Life Insurance, you pay premiums for a specific term and in return, we provide you with a Life Cover. This Life Cover secures your loved ones’ future by paying a lump sum amount in case of an unfortunate event. In some policies, you are paid an amount called Maturity Benefit at the end of the policy term.</p>
                             <p>There are two basic types of Life Insurance plans -</p>
                             <p style={{ marginRight: "20px", marginLeft: "20px", color: "#444",
                             }}>1. Pure Protection</p>
@@ -488,7 +416,9 @@ function LifeInsurance() {
                     
                 </CHRight>
             </CHContainer>
-            <Footer/>
+            <div style={{marginTop:"20vh"}}>
+                <Footer />
+            </div>
         </>
     )
 }

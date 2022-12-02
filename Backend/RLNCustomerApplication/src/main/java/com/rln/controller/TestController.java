@@ -16,7 +16,7 @@ import com.rln.service.CustomerService;
 
 
 
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/test")
 public class TestController {

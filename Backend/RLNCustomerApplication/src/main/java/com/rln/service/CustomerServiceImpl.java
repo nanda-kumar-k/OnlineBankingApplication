@@ -205,6 +205,7 @@ public class CustomerServiceImpl implements CustomerService {
 				                         userDetails.getUsername(),
 				                         userDetails.getAccountType()
 				                         );
+				
 			}
 			else {
 				

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import React from "react";
 import RLNDataService from "../../services/rln.customer.service";
 import { useNavigate, useParams } from "react-router-dom";
+import Footer from "../Footer/Footer";
 
 export const CHRightContainer = styled.div`
     padding: 1vh 1vw;
@@ -54,6 +55,11 @@ function LoanPaymentsHistory() {
     const navigate = useNavigate();
 
     React.useEffect(() => {
+        window.scrollTo(0, 0);
+        const currentuser = JSON.parse(localStorage.getItem('customerLogin'));
+        if ( !currentuser) {
+            navigate('/logintype');
+        }
         RLNDataService.allLoanPayments().then((response) => {
             console.log(response);
             if(response.statusCode === 200) {
@@ -104,6 +110,9 @@ function LoanPaymentsHistory() {
                 </CHRightContainer>
             </CHRight>
         </CHContainer>
+        <div style={{marginTop:"10vh"}}>
+            <Footer/>
+        </div>
         </>
     )
 }

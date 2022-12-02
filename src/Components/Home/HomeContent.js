@@ -9,6 +9,8 @@ import businessimg from "./Images/businessimg.jpg";
 import rlnobt from "./Images/rlnobt.png";
 import insuranceimg from "./Images/insurance.png";
 import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 // import logo from "./Images/logo.png";
 const HomeContainer = styled.div`
     margin-top: 100vh;
@@ -330,6 +332,16 @@ const InsuranceContentBottom = styled.div`
 // `;
 
 function HomeContent() {
+
+    const [currentUser , setCurrentUser] = React.useState(false);
+    const navigate = useNavigate();
+    React.useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('customerLogin'));
+        if ( user) {
+            setCurrentUser(true);
+        }
+    }, []);
+
     return(
         <>
         <HomeContainer>
@@ -362,19 +374,19 @@ function HomeContent() {
                             <AccountBalanceIcon style={{ fontSize: 50 }} />
                             <p>Saving Account</p>
                             <p id="abt">A savings account is a bank account that earns interest and is designed to help you save money.</p>
-                            <ApplyNowBtn>Apply Now</ApplyNowBtn>
+                            <ApplyNowBtn onClick={() => {currentUser  ? navigate('/customerhome') : navigate('/logintype')}} >Apply Now</ApplyNowBtn>
                         </EachServiceCard>
                         <EachServiceCard>
                             <CreditScoreIcon style={{ fontSize: 50 }} />
                             <p>Loans</p>
                             <p id="abt">A loan is a sum of money that an individual borrows from a financial institution or bank.</p>
-                            <ApplyNowBtn>Apply Now</ApplyNowBtn>
+                            <ApplyNowBtn onClick={() => {currentUser  ? navigate('/customerhome') : navigate('/logintype')}} >Apply Now</ApplyNowBtn>
                             </EachServiceCard>
                         <EachServiceCard>
                             <SavingsIcon style={{ fontSize: 50 }} />
                             <p>Deposits</p>
                             <p id="abt">A deposit is a sum of money that is placed in a bank account or other financial institution.</p>
-                            <ApplyNowBtn>Apply Now</ApplyNowBtn>
+                            <ApplyNowBtn onClick={() => {currentUser  ? navigate('/customerhome') : navigate('/logintype')}} >Apply Now</ApplyNowBtn>
                             </EachServiceCard>
                     </SavingContentBottom>
                 </SavingContainer>
@@ -391,19 +403,19 @@ function HomeContent() {
                             <AccountBalanceIcon style={{ fontSize: 50 }} />
                             <p>Business Account</p>
                             <p id="abt">A business account is a bank account that is used for business purposes.</p>
-                            <ApplyNowBtn>Apply Now</ApplyNowBtn>
+                            <ApplyNowBtn onClick={() => {currentUser  ? navigate('/apidocmentation') : navigate('/logintype')}}>Apply Now</ApplyNowBtn>
                         </EachServiceCard>
                         <EachServiceCard>
                             <ApiIcon style={{ fontSize: 50 }} />
                             <p>Business Api</p>
                             <p id="abt">Using Business Api, complete the payments in your application</p>
-                            <ApplyNowBtn>Apply Now</ApplyNowBtn>
+                            <ApplyNowBtn onClick={() => {currentUser  ? navigate('/apikey') : navigate('/logintype')}}>Apply Now</ApplyNowBtn>
                             </EachServiceCard>
                         <EachServiceCard>
                             <PaidIcon style={{ fontSize: 50 }} />
                             <p>Business Transactions</p>
                             <p id="abt">Using Business Transactions, complete the payments in your application</p>
-                            <ApplyNowBtn>Apply Now</ApplyNowBtn>
+                            <ApplyNowBtn onClick={() => {currentUser  ? navigate('/businesstransactionhistory') : navigate('/logintype')}}>Apply Now</ApplyNowBtn>
                             </EachServiceCard>
                     </BusinessContentBottom>
                 </BusinessContainer>
@@ -419,7 +431,7 @@ function HomeContent() {
                             <SettingsAccessibilityIcon style={{ fontSize: 50 }} />
                             <p>Life Insurance</p>
                             <p id="abt">When you have insurance you know that you are secured against any unforeseen events in life, and this gives you complete peace of mind.  </p>
-                            <ApplyNowBtn>Predict Insurance</ApplyNowBtn>
+                            <ApplyNowBtn onClick={() => {currentUser  ? navigate('/lifeinsurance') : navigate('/logintype')}}>Predict Insurance</ApplyNowBtn>
                         </EachServiceCard>
                     </InsuranceContentBottom>
                 </InsuranceContainer>

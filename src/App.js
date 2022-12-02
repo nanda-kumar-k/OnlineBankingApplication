@@ -59,7 +59,7 @@ function App() {
           <Route path="balance" element={<Balance/>} />
           <Route path="transfer" element={<Transfer/>} />
           <Route path="profile" element={<Profile/>} />
-          <Route path="home" element = {<LoginHome/>} />
+          <Route path="logintype" element = {<LoginHome/>} />
 
           <Route path="contractregister" element={<ContactRegister/>}/>
           <Route path="personaldetails" element={<PersonalRegister/>}/>

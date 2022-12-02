@@ -7,7 +7,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import { NavLink } from 'react-router-dom';
 import loginimg from './Images/loginimg.jpg'
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -121,13 +121,18 @@ const LoginRight = styled.div`
 
 function CustomerLogin() {
     const [user , setUser] = React.useState('');
+    const navigate = useNavigate();
+    const parms = useParams();
     React.useEffect(() => {
+        const currentuser = JSON.parse(localStorage.getItem('customerLogin'));
+        if ( currentuser) {
+            navigate('/customerhome');
+        }
         let user = localStorage.getItem('accountType');
         setUser(user);
         localStorage.removeItem('accountType');
-    }, []);
+    }, [parms, navigate]);
 
-    const navigate = useNavigate();
     const [errorMessages, setErrorMessages] = React.useState('');
     const [values, setValues] = React.useState({
         username: '',

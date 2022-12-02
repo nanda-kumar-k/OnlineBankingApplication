@@ -6,6 +6,7 @@ import CustomerImage from "./Images/customer.jpg";
 import { useNavigate, useParams } from "react-router-dom";
 import React from "react";
 import RLNDataService from "../../services/rln.customer.service";
+import Footer from "../Footer/Footer";
 
 const CHRightContainer = styled.div`
     padding: 1vh 1vw;
@@ -75,6 +76,11 @@ function Profile() {
     const navigate = useNavigate();
 
     React.useEffect(() => {
+        window.scrollTo(0, 0);
+        const currentuser = JSON.parse(localStorage.getItem('customerLogin'));
+        if ( !currentuser) {
+            navigate('/logintype');
+        }
         RLNDataService.getCustomerProfile ().then((response) => {
             console.log(response);
             if(response.statusCode === 200) {
@@ -283,6 +289,9 @@ function Profile() {
                 </CHRightContainer>
             </CHRight>
         </CHContainer>
+        <div style={{marginTop:"10vh"}}>
+            <Footer/>
+        </div>
         </>
     )
 }
