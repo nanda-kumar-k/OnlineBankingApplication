@@ -133,6 +133,12 @@ function Navbar() {
         }
     }, [admin, parms]);
 
+    const handleLogout = () => {
+        localStorage.clear();
+        setAdmin(false);
+        navigate("/");
+    }
+
     return(
         <>
             <NavContainer>
@@ -148,7 +154,7 @@ function Navbar() {
                         <div className='RouteLink'  style={{width:'12vw'}} ><PeopleIcon/><p style={{marginLeft:'5px'}} onClick={()=>{navigate('/managerlogin')}}>Manager Login</p></div>
                         <div className='RouteLink'  style={{width:'14vw'}} ><AccountCircleIcon/><p style={{marginLeft:'5px'}} onClick={()=>{navigate('/superadminlogin')}} >Super Admin Login</p></div>
                         {admin ? 
-                        <><div className='RouteLink'  style={{width:'7vw', border: '1px solid #3498db' }} ><AdminPanelSettingsIcon/><p style={{marginLeft:'5px'}}>Logout</p></div></>
+                        <><div className='RouteLink'  style={{width:'7vw', border: '1px solid #3498db' }} onClick={handleLogout} ><AdminPanelSettingsIcon/><p style={{marginLeft:'5px'}}>Logout</p></div></>
                         : <></>}
                     </div>
                 </NavMiddle>

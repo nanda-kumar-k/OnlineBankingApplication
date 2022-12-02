@@ -20,7 +20,7 @@ import com.rln.service.TransactionService;
 
 
 
-@CrossOrigin(origins = "http://localhost:3010", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:3010", maxAge = 3600)
 @RestController
 @RequestMapping("/api/superadmin/transactions")
 public class TransactionController {

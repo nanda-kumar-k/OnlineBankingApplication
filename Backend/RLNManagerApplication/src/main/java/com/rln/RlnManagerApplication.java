@@ -10,8 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.client.RestTemplate;
 
-import com.rln.model.SuperAdmin;
-import com.rln.repository.SuperAdminRepository;
+
 import com.rln.service.FilesStorageService;
 
 @SpringBootApplication

@@ -33,6 +33,8 @@ import Home from './Components/Home/Home';
 import ManagerLogin from './Components/AdminAuthentication/Manager/ManagerLogin';
 import EmployeeLogin from './Components/AdminAuthentication/Employee/EmployeeLogin';
 import Dashboard from './Components/AllAdminServices/Dashboard';
+import UpdateRLNDetails from './Components/SuperAdmin/UpdateRLNDetails';
+import RLNDetails from './Components/SuperAdmin/RLNDetails';
 
 function App() {
   return (
@@ -42,11 +44,11 @@ function App() {
 
           <Route path="/" element={<Home />} />
           
-          <Route path="/superadminlogin" element = {<SuperAdminLogin />} />
-          <Route path="/managerlogin" element = {<ManagerLogin/>} />
-          <Route path="/employeelogin" element = {<EmployeeLogin/>} />
+          <Route path="superadminlogin" element = {<SuperAdminLogin />} />
+          <Route path="managerlogin" element = {<ManagerLogin/>} />
+          <Route path="employeelogin" element = {<EmployeeLogin/>} />
 
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
 
 
           <Route path="allaccountrequest" element = {<AccountRequest />} />
@@ -88,6 +90,9 @@ function App() {
           <Route path="alleducationalloans" element={<AllEducationalLoans/>}/>
           <Route path="allhomeloans" element={<AllHomeLoans/>}/>
           
+
+          <Route path="updaterlndetails" element={<UpdateRLNDetails/>}/>
+          <Route path="rlndetails" element={<RLNDetails/>}/>
           
           <Route path="customerloan" element={<CustomerLoan/>}/>
           <Route path="*" element={<h1>404 Not Found</h1>} />

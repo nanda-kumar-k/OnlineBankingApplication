@@ -16,22 +16,18 @@ import com.rln.model.Customer;
 import com.rln.model.CustomerProfile;
 import com.rln.model.Employee;
 import com.rln.model.Manager;
-import com.rln.model.SuperAdmin;
 import com.rln.payload.response.JwtResponse;
 import com.rln.repository.CustomerProfileRepository;
 import com.rln.repository.CustomerRepository;
 import com.rln.repository.DepositRepository;
 import com.rln.repository.EmployeeRepository;
 import com.rln.repository.ManagerRepository;
-import com.rln.repository.SuperAdminRepository;
 import com.rln.security.services.UserDetailsImpl;
 
 
 @Service
 public class ManagerServiceImpl  implements ManagerService {
 	
-	@Autowired
-	private SuperAdminRepository adminRepository;
 	
 	@Autowired
 	private PasswordEncoder encoder;
@@ -61,17 +57,7 @@ public class ManagerServiceImpl  implements ManagerService {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 	
-	@Override
-	public boolean _createSuperAdmin() {
-		
-		SuperAdmin admin = new SuperAdmin();
-		admin.setUsername("nandakumark");
-		admin.setPassword(encoder.encode("nandu123"));
-		
-		adminRepository.save(admin);
-		
-		return false;
-	}
+	
 
 	@Override
 	public JwtResponse _authenticateManager(Manager manager) {
@@ -92,16 +78,6 @@ public class ManagerServiceImpl  implements ManagerService {
 
 	
 	
-	@Override
-	public SuperAdmin _GetSuperAdminFromToken(String token) {
-		
-		String username = customerService._GetUsernameFromToken(token);
-		
-		Optional<SuperAdmin> check = adminRepository.findByUsername(username);
-		
-		return check.get();
-		
-	}
 	
 	
 	@Override
@@ -158,31 +134,7 @@ public class ManagerServiceImpl  implements ManagerService {
 		return res;
 	}
 
-	@Override
-	public boolean _addManager(Manager manager) {
-		
-//		Manager check = managerRepository.findByUsername(manager.getUsername()).get();
-//		
-//		if ( check == null ) {
-			
-			manager.setPassword(encoder.encode(manager.getPassword()));
-			managerRepository.save(manager);
-			return true;
-//		}
-//		else {
-//			
-//			return false;
-//		}
-		
-	}
-
-	@Override
-	public List<Manager> _getAllManagers() {
-		
-		List<Manager> res = (List<Manager>) managerRepository.findAll();
-		
-		return res;
-	}
+	
 
 	@Override
 	public boolean _addEmployee(Employee employee) {

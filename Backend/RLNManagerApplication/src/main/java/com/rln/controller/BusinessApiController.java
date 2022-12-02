@@ -17,7 +17,7 @@ import com.rln.model.BusinessTransaction;
 import com.rln.payload.response.ApiResponse;
 import com.rln.service.BusinessService;
 
-@CrossOrigin(origins = "http://localhost:3010", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:3010", maxAge = 3600)
 @RestController
 @RequestMapping("/api/manager/businessapi")
 public class BusinessApiController {

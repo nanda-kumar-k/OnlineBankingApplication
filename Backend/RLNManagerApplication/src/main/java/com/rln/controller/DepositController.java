@@ -18,7 +18,7 @@ import com.rln.model.Deposit;
 import com.rln.payload.response.ApiResponse;
 import com.rln.service.DepositService;
 
-@CrossOrigin(origins = "http://localhost:3010", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:3010", maxAge = 3600)
 @RestController
 @RequestMapping("/api/manager/deposit")
 public class DepositController {

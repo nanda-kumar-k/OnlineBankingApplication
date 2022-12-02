@@ -28,7 +28,7 @@ import com.rln.payload.response.SpecificLoanResponse;
 import com.rln.service.FilesStorageService;
 import com.rln.service.LoanService;
 
-@CrossOrigin(origins = "http://localhost:3010", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:3010", maxAge = 3600)
 @RestController
 @RequestMapping("/api/superadmin/loans")
 public class LoanController {

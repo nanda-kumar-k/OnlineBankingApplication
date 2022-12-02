@@ -19,14 +19,13 @@ import com.rln.model.CustomerProfile;
 import com.rln.model.Deposit;
 import com.rln.model.Employee;
 import com.rln.model.Manager;
-import com.rln.model.SuperAdmin;
 import com.rln.payload.response.ApiResponse;
 import com.rln.payload.response.JwtResponse;
 import com.rln.service.ManagerService;
 
 
 
-@CrossOrigin(origins = "http://localhost:3010", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:3010", maxAge = 3600)
 @RestController
 @RequestMapping("/api/manager")
 public class ManagerController {
@@ -39,13 +38,6 @@ public class ManagerController {
 		return "test done";
 	}
 	
-	
-	@GetMapping("/createsuperadmin")
-	public String __createSuperAdmin() {
-		adminService._createSuperAdmin();
-		
-		return "created";
-	}
 	
 	@PostMapping("/managerlogin")
 	public JwtResponse __authenticateSuperAdmin(@RequestBody Manager manager) {
@@ -154,50 +146,6 @@ public class ManagerController {
 		return res;
 	}
 	
-	
-	@PostMapping("/addmanager")
-//	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<String> __addManager(@RequestBody Manager manager) {
-		
-		ApiResponse<String> res = new ApiResponse<>();
-		res.setTimestamp(new Date());
-		
-		if ( adminService._addManager(manager) ) {
-			
-			res.setMessage("Added New Manager Successfull...!!");
-			res.setStatusCode(200);
-		}
-		else  {
-			
-			res.setStatusCode(400);
-			res.setMessage("Username already exit try again...!!");
-		}
-		
-		return res;
-	}
-	
-	@GetMapping("/getallmanagers")
-	@PreAuthorize("isAuthenticated()")
-	public ApiResponse<List<Manager>> __getAllManagers() {
-		ApiResponse<List<Manager>> res = new ApiResponse<>();
-		res.setTimestamp(new Date());
-		
-		List<Manager> getCheck = adminService._getAllManagers();
-		
-		if ( getCheck != null ) {
-			
-			res.setData(getCheck);
-			res.setStatusCode(200);
-		}
-		
-		else {
-			
-			res.setStatusCode(400);
-			res.setMessage("Managers Not Found...!!");
-		}
-		
-		return res;
-	}
 	
 	
 	@PostMapping("/addemployee")
