@@ -179,7 +179,7 @@ function ContactRegister() {
                                     find.customer.contactNumber = Number(values.contactNumber);
                                     find.customer.emailId = values.emailId;
                                     find.customer.accountType = accType;
-                                    localStorage.removeItem("accountType");
+                                    // localStorage.removeItem("accountType");
                                     localStorage.setItem("customerRegister", JSON.stringify(find));
                                 }
                                 else {
@@ -342,7 +342,7 @@ function ContactRegister() {
                     </AllInputContainer>
                 </OuterContainer>
             </SliderContainer>
-            <div style={{marginTop:"15vh"}}>
+            <div style={{marginTop:"30vh"}}>
                 <Footer/>
             </div>
         </>

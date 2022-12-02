@@ -5,15 +5,15 @@ import authHeader from "./auth-header";
 
 const API_URL = "http://localhost:2022/api/customer/";
 
-const API_TRANSACTION_URL = "http://localhost:2001/api/customer/transactions/";
+const API_TRANSACTION_URL = "http://localhost:2022/api/customer/transactions/";
 
-const API_DEPOSIT_URL = "http://localhost:2001/api/customer/deposit/";
+const API_DEPOSIT_URL = "http://localhost:2022/api/customer/deposit/";
 
-const API_LOANS_URL = "http://localhost:2001/api/customer/loans/";
+const API_LOANS_URL = "http://localhost:2022/api/customer/loans/";
 
 const API_PREDICT_URL = "https://nandu-insuranceprediction.herokuapp.com/apipredict/";
 
-const API_BUSINESS = "http://localhost:2001/api/customer/businessapi/";
+const API_BUSINESS = "http://localhost:2022/api/customer/businessapi/";
 
 function checkUsernameAvailability (username) {
     return axios.get(API_URL + "checkuser", {

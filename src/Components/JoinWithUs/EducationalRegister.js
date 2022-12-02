@@ -9,9 +9,11 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../Footer/Footer';
 
 
 const SliderContainer = styled.div`
+    margin-top: 11vh;
     background-image: url(${background});
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -251,15 +253,16 @@ function EducationalRegister() {
                         <NotePointContainer>
                             <p style={{fontSize:'1.3rem'}}><b>Please Note</b></p>
                             <ul>
-                                <li><p>The Customer ID is mentioned in the welcome letter and cheque book.</p></li>
-                                <li><p>You can also SMS "CustID" for savings account or CustIDCC XXXX(last 4 digits of credit card number) for credit card only customers to 5676782 from your registered mobile number to know your Customer ID.</p></li>
-                                <li><p>If you have not received your welcome letter, please contact your branch.</p></li>
-                                <li><p>Please ensure that your mobile number is registered with Axis Bank. You may visit the nearest Axis Bank ATM and click on "Registration-Mobile Number Update" to register. You may also visit your nearest branch.</p></li>
+                                <li><p>Please enter your highest  gradation with all the letters are completely specified</p></li>
+                                <li><p>Enter complete details about your higher education</p></li>
                             </ul>                          
                         </NotePointContainer>
                     </AllInputContainer>
                 </OuterContainer>
             </SliderContainer>
+            <div style={{marginTop:"15vh"}}>
+                <Footer/>
+            </div>
         </>
     )
 }

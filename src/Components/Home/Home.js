@@ -12,7 +12,7 @@ function Home() {
         <div>
             <HomeContent/>
         </div>
-        <div style={{marginTop: "350vh"}}>
+        <div style={{marginTop: "450vh"}}>
             <Footer/> 
         </div>
         </>
