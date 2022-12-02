@@ -7,7 +7,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // import { NavLink } from 'react-router-dom';
 import loginimg from '../Images/loginimg.jpg'
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -17,7 +17,7 @@ import "swiper/css/navigation";
 import "swiper/css/bundle";
 import "../../AdminAuthentication/LSlider.css";
 import { Autoplay} from "swiper";
-import SuperAdminAuthService from '../../services/SuperAdmin/auth.superadmin.service';
+import ManagerAuthService from '../../services/Manager/auth.manager.service';
 import banner1 from '../Images/admin1.jpg';
 import banner2 from '../Images/admin2.png';
 import banner3 from '../Images/admin3.jpg';
@@ -25,9 +25,8 @@ import banner4 from '../Images/admin4.jpg';
 import banner5 from '../Images/admin5.jpg';
 import banner6 from '../Images/admin6.jpg';
 import banner7 from '../Images/admin7.png';
-
+import Swal from 'sweetalert2'
 const LoginContainer = styled.div`
-    margin-top: 11vh;
     height: 85vh;
     width: 80vw;
     /* background-color: #3498db; */
@@ -123,6 +122,15 @@ const LoginRight = styled.div`
 function ManagerLogin() {
 
     const navigate = useNavigate();
+    const params = useParams();
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+        const currentuser = JSON.parse(localStorage.getItem('manager'));
+        if ( currentuser) {
+            navigate('/dashboard');
+        }
+    }, [navigate,params]);
+
     const [errorMessages, setErrorMessages] = React.useState('');
     const [values, setValues] = React.useState({
         username: '',
@@ -146,23 +154,34 @@ function ManagerLogin() {
     };
 
     const handleLogin = (event) => {
-        console.log("Login button clicked");
-        console.log(values.username);
-        console.log(values.password);
         event.preventDefault();
         if(values.username && values.password ){
             console.log("ffffffffffffffffffffffffffffffff")
             if(values.password.length >= 8){
-                SuperAdminAuthService.authenticateRLNSuperAdmin(values.username, values.password)
+                ManagerAuthService.authenticateRLNManager(values.username, values.password)
                 .then((response) => {
                     console.log(response);
                     if(response.token){
                         console.log("Login Success");
-                        localStorage.setItem("adminType", "superadmin");
-                        navigate('/superadmindashboard');
+                        localStorage.setItem("adminType", "manager");
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Login Success',
+                            icon: 'success',
+                            confirmButtonText: 'Ok'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                navigate('/dashboard');
+                            }
+                        })
                     }
                     else {
-                        setErrorMessages(response);
+                        Swal.fire({
+                            title: 'Error!',
+                            text: response,
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        })
                     }
                 })
                 .catch((error) => {

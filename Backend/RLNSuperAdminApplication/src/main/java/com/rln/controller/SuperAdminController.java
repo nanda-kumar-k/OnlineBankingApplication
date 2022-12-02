@@ -19,13 +19,14 @@ import com.rln.model.CustomerProfile;
 import com.rln.model.Deposit;
 import com.rln.model.Employee;
 import com.rln.model.Manager;
+import com.rln.model.RLNBankDetails;
 import com.rln.model.SuperAdmin;
 import com.rln.payload.response.ApiResponse;
 import com.rln.payload.response.JwtResponse;
 import com.rln.service.SuperAdminService;
 
 
-@CrossOrigin(origins = "http://localhost:3010", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:3010", maxAge = 3600)
 @RestController
 @RequestMapping("/api/superadmin")
 public class SuperAdminController {
@@ -239,6 +240,46 @@ public class SuperAdminController {
 			
 			res.setStatusCode(400);
 			res.setMessage("Employees Not Found...!!");
+		}
+		
+		return res;
+	}
+	
+	@PostMapping("/updaterlndetails")
+	@PreAuthorize("isAuthenticated()")
+	public ApiResponse<String> __updateRLNDetails(@RequestBody RLNBankDetails bankDetails) {
+		ApiResponse<String> res = new ApiResponse<>();
+		res.setTimestamp(new Date());
+		
+		if ( adminService._updateRLNDetails(bankDetails) ) {
+			
+			res.setStatusCode(200);
+			res.setMessage("Updated...!");
+		}
+		else {
+			res.setStatusCode(400);
+			res.setMessage("Details are not valid");
+		}
+		
+		return res;
+	}
+	
+	@GetMapping("/getrlndetails")
+	@PreAuthorize("isAuthenticated()")
+	public ApiResponse<RLNBankDetails> __getRLNDetails() {
+		ApiResponse<RLNBankDetails> res = new ApiResponse<>();
+		res.setTimestamp(new Date());
+		
+		RLNBankDetails getCheck = adminService._getRLNDetails();
+		
+		if ( getCheck != null ) {
+			
+			res.setStatusCode(200);
+			res.setData(getCheck);
+		}
+		else {
+			res.setStatusCode(400);
+			res.setMessage("No data found...!!");
 		}
 		
 		return res;

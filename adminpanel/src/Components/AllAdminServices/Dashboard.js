@@ -14,6 +14,8 @@ import "swiper/css/bundle";
 import { Autoplay, Pagination, Navigation } from "swiper";
 import Menubar from '../Navbar/Menubar';
 // import "https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap";
+import { useNavigate, useParams } from 'react-router-dom';
+import React from 'react';
 
 export const SliderContainer = styled.div`
     /* margin-top: 11vh; */
@@ -96,6 +98,24 @@ const Show = styled.div`
 
 
 function Dashboard() {
+
+    const navigate = useNavigate();
+    const params = useParams();
+    const [adminType, setAdminType] = React.useState('');
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+        const superadmin = JSON.parse(localStorage.getItem("superadmin"));
+        const manager = JSON.parse(localStorage.getItem("manager"));
+        const employee = JSON.parse(localStorage.getItem("employee"));
+        const adminType = localStorage.getItem('adminType');
+        setAdminType(adminType);
+        if( superadmin || manager || employee){}
+        else{
+          navigate('/');
+        }
+        
+    }, [navigate,params]);
+
   return (
     <>
       <SliderContainer>
@@ -107,7 +127,7 @@ function Dashboard() {
             <SliderContainer>
                 
               <Show>
-              <h1>Dashboard</h1>
+              <h1>{adminType} Dashboard</h1>
               <Swiper
                     spaceBetween={30}
                     centeredSlides={true}

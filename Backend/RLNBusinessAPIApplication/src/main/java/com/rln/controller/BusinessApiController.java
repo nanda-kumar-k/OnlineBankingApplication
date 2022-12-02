@@ -24,7 +24,7 @@ import com.rln.payload.response.ApiPaymentResponse;
 import com.rln.payload.response.ApiPaymentUrlResponse;
 import com.rln.service.BusinessService;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/business")
 public class BusinessApiController {

@@ -7,6 +7,7 @@ import com.rln.model.CustomerProfile;
 import com.rln.model.Deposit;
 import com.rln.model.Employee;
 import com.rln.model.Manager;
+import com.rln.model.RLNBankDetails;
 import com.rln.model.SuperAdmin;
 import com.rln.payload.response.JwtResponse;
 
@@ -35,6 +36,10 @@ public interface SuperAdminService {
 	boolean _addEmployee(Employee employee);
 	
 	List<Employee> _getAllEmployees();
+	
+	boolean _updateRLNDetails(RLNBankDetails bankDetails);
+	
+	RLNBankDetails _getRLNDetails();
 	
 	
 

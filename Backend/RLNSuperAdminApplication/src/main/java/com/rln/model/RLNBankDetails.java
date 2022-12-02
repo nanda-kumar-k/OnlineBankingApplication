@@ -35,7 +35,7 @@ public class RLNBankDetails {
 	@Column(insertable = false,  updatable = false, nullable = false)
 	private long rlnId;
 	@Column(nullable = false)
-	private long balance; 
+	private long balance = 100000000; 
 	@Column(nullable = false)
 	private float homeLoanInterest;
 	@Column(nullable = false)
@@ -43,13 +43,13 @@ public class RLNBankDetails {
 	@Column(nullable = false)
 	private float depositInterest;
 	@Column(nullable = false)
-	private long insuranceMontlyPayment;
+	private long insuranceMontlyPayment = 0;
 	@Column(nullable = false)
-	private long insuranceYearlyPayment;
+	private long insuranceYearlyPayment = 0;
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
-	private Date date;
+	private Date date = new Date();
 
 	
 }

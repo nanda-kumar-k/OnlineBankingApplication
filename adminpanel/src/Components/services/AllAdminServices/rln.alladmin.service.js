@@ -33,18 +33,19 @@ const allAccountRequest = async () =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
             
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -62,18 +63,19 @@ const customerProfile = async (username) =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -91,18 +93,19 @@ const customerVerification = async (username) =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -120,18 +123,19 @@ const getAllCustomers = async () =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -150,18 +154,19 @@ const getAllCustomersDeposits = async () =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
                 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -180,18 +185,19 @@ const getCustomerDeposits = async (username) =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -209,18 +215,19 @@ const specificDeposit = async (depositId) =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -238,18 +245,19 @@ const getCustomerTransactions = async (username) =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -267,18 +275,19 @@ const getAllTransactions = async () =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
                 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -296,18 +305,19 @@ const getCustomerLoans = async (username) =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -325,18 +335,19 @@ const getSpecificLoan = async (loanId) =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -354,18 +365,19 @@ const getSpecificLoanPayments = async (loanId) =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -384,18 +396,19 @@ const getAllHomeLoans = async () =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -414,18 +427,19 @@ const getAllEducationalLoans = async () =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -444,18 +458,19 @@ const getAllLoanPayments = async () =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -474,18 +489,19 @@ const LoansRequest = async () =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }   
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -503,18 +519,19 @@ const loanVerification = async (loanId) =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -533,18 +550,19 @@ const getAllBusinessApiCustomers = async () =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -562,18 +580,19 @@ const getAllBusinessApiTransactions = async () =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -592,18 +611,19 @@ const getCustomerBusinessApiTransactions = async (username) =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -622,18 +642,19 @@ const addEmployee = async (employee) =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 
@@ -652,18 +673,19 @@ const getAllEmployees = async () =>  {
                     return response.data;
                 })
                 .catch((error) => {
-                    console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                    console.log(error);
-                    return ''
+                    localStorage.removeItem("adminType");
+                    localStorage.removeItem(adminType);
+                    window.location.href = '/'+adminType+'login';
                 })
 
         }
         else {
-            return ''
+            localStorage.removeItem("adminType");
+            window.location.href = '/' + adminType + 'login';
         }
     }
     else {
-        return ''
+        window.location.href = '/'
     }
 };
 

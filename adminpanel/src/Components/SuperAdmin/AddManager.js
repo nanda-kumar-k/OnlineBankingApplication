@@ -15,7 +15,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import Button from '@mui/material/Button';
 import RLNDataService from '../services/SuperAdmin/rln.superadmin.service';
-import { useNavigate} from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
+import Swal from 'sweetalert2';
 const EAllContainer = styled.div`
     width: 81vw; 
     height: 85vh;
@@ -63,9 +64,23 @@ const AddManagerContainer = styled.div`
 
 function AddManager() {
 
+    const navigate = useNavigate();
+    const params = useParams();
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+        const superadmin = JSON.parse(localStorage.getItem("superadmin"));
+        const manager = JSON.parse(localStorage.getItem("manager"));
+        const employee = JSON.parse(localStorage.getItem("employee"));
+
+        if( superadmin || manager || employee){}
+        else{
+          navigate('/');
+        }
+        
+    }, [navigate,params]);
+
     const [errorMessages, setErrorMessages] = React.useState('');
     const [dobvalue, setDobvalue] = React.useState(new Date());
-    const navigate = useNavigate();
     const [values, setValues] = React.useState({
         username: '',
         password: '',
@@ -106,7 +121,16 @@ function AddManager() {
                     console.log(response);
                     if (response.status === 200) {
                         // navigate('/superadmin/dashboard');
-                        setErrorMessages(response.message);
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Login Success',
+                            icon: 'success',
+                            confirmButtonText: 'Ok'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                navigate('/allmanagers');
+                            }
+                        })
                     }
                     else {
                         setErrorMessages(response.message);

@@ -166,8 +166,17 @@ function CustomerLogin() {
                 .then((response) => {
                     console.log(response);
                     if(response.statusCode === 200){
-                        console.log("Login Success");
-                        navigate('/customer/dashboard');
+                        Swal
+                        .fire({
+                            title: 'success',
+                            text: 'Login Successfull',
+                            icon: 'success',
+                            confirmButtonText: 'Ok'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                navigate('/customerhome');
+                            }
+                        })    
                     }
                     else if (response.statusCode === 100){
                         Swal

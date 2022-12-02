@@ -14,12 +14,16 @@ const allAccountRequest = async () =>  {
             .catch((error) => {
                 console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
                 console.log(error);
-                return ''
+                localStorage.removeItem("adminType");
+                localStorage.removeItem("superadmin");
+                window.location.href = '/superadminlogin';
             })
         
     }
     else {
-        return ''
+        localStorage.removeItem("adminType");
+        localStorage.removeItem("superadmin");
+        window.location.href = '/superadminlogin';
     }
 };
 
@@ -34,11 +38,15 @@ const addManager = async (data) => {
             .catch((error) => {
                 console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
                 console.log(error);
-                return ''
+                localStorage.removeItem("adminType");
+                localStorage.removeItem("superadmin");
+                window.location.href = '/superadminlogin';
             })
     }
     else {
-        return ''
+        localStorage.removeItem("adminType");
+        localStorage.removeItem("superadmin");
+        window.location.href = '/superadminlogin';
     }
 };
 
@@ -53,18 +61,66 @@ const getAllManagers = async () => {
             .catch((error) => {
                 console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
                 console.log(error);
-                return ''
+                localStorage.removeItem("adminType");
+                localStorage.removeItem("superadmin");
+                window.location.href = '/superadminlogin';
             })
     }
     else {
-        return ''
+        localStorage.removeItem("adminType");
+        localStorage.removeItem("superadmin");
+        window.location.href = '/superadminlogin';
+    }
+};
+
+
+const updateRLNAllDetails = async (data) => {
+    let checkHeader = authHeader();
+    if (checkHeader) {
+        return await axios.post(API_URL + "updaterlndetails", data, { headers: authHeader() })
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                localStorage.removeItem("adminType");
+                localStorage.removeItem("superadmin");
+                window.location.href = '/superadminlogin';
+            })
+    }
+    else {
+        localStorage.removeItem("adminType");
+        localStorage.removeItem("superadmin");
+        window.location.href = '/superadminlogin';
+    }
+};
+
+const getRLNDetails = async () => {
+    let checkHeader = authHeader();
+    if (checkHeader) {
+
+        return await axios.get(API_URL + "getrlndetails", { headers: authHeader() })
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                localStorage.removeItem("adminType");
+                localStorage.removeItem("superadmin");
+                window.location.href = '/superadminlogin';
+            })
+    }
+    else {
+        localStorage.removeItem("adminType");
+        localStorage.removeItem("superadmin");
+        window.location.href = '/superadminlogin';
     }
 };
 
 const RLNDataService = {
     allAccountRequest,
     addManager,
-    getAllManagers
+    getAllManagers,
+    updateRLNAllDetails,
+    getRLNDetails
 };
 
 export default RLNDataService;

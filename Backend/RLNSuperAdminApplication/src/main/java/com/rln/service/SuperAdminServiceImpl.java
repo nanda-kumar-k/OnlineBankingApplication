@@ -18,6 +18,7 @@ import com.rln.model.CustomerProfile;
 import com.rln.model.Deposit;
 import com.rln.model.Employee;
 import com.rln.model.Manager;
+import com.rln.model.RLNBankDetails;
 import com.rln.model.SuperAdmin;
 import com.rln.payload.response.JwtResponse;
 import com.rln.repository.CustomerProfileRepository;
@@ -25,6 +26,7 @@ import com.rln.repository.CustomerRepository;
 import com.rln.repository.DepositRepository;
 import com.rln.repository.EmployeeRepository;
 import com.rln.repository.ManagerRepository;
+import com.rln.repository.RLNBankDetailsRepository;
 import com.rln.repository.SuperAdminRepository;
 import com.rln.security.services.UserDetailsImpl;
 
@@ -62,6 +64,10 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	
 	@Autowired
 	private EmployeeRepository employeeRepository;
+	
+	
+	@Autowired
+	private RLNBankDetailsRepository bankDetailsRepository;
 	
 	@Override
 	public boolean _createSuperAdmin() {
@@ -209,6 +215,40 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		List<Employee> res = (List<Employee>) employeeRepository.findAll();
 		
 		return res;
+	}
+
+	@Override
+	public boolean _updateRLNDetails(RLNBankDetails bankDetails) {
+		
+		List<RLNBankDetails> bd = (List<RLNBankDetails>) bankDetailsRepository.findAll();
+		
+		if ( bd.isEmpty() ) {
+			
+			bankDetailsRepository.save(bankDetails);
+			return true;
+		}
+		else {
+			
+			bd.get(0).setDepositInterest(bankDetails.getDepositInterest());
+			bd.get(0).setEducationLoanInterest(bankDetails.getEducationLoanInterest());
+			bd.get(0).setHomeLoanInterest(bankDetails.getHomeLoanInterest());
+			bankDetailsRepository.save(bd.get(0));
+			
+			return true;
+		}
+		
+	}
+
+	@Override
+	public RLNBankDetails _getRLNDetails() {
+		
+		List<RLNBankDetails> bd = (List<RLNBankDetails>) bankDetailsRepository.findAll();
+		
+		if ( bd.isEmpty() ) {
+			return null;
+		}
+		
+		return bd.get(0);
 	}
 
 	

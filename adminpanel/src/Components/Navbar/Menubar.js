@@ -69,12 +69,28 @@ function Menubar (){
             <MImg src={manager} alt=""/>
         </MImgCon>
         
-        <NavLink to="/employeedashboard" style={{textDecoration : 'none'}}>
+        <NavLink to="/dashboard" style={{textDecoration : 'none'}}>
             <MenusList style={{marginTop:'50px'}}>
                 <DashboardIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
                 <p>Dashboard</p>
             </MenusList>
         </NavLink>
+        { adminLoginType === 'superadmin' ?
+            <NavLink to="/rlndetails" style={{textDecoration : 'none'}}>
+                <MenusList style={{marginTop:'15px'}}>
+                    <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
+                    <p>RLN Bank Details</p>
+                </MenusList>
+            </NavLink>
+        : <></>}
+        { adminLoginType === 'superadmin'?
+            <NavLink to="/updaterlndetails" style={{textDecoration : 'none'}}>
+                <MenusList style={{marginTop:'15px'}}>
+                    <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
+                    <p>Update RLN Details</p>
+                </MenusList>
+            </NavLink>
+        : <></>}
         <NavLink to="/allcustomers" style={{textDecoration : 'none'}}>
             <MenusList style={{marginTop:'15px'}}>
                 <SupervisedUserCircleIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
@@ -131,45 +147,54 @@ function Menubar (){
             </MenusList>
         </NavLink>
 
-        <NavLink to="/allbusinessapicustomers" style={{textDecoration : 'none'}}>
-            <MenusList style={{marginTop:'15px'}}>
-                <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
-                <p>All Business Api Customers</p>
-            </MenusList>
-        </NavLink>
-
-        <NavLink to="/allbusinessapitransactions" style={{textDecoration : 'none'}}>
-            <MenusList style={{marginTop:'15px'}}>
-                <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
-                <p>All Business Api Transactions</p>
-            </MenusList>
-        </NavLink>
-
-        <NavLink to="/addmanager" style={{textDecoration : 'none'}}>
-            <MenusList style={{marginTop:'15px'}}>
-                <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
-                <p>Add Manager</p>
-            </MenusList>
-        </NavLink>
-        <NavLink to="/allmanagers" style={{textDecoration : 'none'}}>
-            <MenusList style={{marginTop:'15px'}}>
-                <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
-                <p>All Managers</p>
-            </MenusList>
-        </NavLink>
-        <NavLink to="/addemployee" style={{textDecoration : 'none'}}>
-            <MenusList style={{marginTop:'15px'}}>
-                <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
-                <p>Add Employee</p>
-            </MenusList>
-        </NavLink>
-        <NavLink to="/allemloyees" style={{textDecoration : 'none'}}>
-            <MenusList style={{marginTop:'15px'}}>
-                <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
-                <p>All Employee</p>
-            </MenusList>
-        </NavLink>
-
+        { adminLoginType === 'superadmin' || adminLoginType ==='manager' ? 
+            <NavLink to="/allbusinessapicustomers" style={{textDecoration : 'none'}}>
+                <MenusList style={{marginTop:'15px'}}>
+                    <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
+                    <p>All Business Api Customers</p>
+                </MenusList>
+            </NavLink>
+        : <></>}
+        { adminLoginType === 'superadmin' || adminLoginType ==='manager' ?
+            <NavLink to="/allbusinessapitransactions" style={{textDecoration : 'none'}}>
+                <MenusList style={{marginTop:'15px'}}>
+                    <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
+                    <p>All Business Api Transactions</p>
+                </MenusList>
+            </NavLink>
+        : <></>}
+        { adminLoginType === 'superadmin' ?
+            <NavLink to="/addmanager" style={{textDecoration : 'none'}}>
+                <MenusList style={{marginTop:'15px'}}>
+                    <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
+                    <p>Add Manager</p>
+                </MenusList>
+            </NavLink>
+        : <></>}
+        { adminLoginType === 'superadmin' ?
+            <NavLink to="/allmanagers" style={{textDecoration : 'none'}}>
+                <MenusList style={{marginTop:'15px'}}>
+                    <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
+                    <p>All Managers</p>
+                </MenusList>
+            </NavLink>
+        : <></>}
+        { adminLoginType === 'superadmin' || adminLoginType ==='manager' ?
+            <NavLink to="/addemployee" style={{textDecoration : 'none'}}>
+                <MenusList style={{marginTop:'15px'}}>
+                    <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
+                    <p>Add Employee</p>
+                </MenusList>
+            </NavLink>
+        : <></>}
+        { adminLoginType === 'superadmin' || adminLoginType ==='manager' ?
+            <NavLink to="/allemloyees" style={{textDecoration : 'none'}}>
+                <MenusList style={{marginTop:'15px'}}>
+                    <SwitchAccountIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
+                    <p>All Employee</p>
+                </MenusList>
+            </NavLink>
+        : <></>}
         <MenusList style={{marginTop:'15px'}}>
             <NoEncryptionIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
             <p>Logout</p>
