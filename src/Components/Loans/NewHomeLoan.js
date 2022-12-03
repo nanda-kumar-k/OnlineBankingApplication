@@ -17,6 +17,7 @@ import RLNDataService from "../../services/rln.customer.service";
 import { useNavigate, useParams } from 'react-router-dom';
 import Footer from "../Footer/Footer";
 import Swal from 'sweetalert2'
+
 const CHRightContainer = styled.div`
     padding: 1vh 1vw;
     width: 64vw;

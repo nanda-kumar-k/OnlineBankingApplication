@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.rln.model.Customer;
 import com.rln.model.CustomerProfile;
+import com.rln.model.RLNServiceRating;
 import com.rln.payload.response.JwtResponse;
 
 public interface CustomerService {
@@ -34,5 +35,9 @@ public interface CustomerService {
 	String _uploadCustomerPhoto(MultipartFile file, String username);
 	
 	CustomerProfile _getCustomerProfile(String token);
+	
+	boolean _updateCustomerProfile(CustomerProfile customerProfile, String token);
+	
+	boolean _rating(RLNServiceRating  serviceRating);
 
 }

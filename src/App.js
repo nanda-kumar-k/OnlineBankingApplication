@@ -44,6 +44,7 @@ import ApiDocumentation from './Components/BusinessApi/ApiDocumentation';
 import SpringBootDocumentation from './Components/BusinessApi/SpringBootDocumentation';
 import PythonDocumentation from './Components/BusinessApi/PythonDocumentation';
 import CustomerLogin from './Components/JoinWithUs/CustomerLogin/CustomerLogin';
+import CustomerProfileUpdate from './Components/Accounts/CustomerProfileUpdate';
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
           <Route path="transfer" element={<Transfer/>} />
           <Route path="profile" element={<Profile/>} />
           <Route path="logintype" element = {<LoginHome/>} />
+          <Route path="customerprofileupdate" element = {<CustomerProfileUpdate/>} />
 
           <Route path="contractregister" element={<ContactRegister/>}/>
           <Route path="personaldetails" element={<PersonalRegister/>}/>
