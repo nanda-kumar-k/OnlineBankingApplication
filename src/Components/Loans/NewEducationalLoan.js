@@ -122,6 +122,7 @@ function NewEducationalLoan() {
         yearOfStudy: '',
         institutionAddress : '',
         nomineeName: '',
+        cibilSCore: '',
       });
     
       const handleChange = (prop) => (event) => {
@@ -132,9 +133,9 @@ function NewEducationalLoan() {
       const handleSubmit = (event) => {
         event.preventDefault();
       
-        if ( values.loanAmount && values.institutionName && values.degree && values.yearOfStudy && values.institutionAddress && values.nomineeName  ) {
+        if ( values.loanAmount && values.institutionName && values.degree && values.yearOfStudy && values.institutionAddress && values.nomineeName  && values.cibilSCore) {
            
-            if ( !isNaN (values.loanAmount) && !isNaN (values.yearOfStudy) ) {
+            if ( !isNaN (values.loanAmount) && !isNaN (values.yearOfStudy) && !isNaN (values.cibilSCore) ) {
 
                 if ( Number(values.loanAmount) >= 10000 ) {
 
@@ -149,7 +150,8 @@ function NewEducationalLoan() {
                             yearOfStudy: values.yearOfStudy,
                             institutionAddress: values.institutionAddress,
                             nomineeName: values.nomineeName,
-                            loanEndDate: loandate
+                            loanEndDate: loandate,
+                            cibilSCore: values.cibilSCore,
                         }
 
                         RLNDataService.openEdicationalLoan(data).then( res => {
@@ -193,7 +195,7 @@ function NewEducationalLoan() {
 
             }
             else {
-                setErrorMessages('Loan Amount and year of study should be a number...!!');
+                setErrorMessages('Loan Amount, year, Cibil SCore of study should be a number...!!');
             }
 
         }
@@ -306,6 +308,20 @@ function NewEducationalLoan() {
                             id="filled-adornment-amount"
                             value={values.nomineeName}
                             onChange={handleChange('nomineeName')}
+                            />
+                        </FormControl>
+                        <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '50ch', '& .MuiInputLabel-root': {
+                            color: 'balck',
+                            fontSize: '1.2rem',
+                            },
+                            '& .MuiFilledInput-root':{
+                                backgroundColor: 'white',
+                            } }} >
+                            <InputLabel htmlFor="filled-adornment-amount">Enter Cibil SCore</InputLabel>
+                            <FilledInput
+                            id="filled-adornment-amount"
+                            value={values.cibilScore}
+                            onChange={handleChange('cibilScore')}
                             />
                         </FormControl>
                         <FormControl sx={{ m: 1, mt: 1, width: '50ch', '& .MuiTextField-root': {

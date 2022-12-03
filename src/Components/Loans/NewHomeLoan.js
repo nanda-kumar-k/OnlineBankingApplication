@@ -43,7 +43,7 @@ const CHRightContainer = styled.div`
 
 const LoanContainer = styled.div`
     width: 64vw;
-    height: 30vh;
+    height: 35vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -79,7 +79,8 @@ function NewHomeLoan() {
     const [values, setValues] = React.useState({
         loanAmount: '',
         homeAddress: '',
-        nomineeName: ''
+        nomineeName: '',
+        cibilSCore: '',
       });
     
       const handleChange = (prop) => (event) => {
@@ -90,9 +91,9 @@ function NewHomeLoan() {
       const handleSubmit = (event) => {
         event.preventDefault();
         
-        if ( values.loanAmount && values.homeAddress &&  values.nomineeName && loanEndDate ) {
+        if ( values.loanAmount && values.homeAddress &&  values.nomineeName && loanEndDate && values.cibilSCore ) {
             
-            if ( !isNaN(values.loanAmount) ) {
+            if ( !isNaN(values.loanAmount) && !isNaN(values.cibilSCore) ) {
                 if ( Number(values.loanAmount) >= 10000 ) {
                     const date = new Date(loanEndDate);
                     const loandate = date.toISOString().split('T')[0];
@@ -100,7 +101,8 @@ function NewHomeLoan() {
                         loanAmount: values.loanAmount,
                         homeAddress: values.homeAddress,
                         nomineeName: values.nomineeName,
-                        loanEndDate: loandate
+                        loanEndDate: loandate,
+                        cibilSCore : values.cibilSCore
                     };
 
                     RLNDataService.openNewHomeLoan(data).then( res => {
@@ -140,7 +142,7 @@ function NewHomeLoan() {
 
             }
             else {
-                setErrorMessages('Loan amount must be a number.');
+                setErrorMessages('Loan amount and Cibil SCore must be a number.');
             }
 
         }
@@ -209,6 +211,20 @@ function NewHomeLoan() {
                             onChange={handleChange('nomineeName')}
                             />
                         </FormControl>
+                        <FormControl variant="filled" sx={{ m: 1, mt: 1, width: '50ch', '& .MuiInputLabel-root': {
+                            color: 'balck',
+                            fontSize: '1.2rem',
+                            },
+                            '& .MuiFilledInput-root':{
+                                backgroundColor: 'white',
+                            } }} >
+                            <InputLabel htmlFor="filled-adornment-amount">Enter Cibil SCore</InputLabel>
+                            <FilledInput
+                            id="filled-adornment-amount"
+                            value={values.cibilSCore}
+                            onChange={handleChange('cibilSCore')}
+                            />
+                        </FormControl>
                         <FormControl sx={{ m: 1, mt: 1, width: '50ch', '& .MuiTextField-root': {
                             width: '50ch'
                             },
@@ -240,13 +256,14 @@ function NewHomeLoan() {
                         <h3>Note:</h3>
                         <p>1. Loan Amount must be greater than or equal to 10000.</p>
                         <p>2. Loan Amount must be a number.</p>
-                        <p>3. Please fill all the fields.</p>
-                        <p>4. Please Give Correct address, if you provide wrong address, your loan will not accpect</p>
-                        <p>5. Address should be complete, it contains street, city, state, zip, etc.</p>
-                        <p>6. Duration of the loan should be more than 3 months.</p>
-                        <p>7. By clicking on the submit button, you agree to the terms and conditions of the bank.</p>
-                        <p>8. The bank will not be responsible for any loss or damage caused by the use of this website.</p>
-                        <p>9. The bank reserves the right to change the terms and conditions of the website at any time.</p>
+                        <p>3. Enter valid Cibil SCore</p>
+                        <p>4. Please fill all the fields.</p>
+                        <p>5. Please Give Correct address, if you provide wrong address, your loan will not accpect</p>
+                        <p>6. Address should be complete, it contains street, city, state, zip, etc.</p>
+                        <p>7. Duration of the loan should be more than 3 months.</p>
+                        <p>8. By clicking on the submit button, you agree to the terms and conditions of the bank.</p>
+                        <p>9. The bank will not be responsible for any loss or damage caused by the use of this website.</p>
+                        <p>10. The bank reserves the right to change the terms and conditions of the website at any time.</p>
                     </DepositNote>
                 </CHRightContainer>
             </CHRight>

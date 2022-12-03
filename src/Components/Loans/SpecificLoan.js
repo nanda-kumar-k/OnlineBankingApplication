@@ -212,6 +212,12 @@ function SpecificLoan() {
                             </EachRow>
                             <EachRow>
                                 <EachInfo>
+                                    <h3>Cibil SCore</h3>
+                                    <p>{loansData.cibilSCore}</p>
+                                </EachInfo>
+                            </EachRow>
+                            <EachRow>
+                                <EachInfo>
                                     <h3>Loan Verification</h3>
                                     {loansData.loanVerification ? <p style={{color: "green"}}>Done</p> : <p style={{color: "red"}}>Pending</p> }
                                 </EachInfo>
@@ -283,7 +289,11 @@ function SpecificLoan() {
                                  {eduData.loanVerification ? <p style={{color: "green"}}>Done</p> : <p style={{color: "red"}}>Pending</p> }
                              </EachInfo>
                          </EachRow>
-                         <EachRow>
+                            <EachRow>
+                                <EachInfo>
+                                    <h3>Cibil SCore</h3>
+                                    <p>{eduData.cibilSCore}</p>
+                                </EachInfo>
                              <EachInfo>
                                  <h3>Loan Status</h3>
                                  {eduData.loanStatus ? <p style={{color: "green"}}>Active</p> : <p style={{color: "red"}}>Closed</p> }

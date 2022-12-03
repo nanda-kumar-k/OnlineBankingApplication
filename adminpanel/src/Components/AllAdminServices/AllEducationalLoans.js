@@ -85,6 +85,7 @@ function AllEducationalLoans() {
                         <th>Loan Date</th>
                         <th>Loan Amount</th>
                         <th>Loan Interest</th>
+                        <th>Cibil Score</th>
                         <th>Institution Name</th>
                         <th>Degree</th>
                         <th>Year Of Study</th>
@@ -104,6 +105,7 @@ function AllEducationalLoans() {
                             <td>{data.loanDate}</td>
                             <td>{data.loanAmount}</td>
                             <td>{data.loanInterest}</td>
+                            <td>{data.cibilSCore}</td>
                             <td>{data.institutionName}</td>
                             <td>{data.degree}</td>
                             <td>{data.yearOfStudy}</td>

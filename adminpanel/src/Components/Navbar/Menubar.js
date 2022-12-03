@@ -2,11 +2,10 @@ import manager from './Images/manager.jpg';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
-import NoEncryptionIcon from '@mui/icons-material/NoEncryption';
 import CreditScoreIcon from '@mui/icons-material/CreditScore';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { NavLink} from 'react-router-dom';
 import React from 'react';
 
 const MImgCon = styled.div`
@@ -62,6 +61,9 @@ function Menubar (){
             setAdminLoginType('employee');
         }
     }, []);
+
+   
+    
 
     return (
         <>
@@ -195,10 +197,6 @@ function Menubar (){
                 </MenusList>
             </NavLink>
         : <></>}
-        <MenusList style={{marginTop:'15px'}}>
-            <NoEncryptionIcon style={{marginRight: '1vw', height:'20px', marginLeft:'20px'}}/> 
-            <p>Logout</p>
-        </MenusList>
         </>
     )
 }

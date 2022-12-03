@@ -68,6 +68,9 @@ public class HomeLoan {
 	@Column(nullable = false)
 	private String documentUrl = "Not found";
 	
+	@Column(nullable = false)
+	private float cibilSCore;
+	
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "customerrefid", referencedColumnName = "customer_id")

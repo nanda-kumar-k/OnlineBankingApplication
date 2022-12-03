@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:2006/api/business/";
+const API_URL = "http://localhost:2022/api/businessapi/";
 
 
 const customerPaymentRequestAuthentication = async (data) =>  {
