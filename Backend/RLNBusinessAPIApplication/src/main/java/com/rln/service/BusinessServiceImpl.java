@@ -271,7 +271,10 @@ public class BusinessServiceImpl implements BusinessService {
 						res.setMessage("Transaction Successfull...!!");
 						
 						try {
-							restTemplate.postForObject(businessTransaction.getRedirectGetURL(), paymentStatusResponse, String.class );
+//							restTemplate.postForObject(businessTransaction.getRedirectGetURL(), paymentStatusResponse, String.class );
+							String url = businessTransaction.getRedirectGetURL() + "/" + businessTransaction.getPaymentId() + "/" +
+									businessTransaction.getPaymentId() + "/Credit/";
+							restTemplate.getForEntity(url, String.class);
 							System.out.println("erorrrrrrrrrrrrrrrrrrrrrrrrr");
 							return res;
 						}
@@ -355,7 +358,10 @@ public class BusinessServiceImpl implements BusinessService {
 			res.setMessage("Transaction Canceled...!!");
 			
 			try {
-				restTemplate.postForObject(businessTransaction.getRedirectGetURL(), paymentStatusResponse, String.class );
+//				restTemplate.postForObject(businessTransaction.getRedirectGetURL(), paymentStatusResponse, String.class );
+				String url = businessTransaction.getRedirectGetURL() + "/" + businessTransaction.getPaymentId() + "/" +
+						businessTransaction.getPaymentId() + "/Failed/";
+				restTemplate.getForEntity(url, String.class);
 				System.out.println("erorrrrrrrrrrrrrrrrrrrrrrrrr");
 				return res;
 			}
