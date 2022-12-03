@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.rln.model.Customer;
 import com.rln.model.CustomerProfile;
+import com.rln.model.RLNServiceRating;
 import com.rln.payload.response.ApiResponse;
 import com.rln.payload.response.JwtResponse;
 import com.rln.security.jwt.JwtUtils;
@@ -176,6 +178,38 @@ public class CustomerController {
 	}
 	
 	
+	 
+	 @PostMapping("/updateprofile")
+	 public ApiResponse<String> __updateCustomerProfile( @RequestHeader("Authorization") String token, @RequestBody CustomerProfile customerProfile ) {
+		 ApiResponse<String> res = new ApiResponse<>();
+		 res.setTimestamp(new Date());
+		 
+		 if ( customerService._updateCustomerProfile(customerProfile, token) ) {
+			
+			 res.setMessage("Profile Updated...!!!");
+			 res.setStatusCode(200);
+		 }
+		 else {
+			 res.setStatusCode(400);
+			 res.setMessage("Internal Server Error...!!");
+		 }
+		 
+		 return res;
+	 }
+	 
+	 
+	 @PostMapping("/rating")
+	 public ApiResponse<String> __rating(@RequestBody RLNServiceRating  serviceRating) {
+		 ApiResponse<String>  res = new ApiResponse<>();
+		 res.setTimestamp(new Date());
+		 
+		 customerService._rating(serviceRating);
+		 
+		 res.setStatusCode(200);
+		 res.setMessage("Thanks for your Rating");
+		 return res;
+	 }
+	 
 	
 	//permitAll()
 //	@PreAuthorize("hasAuthority('Admin')")

@@ -444,6 +444,28 @@ const getAllBusinessTractionsHistory = async () => {
 }
 
 
+const customerProfileUpdate = async (data) => {
+    let checkHeader = authHeader();
+    if ( checkHeader ) {
+        return await axios.post(API_URL + "updateprofile",data, {
+            headers: checkHeader
+        })
+        .then((response) => {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch((error) => {
+            console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
+        })
+    }
+    else{
+        return '';
+    }
+}
+
+
 const testconnection = () => {
     return http.get(`http://localhost:2001/api/customer/test1`);
 }
@@ -470,7 +492,8 @@ const RLNDataService = {
     predictInsurance,
     requestApiKey,
     getApiKey,
-    getAllBusinessTractionsHistory
+    getAllBusinessTractionsHistory,
+    customerProfileUpdate
 };
 
 

@@ -18,9 +18,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.rln.model.Customer;
 import com.rln.model.CustomerProfile;
+import com.rln.model.RLNServiceRating;
 import com.rln.payload.response.JwtResponse;
 import com.rln.repository.CustomerProfileRepository;
 import com.rln.repository.CustomerRepository;
+import com.rln.repository.RLNServiceRepository;
 import com.rln.security.jwt.JwtUtils;
 import com.rln.security.services.UserDetailsImpl;
 
@@ -46,6 +48,9 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Autowired
 	private FilesStorageService filesStorageService;
+	
+	@Autowired
+	private RLNServiceRepository rlnServiceRepository;
 	
 	@Override
 	public String _GetUsernameFromToken(String token) {
@@ -267,6 +272,63 @@ public class CustomerServiceImpl implements CustomerService {
 			return null;
 		}
 		
+	}
+
+	@Override
+	public boolean _updateCustomerProfile(CustomerProfile customerProfile, String token) {
+		
+		Customer customer = _checkCustomerBalance(token);
+		
+		if ( customer != null )	{
+			
+			CustomerProfile cp = customerProfileRepository.findByCustomerId(customer.getCustomer_id());
+			
+			if ( cp != null ) {
+				
+				customer.setFirstName(customerProfile.getCustomer().getFirstName());
+				customer.setLastName(customerProfile.getCustomer().getLastName());
+				customer.setEmailId(customerProfile.getCustomer().getEmailId());
+				customer.setPassword(encoder.encode(customerProfile.getCustomer().getPassword()));
+				customer.setStrongPassword(customer.getUsername() + customerProfile.getCustomer().getPassword());
+				customer.setContactNumber(customerProfile.getCustomer().getContactNumber());
+				
+				customerRepository.save(customer);
+				
+				cp.setDob(customerProfile.getDob());
+				cp.setGender(customerProfile.getGender());
+				cp.setMaritalStatus(customerProfile.isMaritalStatus());
+				cp.setAddress(customerProfile.getAddress());
+				cp.setOrganisationName(customerProfile.getOrganisationName());
+				cp.setDesignation(customerProfile.getDesignation());
+				cp.setNatureOfEmployment(customerProfile.getNatureOfEmployment());
+				cp.setAnnualIncome(customerProfile.getAnnualIncome());
+				cp.setQualification(customerProfile.getQualification());
+				cp.setFatherName(customerProfile.getFatherName());
+				cp.setFatherDob(customerProfile.getFatherDob());
+				cp.setMotherName(customerProfile.getMotherName());
+				cp.setMotherDob(customerProfile.getMotherDob());
+				
+				
+				customerProfileRepository.save(cp);
+				
+				
+				return true;
+				
+			}
+		}
+		else {
+			return false;
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean _rating(RLNServiceRating serviceRating) {
+		
+		rlnServiceRepository.save(serviceRating);
+		
+		return true;
 	}
 
 	

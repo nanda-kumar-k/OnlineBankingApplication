@@ -3,7 +3,7 @@ import background from "../CustomerHome/Images/background.png";
 import AllLinks from "../CustomerHome/AllLinks";
 import styled from "styled-components";
 import CustomerImage from "./Images/customer.jpg";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, NavLink} from "react-router-dom";
 import React from "react";
 import RLNDataService from "../../services/rln.customer.service";
 import Footer from "../Footer/Footer";
@@ -67,6 +67,23 @@ const OneSpecificInfo = styled.div`
     height: auto;
     border-left: 5px solid #3498db;
     margin-top: 50px;
+`
+
+const UpdateButton = styled.button`
+    width: 10vw;
+    height: 5vh;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    margin-bottom: 5vh;
+    &:hover{
+        background-color: #2980b9;
+    }
 `
 
 function Profile() {
@@ -283,6 +300,13 @@ function Profile() {
                             <p>Mother's DOB</p>
                             <hr style={{width:'15vw'}}/>
                             <p>{cpData.motherDob}</p>
+                        </TitleContainer>
+                    </OneSpecificInfo>
+                    <OneSpecificInfo>
+                        <TitleContainer>
+                            <NavLink to="/customerprofileupdate">
+                                <UpdateButton style={{marginLeft:"25vw"}}> Update Profile </UpdateButton>
+                            </NavLink>
                         </TitleContainer>
                     </OneSpecificInfo>
                     </> : null}
