@@ -192,6 +192,12 @@ function SpcificLoan() {
                             </EachRow>
                             <EachRow>
                                 <EachInfo>
+                                    <h3>Cibil Score</h3>
+                                    <p>{loansData.cibilSCore}</p>
+                                </EachInfo>
+                            </EachRow>
+                            <EachRow>
+                                <EachInfo>
                                     <h3>Nominee Name</h3>
                                     <p>{loansData.nomineeName}</p>
                                 </EachInfo>
@@ -274,6 +280,10 @@ function SpcificLoan() {
                              </EachInfo>
                          </EachRow>
                          <EachRow>
+                            <EachInfo>
+                                <h3>Cibil Score</h3>
+                                <p>{eduData.cibilSCore}</p>
+                            </EachInfo>
                              <EachInfo>
                                  <h3>Loan Status</h3>
                                  {eduData.loanStatus ? <p style={{color: "green"}}>Active</p> : <p style={{color: "red"}}>Closed</p> }

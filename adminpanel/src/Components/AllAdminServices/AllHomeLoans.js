@@ -85,6 +85,7 @@ function AllHomeLoans() {
                 <th>Loan Date</th>
                 <th>Loan Amount</th>
                 <th>Loan Interest</th>
+                <th>Cibil Score</th>
                 <th>Home Address</th>
                 <th>Loan Duration</th>
                 <th>Nominee Name</th>
@@ -102,6 +103,7 @@ function AllHomeLoans() {
                     <td>{data.loanDate}</td>
                     <td>{data.loanAmount}</td>
                     <td>{data.loanInterest}</td>
+                    <td>{data.cibilSCore}</td>
                     <td>{data.homeAddress}</td>
                     <td>{data.loanEndDate}</td>
                     <td>{data.nomineeName}</td>

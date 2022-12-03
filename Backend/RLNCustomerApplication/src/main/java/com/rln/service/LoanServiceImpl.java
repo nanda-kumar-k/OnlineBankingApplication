@@ -75,6 +75,14 @@ public class LoanServiceImpl implements LoanService {
 			return res;
 		}
 		
+		if ( homeLoan.getCibilSCore() <= 680 ) {
+			
+			res.setStatusCode(204);
+			res.setMessage("We cannot continue with loan, because your cibil score is very less...!!! ");
+			return res;
+			
+		}
+		
 		
 		RLNBankDetails bankDetails = bankDetailsService._getRLNBankInfo();
 		
@@ -138,6 +146,15 @@ public class LoanServiceImpl implements LoanService {
 			res.setStatusCode(204);
 			res.setMessage("Educational Loan Amount must be greater than 10,000.00 ");
 			return res;
+		}
+		
+		
+		if ( educationalLoan.getCibilSCore() <= 680 ) {
+			
+			res.setStatusCode(204);
+			res.setMessage("We cannot continue with loan, because your cibil score is very less...!!! ");
+			return res;
+			
 		}
 		
 		

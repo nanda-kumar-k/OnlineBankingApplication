@@ -26,7 +26,7 @@ import com.rln.service.BusinessService;
 
 //@CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/business")
+@RequestMapping("/api/businessapi")
 public class BusinessApiController {
 	
 	@Autowired
