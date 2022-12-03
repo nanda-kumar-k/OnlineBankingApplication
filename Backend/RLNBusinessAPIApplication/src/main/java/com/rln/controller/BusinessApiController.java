@@ -141,5 +141,19 @@ public class BusinessApiController {
 	}
 	
 	
+	@PostMapping("/napsacktest")
+	public String __napSackTest( @RequestBody BusinessApiPaymentRequest paymentStatusResponse ) {
+		
+		
+		System.out.println("testingggggggggggggggggggggggg");
+		System.out.println("trssssssssssssssssssssssssssssssssssssss");
+		
+		System.out.println("done");
+		System.out.println(paymentStatusResponse.getAmount());
+		System.out.println(paymentStatusResponse.getClientUsername());
+		
+		return "https://www.youtube.com/watch?v=_ZcNYvcXD4A";
+	}
+	
 
 }
