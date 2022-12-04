@@ -466,6 +466,29 @@ const customerProfileUpdate = async (data) => {
 }
 
 
+const ratingSubmission = async (data) => {
+    let checkHeader = authHeader();
+    if ( checkHeader ) {
+        return await axios.post(API_URL + "rating",data, {
+            headers: checkHeader
+        })
+        .then((response) => {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch((error) => {
+            console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            localStorage.removeItem("customerLogin");
+            window.location.href = '/logintype';
+        })
+    }
+    else{
+        return '';
+    }
+}
+
+
+
 const testconnection = () => {
     return http.get(`http://localhost:2001/api/customer/test1`);
 }
@@ -493,7 +516,8 @@ const RLNDataService = {
     requestApiKey,
     getApiKey,
     getAllBusinessTractionsHistory,
-    customerProfileUpdate
+    customerProfileUpdate,
+    ratingSubmission
 };
 
 

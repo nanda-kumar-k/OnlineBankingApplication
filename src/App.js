@@ -45,6 +45,7 @@ import SpringBootDocumentation from './Components/BusinessApi/SpringBootDocument
 import PythonDocumentation from './Components/BusinessApi/PythonDocumentation';
 import CustomerLogin from './Components/JoinWithUs/CustomerLogin/CustomerLogin';
 import CustomerProfileUpdate from './Components/Accounts/CustomerProfileUpdate';
+import CustomerRating from './Components/Rating/CustomerRating';
 
 
 function App() {
@@ -111,6 +112,8 @@ function App() {
           <Route path="apidocmentation" element={<ApiDocumentation/>}/>
           <Route path="springbootdocmentation" element={<SpringBootDocumentation/>}/>
           <Route path="pythondoc" element={<PythonDocumentation/>}/>
+
+          <Route path="rating" element={<CustomerRating/>}/>
 
           <Route path="testing" element={<ConnectionTest/>}/>
         </Routes>
