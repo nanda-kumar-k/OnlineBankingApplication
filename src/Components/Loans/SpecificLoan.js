@@ -6,7 +6,7 @@ import React from "react";
 import { useNavigate, useParams, NavLink } from "react-router-dom";
 import RLNDataService from "../../services/rln.customer.service";
 import Footer from "../Footer/Footer";
-
+import Swal from "sweetalert2";
 export const CHRightContainer = styled.div`
     padding: 1vh 1vw;
     width: 64vw;
@@ -140,8 +140,16 @@ function SpecificLoan() {
         RLNDataService.closeLoan(loanId).then((response) => {
             console.log(response);
             if(response.statusCode === 200) {
-                setErrormessage(response.message);
-                // navigate('/customerhome/loans');
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Loan Closed Successfully',
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                }).then((result) => {
+                    if(result.isConfirmed) {
+                        navigate('/rating');
+                    }
+                })
             }
             else {
                 setErrormessage(response.message);

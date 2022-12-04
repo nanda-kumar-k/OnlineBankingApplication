@@ -180,6 +180,7 @@ public class CustomerController {
 	
 	 
 	 @PostMapping("/updateprofile")
+	 @PreAuthorize("isAuthenticated()")
 	 public ApiResponse<String> __updateCustomerProfile( @RequestHeader("Authorization") String token, @RequestBody CustomerProfile customerProfile ) {
 		 ApiResponse<String> res = new ApiResponse<>();
 		 res.setTimestamp(new Date());
@@ -197,8 +198,8 @@ public class CustomerController {
 		 return res;
 	 }
 	 
-	 
 	 @PostMapping("/rating")
+	 @PreAuthorize("isAuthenticated()")
 	 public ApiResponse<String> __rating(@RequestBody RLNServiceRating  serviceRating) {
 		 ApiResponse<String>  res = new ApiResponse<>();
 		 res.setTimestamp(new Date());

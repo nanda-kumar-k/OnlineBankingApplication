@@ -26,6 +26,8 @@ import login7 from './Images/login7.jpg'
 import login5 from './Images/login5.jpg'
 import login6 from './Images/login6.jpg'
 import Footer from '../../Footer/Footer';
+import RefreshIcon from '@mui/icons-material/Refresh';
+
 
 const LoginContainer = styled.div`
     margin-top: 11vh;
@@ -39,10 +41,10 @@ const LoginContainer = styled.div`
 `;
 
 const LoginLeft = styled.div`
-    height: 70vh;
+    height: 90vh;
     width: 36vw;
     /* background-color: rgb(213, 231, 247); */
-    padding: 14vh 2vw 0 2vw;
+    padding: 1vh 2vw 0 2vw;
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
@@ -65,6 +67,71 @@ const LoginLeft = styled.div`
         /* margin-top: 2vh; */
 
     }
+
+    .login-form {
+
+  width:22vw;
+  background:#fff;
+  /* padding:20px 30px; */
+  box-shadow:0px 5px 10px rgba(0,0,0,0.1);
+}
+.login-form .form-title {
+  font-family:"Montserrat",sans-serif;
+  text-align:center;
+  font-size:30px;
+  font-weight:600;
+  margin:20px 0px 30px;
+  color:#111;
+}
+.login-form .form-input {
+  margin:10px 0px;
+}
+.login-form .form-input label,
+.login-form .captcha label {
+  display:block;
+  font-size:15px;
+  color:#111;
+  margin-bottom:5px;
+}
+.login-form .form-input input {
+  width:100%;
+  /* padding:10px; */
+  border:1px solid #888;
+  font-size:15px;
+}
+.login-form .captcha {
+  margin:15px 0px;
+}
+.login-form .captcha .preview {
+  color:#555;
+  width:100%;
+  text-align:center;
+  height:40px;
+  line-height:40px;
+  letter-spacing:8px;
+  border:1px dashed #888;
+  font-family:"monospace";
+}
+.login-form .captcha .preview span {
+  display:inline-block;
+  user-select:none;
+}
+.login-form .captcha .captcha-form {
+  display:flex;
+}
+.login-form .captcha .captcha-form input {
+  width:100%;
+  padding:8px;
+  border:1px solid #888;
+}
+.login-form .captcha .captcha-form .captcha-refresh {
+  width:40px;
+  border:none;
+  outline:none;
+  background:#888;
+  color:#eee;
+  cursor:pointer;
+}
 `;
 
 
@@ -123,6 +190,30 @@ function CustomerLogin() {
     const [user , setUser] = React.useState('');
     const navigate = useNavigate();
     const parms = useParams();
+
+    const fonts = ["cursive","sans-serif","serif","monospace"];
+    let captchaValue = "";
+    
+    function generateCaptcha(){
+        let value = btoa(Math.random()*1000000000);
+        value = value.substr(0,5+Math.random()*5);
+        captchaValue = value;
+    }
+    function setCaptcha(){
+        generateCaptcha();
+        let html = captchaValue.split("").map((char)=>{
+        const rotate = -20 + Math.trunc(Math.random()*30);
+        const font = Math.trunc(Math.random()*fonts.length);
+        return `<span 
+            style="
+            transform:rotate(${rotate}deg);
+            font-family:${fonts[font]}
+            "
+        >${char}</span>`;
+        }).join("");
+        document.querySelector(".login-form .captcha .preview").innerHTML = html;
+    }
+
     React.useEffect(() => {
         const currentuser = JSON.parse(localStorage.getItem('customerLogin'));
         if ( currentuser) {
@@ -156,6 +247,10 @@ function CustomerLogin() {
     };
 
     const handleLogin = (event) => {
+        let inputCaptchaValue = document.querySelector(".login-form .captcha input").value;
+        console.log(inputCaptchaValue);
+        console.log(captchaValue);
+        if(inputCaptchaValue === captchaValue) {
         console.log("Login button clicked");
         console.log(values.username);
         console.log(values.password);
@@ -223,9 +318,13 @@ function CustomerLogin() {
         else{
             setErrorMessages("Please fill all the fields");
         }
+        } 
+        else {
+            setErrorMessages("Invalid Captcha");
+        }
+
     }
 
-    
 
     return (
         <>
@@ -261,7 +360,18 @@ function CustomerLogin() {
                         }
                     />
                 </FormControl>
-                 
+                <div className="login-form">
+                <div className="captcha">
+                    <label for="captcha-input">Enter Captcha</label>
+                    <div className="preview"></div>
+                    <div className="captcha-form">
+                    <input type="text" id="captcha-form" placeholder="Enter captcha text" />
+                    <button className="captcha-refresh" onClick={setCaptcha}>
+                        <RefreshIcon/>
+                    </button>
+                    </div>
+                </div>
+                </div>
                  <p style={{marginBottom:"10px"}}>Don't Have account ?. <NavLink to = "/contractregister">Register Here</NavLink ></p>
                  <p>{errorMessages}</p>
                  <SubBut onClick={handleLogin}> Login </SubBut>
